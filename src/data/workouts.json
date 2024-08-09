@@ -1,0 +1,162 @@
+[
+  {
+    "workoutType": "arms",
+    "date": "2024-08-01",
+    "exercises": [
+      {
+        "name": "curls",
+        "weight": 20,
+        "sets": 3,
+        "reps": "6-8",
+        "note": "",
+        "success": false
+      },
+      {
+        "name": "band tricep",
+        "weight": 0,
+        "sets": 3,
+        "reps": "6-8",
+        "note": "",
+        "success": false
+      },
+      {
+        "name": "skullcrusher",
+        "weight": 20,
+        "sets": 3,
+        "reps": "8-10",
+        "note": "",
+        "success": false
+      }
+    ],
+    "note": "",
+    "completed": false
+  },
+  {
+    "workoutType": "legs",
+    "date": "2024-08-01",
+    "exercises": [
+      {
+        "name": "jump",
+        "weight": 0,
+        "sets": 3,
+        "reps": "5",
+        "note": "",
+        "success": false
+      },
+      {
+        "name": "lunge",
+        "weight": 0,
+        "sets": 1,
+        "reps": "30sec each leg",
+        "note": "",
+        "success": false
+      },
+      {
+        "name": "ass up",
+        "weight": 0,
+        "sets": 2,
+        "reps": "30sec",
+        "note": "",
+        "success": false
+      },
+      {
+        "name": "clock + squat",
+        "weight": 0,
+        "sets": 1,
+        "reps": "30sec",
+        "note": "",
+        "success": false
+      },
+      {
+        "name": "kipping",
+        "weight": 0,
+        "sets": 0,
+        "reps": "5",
+        "note": "https://www.youtube.com/watch?v=rGKuFzlb9e8&t=387s&ab_channel=SondreBerg",
+        "success": false
+      },
+      {
+        "name": "squats",
+        "weight": 0,
+        "sets": 1,
+        "reps": "Max",
+        "note": "",
+        "success": false
+      },
+      {
+        "name": "hamstring",
+        "weight": 5,
+        "sets": 3,
+        "reps": "10-12",
+        "note": "",
+        "success": false
+      }
+    ],
+    "note": "",
+    "completed": false
+  },
+  {
+    "workoutType": "chest",
+    "date": "2024-08-02",
+    "exercises": [
+      {
+        "name": "dips",
+        "weight": 0,
+        "sets": 3,
+        "reps": "6-8",
+        "note": "",
+        "success": false
+      },
+      {
+        "name": "push-ups",
+        "weight": 0,
+        "sets": 3,
+        "reps": "8-10",
+        "note": "",
+        "success": false
+      }
+    ],
+    "note": "⚠️ You need to finish your rehab before performing chest exercises (dips and push-ups).",
+    "completed": false
+  },
+  {
+    "workoutType": "back",
+    "date": "2024-08-02",
+    "exercises": [
+      {
+        "name": "chin up",
+        "weight": 0,
+        "sets": 3,
+        "reps": "Max between 3-5",
+        "note": "",
+        "success": false
+      },
+      {
+        "name": "row",
+        "weight": 20,
+        "sets": 3,
+        "reps": "10-12",
+        "note": "",
+        "success": false
+      },
+      {
+        "name": "deadlift",
+        "weight": 20,
+        "sets": 3,
+        "reps": "10-12",
+        "note": "",
+        "success": false
+      },
+      {
+        "name": "windmill",
+        "weight": 0,
+        "sets": 0,
+        "reps": "5",
+        "note": "https://www.youtube.com/watch?v=QpIWwPRAxvM&list=LL&index=16&t=258s&ab_channel=Mover%27sOdyssey",
+        "success": false
+      }
+    ],
+    "note": "Make them count",
+    "completed": false
+  }
+]
