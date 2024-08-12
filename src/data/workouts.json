@@ -1,30 +1,209 @@
 [
   {
+    "workoutType": "fff",
+    "date": "2024-08-12",
+    "exercises": [
+      {
+        "name": "jump",
+        "muscles": "5",
+        "weight": 200,
+        "sets": 100,
+        "reps": "100",
+        "time": false,
+        "note": "",
+        "isCore": false,
+        "success": false
+      },
+      {
+        "name": "lunge",
+        "muscles": "30sec each leg",
+        "weight": 200,
+        "sets": 100,
+        "reps": "100",
+        "time": false,
+        "note": "",
+        "isCore": false,
+        "success": false
+      },
+      {
+        "name": "ass up",
+        "muscles": "30sec",
+        "weight": 200,
+        "sets": 100,
+        "reps": "100",
+        "time": false,
+        "note": "",
+        "isCore": false,
+        "success": false
+      },
+      {
+        "name": "clock + squat",
+        "muscles": "30sec",
+        "weight": 200,
+        "sets": 100,
+        "reps": "100",
+        "time": false,
+        "note": "",
+        "isCore": false,
+        "success": false
+      },
+      {
+        "name": "kipping",
+        "muscles": "5",
+        "weight": 200,
+        "sets": 100,
+        "reps": "100",
+        "time": false,
+        "note": "",
+        "isCore": false,
+        "success": false
+      },
+      {
+        "name": "squats",
+        "muscles": "Max",
+        "weight": 200,
+        "sets": 100,
+        "reps": "100",
+        "time": false,
+        "note": "",
+        "isCore": false,
+        "success": false
+      },
+      {
+        "name": "hamstring",
+        "muscles": "10-12",
+        "weight": 200,
+        "sets": 100,
+        "reps": "100",
+        "time": false,
+        "note": "",
+        "isCore": false,
+        "success": false
+      }
+    ],
+    "note": "TEST session",
+    "completed": false
+  },
+  {
+    "workoutType": "fff",
+    "date": "1999-01-01",
+    "exercises": [
+      {
+        "name": "jump",
+        "muscles": "5",
+        "weight": 0,
+        "sets": 3,
+        "reps": "",
+        "time": false,
+        "note": "",
+        "isCore": false,
+        "success": false
+      },
+      {
+        "name": "lunge",
+        "muscles": "30sec each leg",
+        "weight": 0,
+        "sets": 1,
+        "reps": "",
+        "time": false,
+        "note": "",
+        "isCore": false,
+        "success": false
+      },
+      {
+        "name": "ass up",
+        "muscles": "30sec",
+        "weight": 0,
+        "sets": 2,
+        "reps": "",
+        "time": false,
+        "note": "",
+        "isCore": false,
+        "success": false
+      },
+      {
+        "name": "clock + squat",
+        "muscles": "30sec",
+        "weight": 0,
+        "sets": 1,
+        "reps": "",
+        "time": false,
+        "note": "",
+        "isCore": false,
+        "success": false
+      },
+      {
+        "name": "kipping",
+        "muscles": "5",
+        "weight": 0,
+        "sets": 0,
+        "reps": "https://www.youtube.com/watch?v=rGKuFzlb9e8&t=387s&ab_channel=SondreBerg",
+        "time": false,
+        "note": "",
+        "isCore": false,
+        "success": false
+      },
+      {
+        "name": "squats",
+        "muscles": "Max",
+        "weight": 0,
+        "sets": 1,
+        "reps": "",
+        "time": false,
+        "note": "",
+        "isCore": false,
+        "success": false
+      },
+      {
+        "name": "hamstring",
+        "muscles": "10-12",
+        "weight": 5,
+        "sets": 3,
+        "reps": "",
+        "time": false,
+        "note": "",
+        "isCore": false,
+        "success": false
+      }
+    ],
+    "note": "TEST session",
+    "completed": false
+  },
+  {
     "workoutType": "arms",
-    "date": "2024-08-01",
+    "date": "1999-01-01",
     "exercises": [
       {
         "name": "curls",
+        "muscles": "6-8",
         "weight": 20,
         "sets": 3,
-        "reps": "6-8",
+        "reps": "",
+        "time": false,
         "note": "",
+        "isCore": false,
         "success": false
       },
       {
         "name": "band tricep",
+        "muscles": "6-8",
         "weight": 0,
         "sets": 3,
-        "reps": "6-8",
+        "reps": "",
+        "time": false,
         "note": "",
+        "isCore": false,
         "success": false
       },
       {
         "name": "skullcrusher",
+        "muscles": "8-10",
         "weight": 20,
         "sets": 3,
-        "reps": "8-10",
+        "reps": "",
+        "time": false,
         "note": "",
+        "isCore": false,
         "success": false
       }
     ],
@@ -33,62 +212,83 @@
   },
   {
     "workoutType": "legs",
-    "date": "2024-08-01",
+    "date": "1999-01-01",
     "exercises": [
       {
         "name": "jump",
+        "muscles": "5",
         "weight": 0,
         "sets": 3,
-        "reps": "5",
+        "reps": "",
+        "time": false,
         "note": "",
+        "isCore": false,
         "success": false
       },
       {
         "name": "lunge",
+        "muscles": "30sec each leg",
         "weight": 0,
         "sets": 1,
-        "reps": "30sec each leg",
+        "reps": "",
+        "time": false,
         "note": "",
+        "isCore": false,
         "success": false
       },
       {
         "name": "ass up",
+        "muscles": "30sec",
         "weight": 0,
         "sets": 2,
-        "reps": "30sec",
+        "reps": "",
+        "time": false,
         "note": "",
+        "isCore": false,
         "success": false
       },
       {
         "name": "clock + squat",
+        "muscles": "30sec",
         "weight": 0,
         "sets": 1,
-        "reps": "30sec",
+        "reps": "",
+        "time": false,
         "note": "",
+        "isCore": false,
         "success": false
       },
       {
         "name": "kipping",
+        "muscles": "5",
         "weight": 0,
         "sets": 0,
-        "reps": "5",
-        "note": "https://www.youtube.com/watch?v=rGKuFzlb9e8&t=387s&ab_channel=SondreBerg",
+        "reps": "https://www.youtube.com/watch?v=rGKuFzlb9e8&t=387s&ab_channel=SondreBerg",
+        "time": false,
+        "note": "",
+        "isCore": false,
         "success": false
       },
       {
         "name": "squats",
+        "muscles": "Max",
         "weight": 0,
         "sets": 1,
-        "reps": "Max",
+        "reps": "",
+        "time": false,
         "note": "",
+        "isCore": false,
         "success": false
       },
       {
         "name": "hamstring",
+        "muscles": "10-12",
         "weight": 5,
         "sets": 3,
-        "reps": "10-12",
+        "reps": "",
+        "time": false,
         "note": "",
+        "isCore": false,
         "success": false
       }
     ],
@@ -97,22 +297,28 @@
   },
   {
     "workoutType": "chest",
-    "date": "2024-08-02",
+    "date": "1999-01-01",
     "exercises": [
       {
         "name": "dips",
+        "muscles": "6-8",
         "weight": 0,
         "sets": 3,
-        "reps": "6-8",
+        "reps": "",
+        "time": false,
         "note": "",
+        "isCore": false,
         "success": false
       },
       {
         "name": "push-ups",
+        "muscles": "8-10",
         "weight": 0,
         "sets": 3,
-        "reps": "8-10",
+        "reps": "",
+        "time": false,
         "note": "",
+        "isCore": false,
         "success": false
       }
     ],
@@ -121,38 +327,50 @@
   },
   {
     "workoutType": "back",
-    "date": "2024-08-02",
+    "date": "1999-01-01",
     "exercises": [
       {
         "name": "chin up",
+        "muscles": "Max between 3-5",
         "weight": 0,
         "sets": 3,
-        "reps": "Max between 3-5",
+        "reps": "",
+        "time": false,
         "note": "",
+        "isCore": false,
         "success": false
       },
       {
         "name": "row",
+        "muscles": "10-12",
         "weight": 20,
         "sets": 3,
-        "reps": "10-12",
+        "reps": "",
+        "time": false,
         "note": "",
+        "isCore": false,
         "success": false
       },
       {
         "name": "deadlift",
+        "muscles": "10-12",
         "weight": 20,
         "sets": 3,
-        "reps": "10-12",
+        "reps": "",
+        "time": false,
         "note": "",
+        "isCore": false,
         "success": false
       },
       {
         "name": "windmill",
+        "muscles": "5",
         "weight": 0,
         "sets": 0,
-        "reps": "5",
-        "note": "https://www.youtube.com/watch?v=QpIWwPRAxvM&list=LL&index=16&t=258s&ab_channel=Mover%27sOdyssey",
+        "reps": "https://www.youtube.com/watch?v=QpIWwPRAxvM&list=LL&index=16&t=258s&ab_channel=Mover%27sOdyssey",
+        "time": false,
+        "note": "",
+        "isCore": false,
         "success": false
       }
     ],
