@@ -1,8 +1,32 @@
-/*
+.workout-input{
+	width: 100%;
+	background-color: transparent !important;
+	color-scheme: unset;
+	border: none!important;
+}
 
-This CSS file will be included with your plugin, and
-available in the app when your plugin is enabled.
+.workout-options-container{
+	padding-top: 1rem;
+	padding-bottom: 0.2rem;
+	overflow-y: auto;
+}
 
-If your plugin does not need CSS, delete this file.
+.workout-option{
+	padding: 0.5rem 0.5rem;
+}
+.workout-option:hover {
+	background-color: rgba(255, 255, 255, 0.075)
+}
 
-*/
+/* Custom CSS to style checkboxes without list formatting */
+.exercise-success-container {
+	display: flex;
+	align-items: center;
+	gap: 10px; /* Adjust spacing between checkbox and text */
+}
+
+.exercise-success-checkbox {
+	width: 24px; /* Adjust size as needed */
+	height: 24px; /* Adjust size as needed */
+	vertical-align: middle; /* Align with text */
+}

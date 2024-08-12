@@ -1,111 +1,156 @@
 import {Workout} from "../../models/Workout";
 import * as fs from 'fs';
 import {Exercise} from "../../models/Exercise";
+import {WORKOUT_TYPES} from "../../utils/Constants";
 
 export class WorkoutData{
-	dataPath: string
-	workouts: Array<Workout>
+	private dataPath: string
+	private workouts: Map<string, Workout[]> = new Map();
 
 	constructor(dataPath:string) {
 		this.dataPath = dataPath;
-		this.workouts = this.convertDataToWorkout(dataPath)
+		// init workouts
+		this.convertDataToWorkout(this.dataPath);
 	}
 
 
+	// Cache functions
+	private updateCache(workouts: Workout[]) {
+		// Initialize the cache map with empty arrays for each workout type
+		WORKOUT_TYPES.forEach(type => this.workouts.set(type, []));
 
-	// printWorkouts(){
-	// 	this.workouts .forEach(w =>
-	// 		console.log(w.toMarkdown())
-	// 	)
-	// }
-
-	// getWorkout(workoutType: string, date: string): Workout | undefined {
-	// 	// Normalize dates by setting hours, minutes, seconds, and milliseconds to 0
-	// 	const normalizeDate = (d: Date) => new Date(d.getFullYear(), d.getMonth(), d.getDate());
-	//
-	// 	// Find the workout that matches both the workoutType and date, ignoring time
-	// 	return this.workouts.find(workout =>
-	// 		workout.workoutType === workoutType &&
-	// 		normalizeDate(new Date(workout.date)).getTime() === normalizeDate(new Date(date)).getTime()
-	// 	);
-	// }
-
-
-	getAllWorkouts() : Array<Workout> {
-		return this.workouts
+		// Populate the cache with workouts
+		workouts.forEach(workout => {
+			if (WORKOUT_TYPES.includes(workout.workoutType)) {
+				const list = this.workouts.get(workout.workoutType) || [];
+				list.push(workout);
+				// Ensure the list is sorted from oldest to newest
+				list.sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime());
+				this.workouts.set(workout.workoutType, list);
+			}
+		});
 	}
 
-	private getWorkoutIndex(workoutType: string, date: string): number {
-		return this.workouts.findIndex(workout =>
-			workout.workoutType === workoutType && new Date(workout.date).getTime() === new Date(date).getTime()
-		)
+	private isSameDate(date1: string, date2:string){
+		const [year1, month1, day1] = date1.split('-').map(Number);
+		const [year2, month2, day2] = date2.split('-').map(Number);
+
+		return year1 === year2 &&
+			month1 === month2 &&
+			day1 === day2;
 	}
+
+
+	getAllWorkouts(): Workout[] {
+		// Combine all workouts from the map into a single array
+		const allWorkouts: Workout[] = [];
+		this.workouts.forEach(workoutsList => {
+			allWorkouts.push(...workoutsList);
+		});
+
+		// Sort the combined array from newest to oldest
+		return allWorkouts.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
+	}
+
 
 	getLastWorkoutOfType(workoutType: string) : Workout{
+		const list = this.workouts.get(workoutType);
+		// @ts-ignore
+		return list[list.length - 1];
 
-		// Filter workouts by the specified type
-		const filteredWorkouts = this.workouts.filter(workout =>
-			workout.workoutType === workoutType
-		)
-
-		// Sort the filtered workouts by date, with the most recent first
-		filteredWorkouts.sort((a, b) =>
-			new Date(b.date).getTime() - new Date(a.date).getTime()
-		);
-
-		// Return the most recent workout or undefined if none found
-		return filteredWorkouts[0];
 	}
 
 	//adding a new workout to the list
-	addWorkout(workout:Workout){
-		this.workouts.push(workout);
-		this.saveWorkouts()
+	addWorkout(workout: Workout) {
+		// Get the list of workouts for the specified workoutType
+		const list = this.workouts.get(workout.workoutType) || [];
+
+		// Check if the workout already exists in the list
+		if (!list.some(existingWorkout => this.isSameDate(existingWorkout.date, workout.date))) {
+			// Append the new workout to the list
+			list.push(workout);
+			// Update the map with the new list
+			this.workouts.set(workout.workoutType, list);
+			// Save the updated workouts to the file
+			this.saveWorkouts();
+		} else {
+			console.debug("Workout already exists");
+		}
 	}
+
 
 	updateWorkout(newWorkout: Workout) {
-		const index = this.getWorkoutIndex(newWorkout.workoutType, newWorkout.date)
+		// Get the list of workouts for the specified workoutType
+		const list = this.workouts.get(newWorkout.workoutType);
 
-		if (index !== -1) {
-			// Replace the old workout with the new workout
-			this.workouts[index] = newWorkout;
-			// Save the updated list to the JSON file
-			this.saveWorkouts();
+		// Check if the list exists and is not empty
+		if (list) {
+			// Find the index of the workout to update
+			const index = list.findIndex(workout => this.isSameDate(workout.date, newWorkout.date));
+
+			if (index !== -1) {
+				// Replace the old workout with the new workout
+				list[index] = newWorkout;
+				// Ensure the list is still sorted from oldest to newest
+				list.sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime());
+				// Update the map with the modified list
+				this.workouts.set(newWorkout.workoutType, list);
+				// Save the updated list to the JSON file
+				this.saveWorkouts();
+			} else {
+				console.error("Workout not found");
+			}
 		} else {
-			console.error("Workout not found");
+			console.error("Workout type not found");
 		}
 	}
+
 
 	deleteWorkout(workoutType: string, date: string) {
-		// Find the index of the workout to delete
-		const index = this.getWorkoutIndex(workoutType, date)
 
-		if (index !== -1) {
-			// Remove the workout from the list
-			this.workouts.splice(index, 1);
-			// Save the updated list to the JSON file
-			this.saveWorkouts();
+		// Get the list of workouts for the specified workoutType
+		const list = this.workouts.get(workoutType);
+
+		// Check if the list exists
+		if (list) {
+			// Find the index of the workout to delete
+			const index = list.findIndex(workout => this.isSameDate(workout.date, date));
+
+			if (index !== -1) {
+				// Remove the workout from the list
+				list.splice(index, 1);
+
+				// Update the map with the modified list
+				this.workouts.set(workoutType, list);
+
+				// Save the updated list to the JSON file
+				this.saveWorkouts();
+			} else {
+				console.error("Workout not found");
+			}
 		} else {
-			console.error("Workout not found");
+			console.error("Workout type not found");
 		}
 	}
 
+
 	private saveWorkouts(){
-		const updatedData = JSON.stringify(this.workouts, null, 2);
+		const updatedData = JSON.stringify( this.getAllWorkouts(), null, 2);
 		fs.writeFileSync( this.dataPath, updatedData, 'utf8');
 	}
 
-	private convertDataToWorkout(dataPath: string){
+	private convertDataToWorkout(dataPath: string) {
 		const rawData = fs.readFileSync(dataPath, 'utf8');
-		const parsedData  = JSON.parse(rawData);
+		const parsedData = JSON.parse(rawData);
 
-		return parsedData.map((rawWorkout: any) => {
+		// Assuming parsedData is an array of workouts
+		const workouts: Workout[] = parsedData.map((rawWorkout: any) => {
 			const exercises = rawWorkout.exercises.map((rawExercise: any) => {
 				return new Exercise(
 					rawExercise.name,
+					rawExercise.weight,
 					rawExercise.sets,
 					rawExercise.reps,
-					rawExercise.weight,
 					rawExercise.note,
 					rawExercise.success
 				);
@@ -119,5 +164,8 @@ export class WorkoutData{
 				rawWorkout.completed
 			);
 		});
+
+		// Update the cache with the loaded workouts
+		this.updateCache(workouts);
 	}
 }
