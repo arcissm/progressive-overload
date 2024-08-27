@@ -11,6 +11,7 @@ export class WorkoutDropdownModal extends Modal {
 	constructor(app: App, plugin: WorkoutPlugin) {
 		super(app);
 		this.plugin = plugin;
+		this.items = [];
 	}
 
 	onOpen() {
@@ -39,21 +40,37 @@ export class WorkoutDropdownModal extends Modal {
 		this.resultsContainer.className = 'workout-options-container';
 		contentEl.appendChild(this.resultsContainer);
 
-		// Create buttons for each workout type
-		this.items = WORKOUT_TYPES.map(workoutType => {
+
+		// BREAK BUTTON IF onBreak
+		if (this.plugin.isOnBreak()){
 			const item = document.createElement('div');
+			const workoutType = "break"
 			item.className = 'workout-option';
 			item.textContent = workoutType;
 			item.onclick = () => {
-
 				new Notice(`You selected: ${workoutType}`);
 				this.close();
 
 				this.plugin.createNote(workoutType);
 			};
-			this.resultsContainer.appendChild(item);
-			return item;
-		});
+			this.resultsContainer.appendChild(item)
+			this.items.push(item)
+		}else{
+			// Create buttons for each workout type
+			this.items = WORKOUT_TYPES.map(workoutType => {
+				const item = document.createElement('div');
+				item.className = 'workout-option';
+				item.textContent = workoutType;
+				item.onclick = () => {
+					new Notice(`You selected: ${workoutType}`);
+					this.close();
+
+					this.plugin.createNote(workoutType);
+				};
+				this.resultsContainer.appendChild(item);
+				return item;
+			});
+		}
 	}
 
 	onClose() {
