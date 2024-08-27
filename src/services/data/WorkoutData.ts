@@ -1,18 +1,87 @@
 import {Workout} from "../../models/Workout";
 import * as fs from 'fs';
+import * as path from 'path'
 import {Exercise} from "../../models/Exercise";
 import {WORKOUT_TYPES} from "../../utils/Constants";
 
 export class WorkoutData{
-	private dataPath: string
+	private dataPath: string;
+	private imageDirPath: string;
 	private workouts: Map<string, Workout[]> = new Map();
 
-	constructor(dataPath:string) {
+	constructor(dataPath:string, imageDirPath: string) {
 		this.dataPath = dataPath;
+		this.imageDirPath = imageDirPath;
 		// init workouts
 		this.convertDataToWorkout(this.dataPath);
 	}
 
+
+	getWorkout(workoutType:string, date:string){
+		const workoutsOfType = this.workouts.get(workoutType)
+			if(workoutsOfType != undefined){
+				return workoutsOfType.find(workout => workout.date === date)
+			}
+			return undefined
+	}
+
+	getCompletedWorkoutsLastWeeks(numberWeeks:number): number {
+		const twoWeeksAgo = new Date();
+		twoWeeksAgo.setDate(twoWeeksAgo.getDate() - (numberWeeks * 7));
+
+		let completedWorkoutsCount = 0;
+
+		this.workouts.forEach((workoutArray) => {
+			workoutArray.forEach((workout) => {
+				const workoutDate = new Date(workout.date);
+
+				if (workoutDate >= twoWeeksAgo) {
+					completedWorkoutsCount++;
+				}
+			});
+		});
+
+		return completedWorkoutsCount;
+	}
+
+	getDaysSinceLastWorkout(): number {
+
+		let mostRecentDate: Date = new Date("1999-01-01");
+
+		const currentDate = new Date();
+		const currentDateUTC = new Date(Date.UTC(currentDate.getFullYear(), currentDate.getMonth(), currentDate.getDate()));
+
+		// Iterate over each array of workouts in the Map
+		for (const workoutArray of this.workouts.values()) {
+			// Find the most recent workout in the current array
+			for (const workout of workoutArray) {
+				const workoutDate = new Date(`${workout.date}T00:00:00Z`);
+				if (workoutDate > mostRecentDate && workoutDate < currentDateUTC){
+					mostRecentDate = workoutDate;
+				}
+			}
+		}
+
+		// Calculate the difference in days
+		const diffTime = Math.abs(currentDateUTC.getTime() - mostRecentDate.getTime());
+		const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+
+		return diffDays;
+	}
+
+	getMotivationalImage(){
+
+		let files;
+		try {
+			files = fs.readdirSync(this.imageDirPath);
+		} catch (err) {
+			console.error("Error reading the image folder:", err);
+			return "";
+		}
+
+		const randomImage = files[Math.floor(Math.random() * files.length)];
+		return path.join(this.imageDirPath, randomImage)
+	}
 
 	// Cache functions
 	private updateCache(workouts: Workout[]) {
@@ -31,7 +100,7 @@ export class WorkoutData{
 		});
 	}
 
-	private isSameDate(date1: string, date2:string){
+	private isSameDate(date1: string, date2:string) {
 		const [year1, month1, day1] = date1.split('-').map(Number);
 		const [year2, month2, day2] = date2.split('-').map(Number);
 
@@ -52,6 +121,16 @@ export class WorkoutData{
 		return allWorkouts.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
 	}
 
+	getLastSuccessStreak(workoutType: string){
+		try {
+			const list = this.workouts.get(workoutType);
+			// @ts-ignore
+			const workout = list[list.length - 2];
+			return workout.successStreak;
+		} catch (error){
+			return 0;
+		}
+	}
 
 	getLastWorkoutOfType(workoutType: string) : Workout{
 		const list = this.workouts.get(workoutType);
@@ -79,35 +158,11 @@ export class WorkoutData{
 	}
 
 
-	updateWorkout(newWorkout: Workout) {
-		// Get the list of workouts for the specified workoutType
-		const list = this.workouts.get(newWorkout.workoutType);
-
-		// Check if the list exists and is not empty
-		if (list) {
-			// Find the index of the workout to update
-			const index = list.findIndex(workout => this.isSameDate(workout.date, newWorkout.date));
-
-			if (index !== -1) {
-				// Replace the old workout with the new workout
-				list[index] = newWorkout;
-				// Ensure the list is still sorted from oldest to newest
-				list.sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime());
-				// Update the map with the modified list
-				this.workouts.set(newWorkout.workoutType, list);
-				// Save the updated list to the JSON file
-				this.saveWorkouts();
-			} else {
-				console.error("Workout not found");
-			}
-		} else {
-			console.error("Workout type not found");
-		}
-	}
-
-
 	deleteWorkout(workoutType: string, date: string) {
 
+		if(workoutType === "break"){
+			return
+		}
 		// Get the list of workouts for the specified workoutType
 		const list = this.workouts.get(workoutType);
 
@@ -134,7 +189,7 @@ export class WorkoutData{
 	}
 
 
-	private saveWorkouts(){
+	saveWorkouts(){
 		const updatedData = JSON.stringify( this.getAllWorkouts(), null, 2);
 		fs.writeFileSync( this.dataPath, updatedData, 'utf8');
 	}
@@ -145,23 +200,43 @@ export class WorkoutData{
 
 		// Assuming parsedData is an array of workouts
 		const workouts: Workout[] = parsedData.map((rawWorkout: any) => {
+			const warmUps = rawWorkout.exercises.map((rawWarmUp: any) => {
+				return new Exercise(
+					rawWarmUp.name,
+					rawWarmUp.weight,
+					rawWarmUp.sets,
+					rawWarmUp.reps,
+					rawWarmUp.time,
+					rawWarmUp.note,
+					rawWarmUp.isCore,
+					rawWarmUp.isSuccess,
+					rawWarmUp.isUnlocked,
+					rawWarmUp.weightIncrease
+				);
+			});
 			const exercises = rawWorkout.exercises.map((rawExercise: any) => {
 				return new Exercise(
 					rawExercise.name,
 					rawExercise.weight,
 					rawExercise.sets,
 					rawExercise.reps,
+					rawExercise.time,
 					rawExercise.note,
-					rawExercise.success
+					rawExercise.isCore,
+					rawExercise.isSuccess,
+					rawExercise.isUnlocked,
+					rawExercise.weightIncrease
 				);
 			});
 
 			return new Workout(
 				rawWorkout.workoutType,
 				rawWorkout.date,
+				warmUps,
 				exercises,
 				rawWorkout.note,
-				rawWorkout.completed
+				rawWorkout.completed,
+				rawWorkout.successStreak
 			);
 		});
 

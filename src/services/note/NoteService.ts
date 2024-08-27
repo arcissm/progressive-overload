@@ -1,5 +1,8 @@
 import {App} from 'obsidian';
-import {WorkoutService} from "./WorkoutService";
+import {WorkoutService} from "../core/WorkoutService";
+import {POST_BREAK_WORKOUTS} from "../../utils/BreakWorkout";
+import {getRandomInt} from "../../utils/AlgorithmUtils";
+import {CheckBox} from "../../models/Checkbox";
 
 export class NoteService {
 	private app: App;
@@ -23,7 +26,15 @@ export class NoteService {
 
 	async createNote(workoutType:string){
 
-		const workout = this.workoutService.createNewWorkout(workoutType)
+		let workout;
+		if(workoutType === "break"){
+			const index = getRandomInt(0, POST_BREAK_WORKOUTS.length - 1)
+			workout = POST_BREAK_WORKOUTS[index]
+		}else{
+			workout = this.workoutService.createNewWorkout(workoutType)
+		}
+
+
 
 		// Adds capital Letter
 		const fancyWorkoutType = workoutType.charAt(0).toUpperCase() + workoutType.slice(1).toLowerCase();
@@ -35,18 +46,36 @@ export class NoteService {
 		const existingFile = this.app.vault.getAbstractFileByPath(fullPath);
 		if (existingFile) {
 			// console.log("Note already exists");
-			return;
+			return 303;
 		}
 
 		try {
 			// Create the note
 			const file = await this.app.vault.create(fullPath, workout.toMarkdown());
 			// console.log("Note created:", file.path);
+			return 200
 		} catch (error) {
-			// console.error(`Failed to create note at path: ${fullPath}`, error);
-			return null;
+			console.error(`Failed to create note at path: ${fullPath}`, error);
+			return 404;
 		}
 	}
+
+	getAllCheckboxes(content: string): CheckBox[] {
+		const checkboxRegex = /- \[( |x)\] \*\*Completed:\*\*.*<!-- id: (.+?) -->/g;
+		const checkboxes: CheckBox[] = [];
+		let match;
+
+		while ((match = checkboxRegex.exec(content)) !== null) {
+			checkboxes.push(new CheckBox(match[2], match[1] === 'x'));
+		}
+
+		return checkboxes;
+	}
+
+	isAllChecked(checkboxes: CheckBox[]): boolean {
+		return checkboxes.every(checkbox => checkbox.checked);
+	}
+
 
 	private async ensureDirectoryExists(directoryPath: string) {
 		// Check if the directory already exists
@@ -92,5 +121,6 @@ export class NoteService {
 		await this.ensureDirectoryExists(weekDir);
 		return weekDir + today.toISOString().split('T')[0];
 	}
+
 
 }

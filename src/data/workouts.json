@@ -1,380 +1,232 @@
 [
   {
-    "workoutType": "fff",
-    "date": "2024-08-12",
-    "exercises": [
+    "workoutType": "abs",
+    "date": "2024-08-26",
+    "warmUps": [
       {
-        "name": "jump",
-        "muscles": "5",
-        "weight": 200,
-        "sets": 100,
-        "reps": "100",
-        "time": false,
+        "name": "farmer carry",
+        "id": "farmer-carry",
+        "weight": 20,
+        "sets": 3,
+        "reps": "10-12",
+        "time": 45,
         "note": "",
-        "isCore": false,
-        "success": false
+        "isCore": true,
+        "isSuccess": false,
+        "isUnlocked": true,
+        "weightIncrease": 10
       },
       {
-        "name": "lunge",
-        "muscles": "30sec each leg",
-        "weight": 200,
-        "sets": 100,
-        "reps": "100",
-        "time": false,
-        "note": "",
-        "isCore": false,
-        "success": false
-      },
-      {
-        "name": "ass up",
-        "muscles": "30sec",
-        "weight": 200,
-        "sets": 100,
-        "reps": "100",
-        "time": false,
-        "note": "",
-        "isCore": false,
-        "success": false
-      },
-      {
-        "name": "clock + squat",
-        "muscles": "30sec",
-        "weight": 200,
-        "sets": 100,
-        "reps": "100",
-        "time": false,
-        "note": "",
-        "isCore": false,
-        "success": false
-      },
-      {
-        "name": "kipping",
-        "muscles": "5",
-        "weight": 200,
-        "sets": 100,
-        "reps": "100",
-        "time": false,
-        "note": "",
-        "isCore": false,
-        "success": false
-      },
-      {
-        "name": "squats",
-        "muscles": "Max",
-        "weight": 200,
-        "sets": 100,
-        "reps": "100",
-        "time": false,
-        "note": "",
-        "isCore": false,
-        "success": false
-      },
-      {
-        "name": "hamstring",
-        "muscles": "10-12",
-        "weight": 200,
-        "sets": 100,
-        "reps": "100",
-        "time": false,
-        "note": "",
-        "isCore": false,
-        "success": false
-      }
-    ],
-    "note": "TEST session",
-    "completed": false
-  },
-  {
-    "workoutType": "fff",
-    "date": "1999-01-01",
-    "exercises": [
-      {
-        "name": "jump",
-        "muscles": "5",
+        "name": "roll backwards",
+        "id": "roll-backwards",
         "weight": 0,
         "sets": 3,
-        "reps": "",
-        "time": false,
+        "reps": "10-12",
+        "time": 30,
         "note": "",
         "isCore": false,
-        "success": false
+        "isSuccess": false,
+        "isUnlocked": true,
+        "weightIncrease": 10
       },
       {
-        "name": "lunge",
-        "muscles": "30sec each leg",
-        "weight": 0,
-        "sets": 1,
-        "reps": "",
-        "time": false,
-        "note": "",
-        "isCore": false,
-        "success": false
-      },
-      {
-        "name": "ass up",
-        "muscles": "30sec",
+        "name": "band press",
+        "id": "band-press",
         "weight": 0,
         "sets": 2,
-        "reps": "",
-        "time": false,
+        "reps": "6-8",
+        "time": 30,
         "note": "",
         "isCore": false,
-        "success": false
-      },
-      {
-        "name": "clock + squat",
-        "muscles": "30sec",
-        "weight": 0,
-        "sets": 1,
-        "reps": "",
-        "time": false,
-        "note": "",
-        "isCore": false,
-        "success": false
-      },
-      {
-        "name": "kipping",
-        "muscles": "5",
-        "weight": 0,
-        "sets": 0,
-        "reps": "https://www.youtube.com/watch?v=rGKuFzlb9e8&t=387s&ab_channel=SondreBerg",
-        "time": false,
-        "note": "",
-        "isCore": false,
-        "success": false
-      },
-      {
-        "name": "squats",
-        "muscles": "Max",
-        "weight": 0,
-        "sets": 1,
-        "reps": "",
-        "time": false,
-        "note": "",
-        "isCore": false,
-        "success": false
-      },
-      {
-        "name": "hamstring",
-        "muscles": "10-12",
-        "weight": 5,
-        "sets": 3,
-        "reps": "",
-        "time": false,
-        "note": "",
-        "isCore": false,
-        "success": false
+        "isSuccess": false,
+        "isUnlocked": true,
+        "weightIncrease": 10
       }
     ],
-    "note": "TEST session",
-    "completed": false
-  },
-  {
-    "workoutType": "arms",
-    "date": "1999-01-01",
     "exercises": [
       {
-        "name": "curls",
-        "muscles": "6-8",
+        "name": "farmer carry",
+        "id": "farmer-carry",
         "weight": 20,
         "sets": 3,
-        "reps": "",
-        "time": false,
+        "reps": "10-12",
+        "time": 45,
         "note": "",
-        "isCore": false,
-        "success": false
+        "isCore": true,
+        "isSuccess": false,
+        "isUnlocked": true,
+        "weightIncrease": 10
       },
       {
-        "name": "band tricep",
-        "muscles": "6-8",
+        "name": "roll backwards",
+        "id": "roll-backwards",
         "weight": 0,
         "sets": 3,
-        "reps": "",
-        "time": false,
+        "reps": "10-12",
+        "time": 30,
         "note": "",
         "isCore": false,
-        "success": false
+        "isSuccess": false,
+        "isUnlocked": true,
+        "weightIncrease": 10
       },
       {
-        "name": "skullcrusher",
-        "muscles": "8-10",
-        "weight": 20,
-        "sets": 3,
-        "reps": "",
-        "time": false,
+        "name": "band press",
+        "id": "band-press",
+        "weight": 0,
+        "sets": 2,
+        "reps": "6-8",
+        "time": 30,
         "note": "",
         "isCore": false,
-        "success": false
+        "isSuccess": false,
+        "isUnlocked": true,
+        "weightIncrease": 10
       }
     ],
-    "note": "",
-    "completed": false
+    "note": "![Motivation](D:\\plugin\\gym\\.obsidian\\plugins\\obsidian-but-better\\assets\\images\\motivation\\bad_37.JPG)\n\n<div class=\"motivationalSpeech\">\nDo you want to look like that forever?</div>\n",
+    "completed": false,
+    "successStreak": 0
   },
   {
     "workoutType": "legs",
-    "date": "1999-01-01",
-    "exercises": [
+    "date": "2024-08-19",
+    "warmUps": [
       {
-        "name": "jump",
-        "muscles": "5",
+        "name": "squat",
+        "id": "squat",
         "weight": 0,
         "sets": 3,
-        "reps": "",
-        "time": false,
+        "reps": "5",
+        "time": 30,
         "note": "",
-        "isCore": false,
-        "success": false
-      },
-      {
-        "name": "lunge",
-        "muscles": "30sec each leg",
-        "weight": 0,
-        "sets": 1,
-        "reps": "",
-        "time": false,
-        "note": "",
-        "isCore": false,
-        "success": false
-      },
-      {
-        "name": "ass up",
-        "muscles": "30sec",
-        "weight": 0,
-        "sets": 2,
-        "reps": "",
-        "time": false,
-        "note": "",
-        "isCore": false,
-        "success": false
-      },
-      {
-        "name": "clock + squat",
-        "muscles": "30sec",
-        "weight": 0,
-        "sets": 1,
-        "reps": "",
-        "time": false,
-        "note": "",
-        "isCore": false,
-        "success": false
-      },
-      {
-        "name": "kipping",
-        "muscles": "5",
-        "weight": 0,
-        "sets": 0,
-        "reps": "https://www.youtube.com/watch?v=rGKuFzlb9e8&t=387s&ab_channel=SondreBerg",
-        "time": false,
-        "note": "",
-        "isCore": false,
-        "success": false
-      },
-      {
-        "name": "squats",
-        "muscles": "Max",
-        "weight": 0,
-        "sets": 1,
-        "reps": "",
-        "time": false,
-        "note": "",
-        "isCore": false,
-        "success": false
-      },
-      {
-        "name": "hamstring",
-        "muscles": "10-12",
-        "weight": 5,
-        "sets": 3,
-        "reps": "",
-        "time": false,
-        "note": "",
-        "isCore": false,
-        "success": false
-      }
-    ],
-    "note": "",
-    "completed": false
-  },
-  {
-    "workoutType": "chest",
-    "date": "1999-01-01",
-    "exercises": [
-      {
-        "name": "dips",
-        "muscles": "6-8",
-        "weight": 0,
-        "sets": 3,
-        "reps": "",
-        "time": false,
-        "note": "",
-        "isCore": false,
-        "success": false
-      },
-      {
-        "name": "push-ups",
-        "muscles": "8-10",
-        "weight": 0,
-        "sets": 3,
-        "reps": "",
-        "time": false,
-        "note": "",
-        "isCore": false,
-        "success": false
-      }
-    ],
-    "note": "⚠️ You need to finish your rehab before performing chest exercises (dips and push-ups).",
-    "completed": false
-  },
-  {
-    "workoutType": "back",
-    "date": "1999-01-01",
-    "exercises": [
-      {
-        "name": "chin up",
-        "muscles": "Max between 3-5",
-        "weight": 0,
-        "sets": 3,
-        "reps": "",
-        "time": false,
-        "note": "",
-        "isCore": false,
-        "success": false
-      },
-      {
-        "name": "row",
-        "muscles": "10-12",
-        "weight": 20,
-        "sets": 3,
-        "reps": "",
-        "time": false,
-        "note": "",
-        "isCore": false,
-        "success": false
+        "isCore": true,
+        "isSuccess": false,
+        "isUnlocked": true,
+        "weightIncrease": 10
       },
       {
         "name": "deadlift",
-        "muscles": "10-12",
-        "weight": 20,
+        "id": "deadlift",
+        "weight": 0,
         "sets": 3,
-        "reps": "",
-        "time": false,
+        "reps": "5",
+        "time": 30,
         "note": "",
-        "isCore": false,
-        "success": false
+        "isCore": true,
+        "isSuccess": false,
+        "isUnlocked": true,
+        "weightIncrease": 10
       },
       {
-        "name": "windmill",
-        "muscles": "5",
+        "name": "hamstring curls",
+        "id": "hamstring-curls",
+        "weight": 10,
+        "sets": 5,
+        "reps": "5",
+        "time": 30,
+        "note": "",
+        "isCore": true,
+        "isSuccess": false,
+        "isUnlocked": true,
+        "weightIncrease": 10
+      },
+      {
+        "name": "rolling",
+        "id": "rolling",
         "weight": 0,
-        "sets": 0,
-        "reps": "https://www.youtube.com/watch?v=QpIWwPRAxvM&list=LL&index=16&t=258s&ab_channel=Mover%27sOdyssey",
-        "time": false,
+        "sets": 4,
+        "reps": "5",
+        "time": 30,
         "note": "",
         "isCore": false,
-        "success": false
+        "isSuccess": false,
+        "isUnlocked": true,
+        "weightIncrease": 10
+      },
+      {
+        "name": "farmer carry",
+        "id": "farmer-carry",
+        "weight": 0,
+        "sets": 2,
+        "reps": "5",
+        "time": 30,
+        "note": "",
+        "isCore": false,
+        "isSuccess": false,
+        "isUnlocked": true,
+        "weightIncrease": 10
       }
     ],
-    "note": "Make them count",
-    "completed": false
+    "exercises": [
+      {
+        "name": "squat",
+        "id": "squat",
+        "weight": 0,
+        "sets": 3,
+        "reps": "5",
+        "time": 30,
+        "note": "",
+        "isCore": true,
+        "isSuccess": false,
+        "isUnlocked": true,
+        "weightIncrease": 10
+      },
+      {
+        "name": "deadlift",
+        "id": "deadlift",
+        "weight": 0,
+        "sets": 3,
+        "reps": "5",
+        "time": 30,
+        "note": "",
+        "isCore": true,
+        "isSuccess": false,
+        "isUnlocked": true,
+        "weightIncrease": 10
+      },
+      {
+        "name": "hamstring curls",
+        "id": "hamstring-curls",
+        "weight": 10,
+        "sets": 5,
+        "reps": "5",
+        "time": 30,
+        "note": "",
+        "isCore": true,
+        "isSuccess": false,
+        "isUnlocked": true,
+        "weightIncrease": 10
+      },
+      {
+        "name": "rolling",
+        "id": "rolling",
+        "weight": 0,
+        "sets": 4,
+        "reps": "5",
+        "time": 30,
+        "note": "",
+        "isCore": false,
+        "isSuccess": false,
+        "isUnlocked": true,
+        "weightIncrease": 10
+      },
+      {
+        "name": "farmer carry",
+        "id": "farmer-carry",
+        "weight": 0,
+        "sets": 2,
+        "reps": "5",
+        "time": 30,
+        "note": "",
+        "isCore": false,
+        "isSuccess": false,
+        "isUnlocked": true,
+        "weightIncrease": 10
+      }
+    ],
+    "note": "Do it or i'll suck your toes",
+    "completed": true,
+    "successStreak": 4
   }
 ]

@@ -18,15 +18,66 @@
 	background-color: rgba(255, 255, 255, 0.075)
 }
 
-/* Custom CSS to style checkboxes without list formatting */
-.exercise-success-container {
-	display: flex;
-	align-items: center;
-	gap: 10px; /* Adjust spacing between checkbox and text */
+/* Removes X from workout option menu*/
+.modal-close-button{
+	color: transparent;
 }
 
-.exercise-success-checkbox {
-	width: 24px; /* Adjust size as needed */
-	height: 24px; /* Adjust size as needed */
-	vertical-align: middle; /* Align with text */
+/* Makes the checkbox huge */
+input[type=checkbox]{
+	height: 2.5rem;
+	width: 2.5rem;
+}
+
+input[type=checkbox]:checked:after{
+	height: 2.5rem;
+	width: 2.5rem;
+}
+
+.motivationalSpeech {
+	text-align: center;
+	font-size: 1.5rem;
+	color: rgb(138, 92, 245);
+	font-style: italic;
+}
+
+
+/*calendar*/
+
+.calendar-header {
+	display: flex;
+	justify-content: space-between;
+	margin-bottom: 10px;
+}
+
+.calendar-grid {
+	display: grid;
+	grid-template-columns: repeat(7, 1fr);
+	gap: 5px;
+}
+
+.calendar-day-header {
+	font-weight: bold;
+	text-align: center;
+	padding: 5px;
+}
+
+.calendar-day {
+	text-align: center;
+	padding: 10px;
+	cursor: pointer;
+	border-radius: 5px;
+}
+
+.calendar-day.empty {
+	background-color: transparent;
+}
+
+.calendar-day.current-day {
+	background-color: #ffecb3;
+	font-weight: bold;
+}
+
+.calendar-day.greyed-out {
+	color: darkslateblue; /* Grey color for days from the previous month */
 }
