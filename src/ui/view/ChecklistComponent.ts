@@ -1,6 +1,16 @@
+import WorkoutPlugin from "../../main";
+import {CalendarComponent} from "./CalendarComponent";
+import {StatsComponent} from "./StatsComponent";
+import {WorkspaceLeaf} from "obsidian";
 
 export class ChecklistComponent {
+	private plugin: WorkoutPlugin;
 
+
+
+	constructor(plugin: WorkoutPlugin) {
+		this.plugin = plugin;
+	}
 
 	render(container: HTMLElement) {
 		container.createEl("h3", { text: "Checklist" });

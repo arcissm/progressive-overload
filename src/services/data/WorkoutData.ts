@@ -3,6 +3,7 @@ import * as fs from 'fs';
 import * as path from 'path'
 import {Exercise} from "../../models/Exercise";
 import {WORKOUT_TYPES} from "../../utils/Constants";
+import {isSameDate, getTodayDateUTC} from "../../utils/AlgorithmUtils";
 
 export class WorkoutData{
 	private dataPath: string;
@@ -25,6 +26,15 @@ export class WorkoutData{
 			return undefined
 	}
 
+	getWorkoutsByDate(date: string): Workout[] {
+		let result: Workout[] = [];
+		for (const [workoutType, workoutList] of this.workouts) {
+			const filteredWorkouts = workoutList.filter(workout => isSameDate(workout.date,date));
+			result = result.concat(filteredWorkouts);
+		}
+		return result;
+	}
+
 	getCompletedWorkoutsLastWeeks(numberWeeks:number): number {
 		const twoWeeksAgo = new Date();
 		twoWeeksAgo.setDate(twoWeeksAgo.getDate() - (numberWeeks * 7));
@@ -45,29 +55,34 @@ export class WorkoutData{
 	}
 
 	getDaysSinceLastWorkout(): number {
+		let mostRecentDate: Date = new Date("1999-01-01T00:00:00Z");
 
-		let mostRecentDate: Date = new Date("1999-01-01");
-
-		const currentDate = new Date();
-		const currentDateUTC = new Date(Date.UTC(currentDate.getFullYear(), currentDate.getMonth(), currentDate.getDate()));
+		const todayDateUTC = getTodayDateUTC();
 
 		// Iterate over each array of workouts in the Map
 		for (const workoutArray of this.workouts.values()) {
 			// Find the most recent workout in the current array
 			for (const workout of workoutArray) {
-				const workoutDate = new Date(`${workout.date}T00:00:00Z`);
-				if (workoutDate > mostRecentDate && workoutDate < currentDateUTC){
-					mostRecentDate = workoutDate;
+				// Parse the workout date assuming it is in 'YYYY-MM-DD' format
+				const workoutDateUTC = new Date(`${workout.date}T00:00:00Z`);
+
+				// Update mostRecentDate if the workoutDate is more recent
+				if (workoutDateUTC > mostRecentDate && workoutDateUTC <= todayDateUTC) {
+					mostRecentDate = workoutDateUTC;
 				}
 			}
 		}
 
 		// Calculate the difference in days
-		const diffTime = Math.abs(currentDateUTC.getTime() - mostRecentDate.getTime());
+		const diffTime = Math.abs(todayDateUTC.getTime() - mostRecentDate.getTime());
 		const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
 
 		return diffDays;
 	}
+
+
+
+
 
 	getMotivationalImage(){
 
@@ -98,15 +113,6 @@ export class WorkoutData{
 				this.workouts.set(workout.workoutType, list);
 			}
 		});
-	}
-
-	private isSameDate(date1: string, date2:string) {
-		const [year1, month1, day1] = date1.split('-').map(Number);
-		const [year2, month2, day2] = date2.split('-').map(Number);
-
-		return year1 === year2 &&
-			month1 === month2 &&
-			day1 === day2;
 	}
 
 
@@ -145,7 +151,7 @@ export class WorkoutData{
 		const list = this.workouts.get(workout.workoutType) || [];
 
 		// Check if the workout already exists in the list
-		if (!list.some(existingWorkout => this.isSameDate(existingWorkout.date, workout.date))) {
+		if (!list.some(existingWorkout => isSameDate(existingWorkout.date, workout.date))) {
 			// Append the new workout to the list
 			list.push(workout);
 			// Update the map with the new list
@@ -169,7 +175,7 @@ export class WorkoutData{
 		// Check if the list exists
 		if (list) {
 			// Find the index of the workout to delete
-			const index = list.findIndex(workout => this.isSameDate(workout.date, date));
+			const index = list.findIndex(workout => isSameDate(workout.date, date));
 
 			if (index !== -1) {
 				// Remove the workout from the list

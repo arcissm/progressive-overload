@@ -33,19 +33,22 @@ const BACK = "back";
 const QUADS = "quads";
 const HAMSTRING = "hamstring";
 const ABS = "abs";
+const CARDIO = "cardio";
 
-export const WORKOUT_TYPES = [LEGS, ABS, BACK];
+export const WORKOUT_TYPES = [LEGS, ABS, BACK, CARDIO];
 
-export const MUSCLE_GROUP = [BICEPS, TRICEP, FOREARM, FRONT_DELT, SIDE_DELT, REAR_DELT, CHEST, BACK, QUADS, HAMSTRING, ABS]
+export const MUSCLE_GROUP = [BICEPS, TRICEP, FOREARM, FRONT_DELT, SIDE_DELT, REAR_DELT, CHEST, BACK, QUADS, HAMSTRING, ABS, CARDIO]
 
 // Define the mapping between workout types and muscle groups
 // TODO: Make configurable
 export const WORKOUT_MUSCLE_MAP: Record<string, string[]> = {
 	abs: [ABS], // Example mapping
+	fff: [CARDIO],
 	arms: [BICEPS, TRICEP, FOREARM],
 	legs: [QUADS, HAMSTRING, FRONT_DELT],
 	chest: [CHEST, FRONT_DELT],
-	back: [BACK]
+	back: [BACK, QUADS],
+	cardio: [CARDIO]
 };
 
 export const WORKOUT_WARMUP_MAP: Record<string, Exercise[]> = {

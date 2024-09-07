@@ -9,7 +9,7 @@ import {
 	YOGA_WORKOUT
 } from "../../utils/Constants";
 import {Exercise} from "../../models/Exercise";
-import { getRandomInt} from "../../utils/AlgorithmUtils";
+import {getRandomInt, getTodayDateUTC} from "../../utils/AlgorithmUtils";
 import {Muscle} from "../../models/Muscle";
 import {Workout} from "../../models/Workout";
 import * as path from "path";
@@ -24,20 +24,28 @@ export class WorkoutService {
 		this.exerciseData = exerciseData;
 	}
 
-	deleteWorkout(workoutType: string ,date: string){
+	createCardioWorkout(workoutType:string){
+		const musclesName = this.getMuscleGroupsForWorkout(workoutType)[0];
+		const exercisesList = this.exerciseData.getMuscleByName(musclesName)?.exercises;
+		const todayDateUTC = getTodayDateUTC();
+		const date = todayDateUTC.toISOString().split('T')[0];
+		const capitalWorkout = workoutType.charAt(0).toUpperCase() + workoutType.slice(1)
+		const workout =  new Workout(
+			workoutType,
+			date,
+			[],
+			exercisesList,
+			"",
+			false,
+			0
+		)
 
-		// remove failure debt
-		const musclesNames = this.getMuscleGroupsForWorkout(workoutType);
-		musclesNames.forEach(muscleName => {
-			const muscle = this.exerciseData.getMuscleByName(muscleName)
-			if(muscle != null){
-				muscle.failed--;
-			}
-		});
+		this.workoutData.addWorkout(workout);
 
-		this.workoutData.deleteWorkout(workoutType,date);
+		this.updateWorkoutComplete(date + " " + capitalWorkout + ".md")
+
+		return workout;
 	}
-
 
 	createNewWorkout(workoutType:string){
 
@@ -71,12 +79,20 @@ export class WorkoutService {
 
 			// Add non-duplicate exercises to the exercisesList
 			exercisesList.push(...filteredExercises);
+
+			// save the exercise data to JSON
+			// this.exerciseData.updateExercises(muscleName, filteredExercises)
+
 		})
+
+		const todayDateUTC = getTodayDateUTC();
+		const todayDateString = todayDateUTC.toISOString().split('T')[0];
+
 
 		const workout =
 			new Workout(
 				workoutType,
-				new Date().toISOString().split("T")[0],
+				todayDateString,
 				this.getWarmUForWorkout(workoutType),
 				exercisesList,
 				this.getMotivationalNote(),
@@ -85,30 +101,48 @@ export class WorkoutService {
 			)
 
 		// save the workout data to JSON
-		this.exerciseData.saveExercises()
 		this.workoutData.addWorkout(workout);
+		this.exerciseData.saveExercises();
 
 		return workout;
 	}
 
+	deleteWorkout(workoutType: string ,date: string){
+
+		// remove failure debt
+		const musclesNames = this.getMuscleGroupsForWorkout(workoutType);
+		musclesNames.forEach(muscleName => {
+			const muscle = this.exerciseData.getMuscleByName(muscleName)
+			if(muscle != null){
+				muscle.failed = Math.max(0, muscle.failed-1);
+			}
+		});
+
+		this.workoutData.deleteWorkout(workoutType,date);
+	}
+
+	getWorkoutsByDate(date:string){
+		return this.workoutData.getWorkoutsByDate(date);
+	}
+
 
 	updateWorkoutComplete(fileName:string){
-		console.log("COMPLETED")
 		const { date, workoutType } = this.extractDateAndWorkoutType(fileName)
 
 		this.getMuscleGroupsForWorkout(workoutType).forEach(muscleName => {
 			const muscle = this.exerciseData.getMuscleByName(muscleName)
-			if(muscle != null) muscle.failed--;
+			if(muscle != null) muscle.failed = Math.max(0, muscle.failed-1);
 		})
 
 		// completed workout
 		const workout = this.workoutData.getWorkout(workoutType, date)
+
 		if(workout == undefined) return
 		workout.completed = true;
 
 		// the exercise is successful everywhere,
 		// even under another muscle
-		this.exerciseData.setSuccessful(workout.exercises);
+		// this.exerciseData.setSuccessful(workout.exercises);
 
 		// add to successful streak
 		let successStreak = this.workoutData.getLastSuccessStreak(workoutType);
@@ -123,16 +157,20 @@ export class WorkoutService {
 
 
 	updateExerciseSuccess(id:string) {
-		// console.log("SUCCESS")
+		console.log("SUCCESS")
 
 		const exercise = this.exerciseData.findExerciseById(id)
+		console.log(exercise)
 		if(exercise == null){
 			// a warmup or rehab exercise not saved in the .json
 			return;
 		}
-		if(!exercise.isSuccess){
+		if(exercise.isSuccess == false){
 			exercise.isSuccess = true;
 		}
+
+		exercise.note = "AAAAAAAAAA"
+		console.log(exercise)
 		this.exerciseData.saveExercises();
 
 	}
@@ -196,6 +234,9 @@ export class WorkoutService {
 	}
 
 	private setUpSetRangeBasedOnFailure(muscle: Muscle, successStreak: number){
+		// muscle debt
+		muscle.failed++;
+
 		// If I fail 4 times in a row, I have to do more sets
 		if(muscle.failed >= MAXIMUM_ALLOWED_MUSCLE_FAILURES){
 			this.addMuscleSets(muscle);
@@ -205,6 +246,9 @@ export class WorkoutService {
 			muscle.failed = 0;
 			this.removeMuscleSets(muscle)
 		}
+
+
+		this.exerciseData.saveExercises();
 	}
 
 	private makeWorkoutExerciseList(muscleName: string, successStreak: number) {
@@ -212,8 +256,6 @@ export class WorkoutService {
 		if(muscle == null){
 			return []
 		}
-
-		muscle.failed++;
 
 		this.setUpSetRangeBasedOnFailure(muscle, successStreak)
 

@@ -1,4 +1,4 @@
-import {Plugin, TFile, WorkspaceLeaf} from "obsidian";
+import {Notice, Plugin, TFile, WorkspaceLeaf} from "obsidian";
 import { SettingsTab } from "./ui/settings/SettingsTab";
 import { PluginSettings, DEFAULT_SETTINGS } from "./services/settings/Settings";
 import {WorkoutData} from "./services/data/WorkoutData";
@@ -47,7 +47,7 @@ export default class WorkoutPlugin extends Plugin {
 
 		this.registerView(
 			WORKOUT_VIEW,
-			(leaf) => new WorkoutView(leaf)
+			(leaf) => new WorkoutView(leaf, this)
 		);
 
 		this.addRibbonIcon('heart', 'info', () => {
@@ -75,7 +75,7 @@ export default class WorkoutPlugin extends Plugin {
 		this.app.workspace.detachLeavesOfType(WORKOUT_VIEW);
 	}
 
-	async activateView() {
+	private async activateView() {
 		const { workspace } = this.app;
 
 		let leaf: WorkspaceLeaf | null = null;
@@ -98,12 +98,88 @@ export default class WorkoutPlugin extends Plugin {
 
 
 
-
+	getWorkoutByDate(date:string){
+		return this.workoutService.getWorkoutsByDate(date);
+	}
 
 
 	async removeWorkout(noteName: string) {
 		this.breakService.revertBreakData()
 		await this.noteService.deleteNote(noteName);
+		await this.updateCalendarView(); // Update the calendar view
+		// await this.updateChecklistView(); // Update the checklist view if necessary
+		// await this.updateStatsView(); // Update the stats view if necessary
+	}
+
+
+	async createNote(workoutType:string){
+		const code = await this.noteService.createNote(workoutType)
+		if(code == 200){
+			this.breakService.updateBreakData();
+			await this.updateCalendarView(); // Update the calendar view
+			// await this.updateChecklistView(); // Update the checklist view if necessary
+			// await this.updateStatsView(); // Update the stats view if necessary
+		}
+	}
+
+	async openNote(date: string) {
+		const files = this.app.vault.getMarkdownFiles();
+		const fileNamePattern = `${date} `; // e.g., "2024-09-03 "
+
+		const matchingFile = files.find(file => file.basename.startsWith(fileNamePattern));
+
+		if (matchingFile) {
+			await this.app.workspace.openLinkText(matchingFile.path, matchingFile.path);
+		} else {
+			new Notice("No file found for this date.");
+		}
+	}
+
+	isOnBreak(){
+		return this.breakService.isOnBreak();
+	}
+
+	async handleFileChange(file: TFile) {
+		const content = await this.app.vault.read(file);
+	
+		await this.handleCompletedCheckboxes(content);
+		await this.handleSuccessCheckboxes(content);
+
+	}
+	
+
+	// Handle completed checkboxes
+	async handleCompletedCheckboxes(content: string) {
+		const completedCheckboxes = this.noteService.getCheckboxes("Completed", content);
+		let allCompleted = true;
+
+		completedCheckboxes.forEach(checkbox => {
+			const exerciseId = checkbox.id.replace(/^completed_/, "");
+
+			if (!checkbox.checked) {
+				allCompleted = false; // Mark as incomplete if any completed checkbox is unchecked
+			}
+		});
+
+		if (allCompleted) {
+			this.workoutService.updateWorkoutComplete(file.name);
+			await this.updateCalendarView(); // Update the calendar view
+			// await this.updateChecklistView(); // Optionally update other views
+			// await this.updateStatsView();    // Optionally update stats
+		}
+	}
+
+	// Handle success checkboxes
+	async handleSuccessCheckboxes(content: string) {
+		const successCheckboxes = this.noteService.getCheckboxes("Success", content);
+
+		successCheckboxes.forEach(checkbox => {
+			const exerciseId = checkbox.id.replace(/^success_/, "");
+
+			if (checkbox.checked) {
+				this.workoutService.updateExerciseSuccess(exerciseId);
+			}
+		});
 	}
 
 	async loadSettings() {
@@ -118,63 +194,31 @@ export default class WorkoutPlugin extends Plugin {
 		}
 	}
 
-	async createNote(workoutType:string){
-		const code = await this.noteService.createNote(workoutType)
-		if(code == 200){
-			this.breakService.updateBreakData();
-
+	private async updateCalendarView() {
+		const view = this.getActiveWorkoutView();
+		if (view) {
+			view.updateCalendar();
 		}
 	}
 
-	isOnBreak(){
-		return this.breakService.isOnBreak();
+	private async updateChecklistView() {
+		const view = this.getActiveWorkoutView();
+		if (view) {
+			view.updateChecklist();
+		}
 	}
 
-
-	handleFileChange(file: TFile) {
-		this.app.vault.read(file).then(content => {
-			const checkboxes = this.noteService.getAllCheckboxes(content);
-			let allCompleted = true;
-
-			checkboxes.forEach(checkbox => {
-				const exerciseId = checkbox.id.replace(/^(completed_|success_)/, "");
-
-				if (checkbox.id.startsWith("success_")) {
-					if (checkbox.checked) {
-						this.workoutService.updateExerciseSuccess(exerciseId);
-					}
-				} else if (checkbox.id.startsWith("completed_")) {
-					if (!checkbox.checked) {
-						allCompleted = false; // Mark the workout as incomplete if any completed checkbox is unchecked
-					}
-				}
-			});
-
-			// If all success checkboxes are checked, mark the workout as complete
-			if (allCompleted) {
-				this.workoutService.updateWorkoutComplete(file.name);
-			}
-		});
+	private async updateStatsView() {
+		const view = this.getActiveWorkoutView();
+		if (view) {
+			view.updateStats();
+		}
 	}
 
-
-	// handleFileChange(file: TFile) {
-	// 	this.app.vault.read(file).then(content => {
-	// 		const checkboxes = this.noteService.getAllCheckboxes(content);
-	//
-	// 		if (this.noteService.isAllChecked(checkboxes)) {
-	// 			this.workoutService.updateWorkoutComplete(file.name);
-	// 		}
-	//
-	// 		checkboxes.forEach(checkbox => {
-	// 			if (checkbox.checked) {
-	// 				this.workoutService.updateExerciseSuccess(checkbox.id);
-	// 			}
-	// 		});
-	// 	});
-	// }
-
-
+	private getActiveWorkoutView(): WorkoutView | null {
+		const leaves = this.app.workspace.getLeavesOfType(WORKOUT_VIEW);
+		return leaves.length > 0 ? (leaves[0].view as WorkoutView) : null;
+	}
 
 }
 

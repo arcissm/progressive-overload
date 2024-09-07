@@ -8,26 +8,21 @@ export class BreakData {
 	constructor(dataPath: string) {
 		this.dataPath = dataPath;
 		// init workouts
-		this.setCountData(this.dataPath);
+		this.convertDataToBreakData(this.dataPath);
 	}
 
 	saveCountData() {
-		// Create an object with the current state
 		const dataToSave = {
 			workoutDaysCount: this.workoutDaysCount,
 			breakDaysCount: this.breakDaysCount,
 		};
 
-		// Convert the object to a JSON string
 		const jsonString = JSON.stringify(dataToSave, null, 2);
-
-		// Write the JSON string back to the file
 		fs.writeFileSync(this.dataPath, jsonString, 'utf8');
 	}
 
 
-	private setCountData(dataPath: string) {
-		// Read and parse the JSON file
+	private convertDataToBreakData(dataPath: string) {
 		const rawData = fs.readFileSync(dataPath, 'utf8');
 		const parsedData = JSON.parse(rawData);
 
