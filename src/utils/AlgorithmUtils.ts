@@ -1,3 +1,16 @@
+export function getTodayDateUTC(): Date {
+	const now = new Date();
+	return new Date(Date.UTC(now.getFullYear(), now.getMonth(), now.getDate()));
+}
+
+export function isSameDate(date1: string, date2:string) {
+	const [year1, month1, day1] = date1.split('-').map(Number);
+	const [year2, month2, day2] = date2.split('-').map(Number);
+
+	return year1 === year2 &&
+		month1 === month2 &&
+		day1 === day2;
+}
 
 // includes min ands max
 export function getRandomInt(min: number, max: number): number {

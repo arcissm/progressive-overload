@@ -1,24 +1,24 @@
 import { ItemView, WorkspaceLeaf } from "obsidian";
 import {CalendarComponent} from "./CalendarComponent";
-import {CheckBox} from "../../models/Checkbox";
 import {ChecklistComponent} from "./ChecklistComponent";
 import {StatsComponent} from "./StatsComponent";
-// import { createCalendar } from "./calendar";
-// import { createGraph } from "./graph";
+import WorkoutPlugin from "../../main";
 
 export const WORKOUT_VIEW = "workout-view";
 
 export class WorkoutView extends ItemView {
+	private plugin: WorkoutPlugin;
 	private calendar: CalendarComponent;
 	private checkList: ChecklistComponent;
 	private stats: StatsComponent;
 
 
-	constructor(leaf: WorkspaceLeaf) {
+	constructor(leaf: WorkspaceLeaf, plugin: WorkoutPlugin) {
 		super(leaf);
-		this.calendar = new CalendarComponent();
-		this.checkList = new ChecklistComponent();
-		this.stats = new StatsComponent();
+		this.plugin = plugin;
+		this.calendar = new CalendarComponent(plugin);
+		this.checkList = new ChecklistComponent(plugin);
+		this.stats = new StatsComponent(plugin);
 	}
 
 	getViewType(): string {
@@ -48,4 +48,26 @@ export class WorkoutView extends ItemView {
 	async onClose() {
 		// Cleanup if necessary when the view is closed
 	}
+
+	public updateCalendar() {
+		const calendarSection = this.containerEl.querySelector('.calendar-section') as HTMLElement;
+		if (calendarSection) {
+			this.calendar.render(calendarSection); // Re-render the calendar
+		}
+	}
+
+	public updateChecklist() {
+		const checklistSection = this.containerEl.querySelector('.checklist-section') as HTMLElement;
+		if (checklistSection) {
+			this.checkList.render(checklistSection); // Re-render the checklist
+		}
+	}
+
+	public updateStats() {
+		const graphSection = this.containerEl.querySelector('.graph-section') as HTMLElement;
+		if (graphSection) {
+			this.stats.render(graphSection); // Re-render the stats
+		}
+	}
+
 }

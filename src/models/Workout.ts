@@ -29,9 +29,18 @@ export class Workout {
 		this.warmUps.forEach(warmUp => {
 			result += `${warmUp.toMarkdownWarmUp()}\n`;
 		});
-		this.exercises.forEach(exercise => {
-			result += `${exercise.toMarkdown()}\n`;
-		});
+
+		if (this.workoutType === "cardio") {
+			this.exercises.forEach(exercise => {
+				result += `\n\n# ${exercise.toMarkdownCardio()}`;
+			})
+			result += `\n\n`;
+
+		}else{
+			this.exercises.forEach(exercise => {
+				result += `${exercise.toMarkdown()}\n`;
+			})
+		}
 		return result;
 	}
 }

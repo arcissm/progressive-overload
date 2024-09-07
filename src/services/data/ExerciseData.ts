@@ -12,7 +12,7 @@ export class ExerciseData {
 		this.convertDataToExercises(this.dataPath);
 	}
 
-		findExerciseById(id: string): Exercise | null {
+	findExerciseById(id: string): Exercise | null {
 		// Iterate through each Muscle in the muscleExercises array
 		for (const muscle of this.muscleExercises) {
 			// Use the find method to locate the exercise with the matching id
@@ -55,10 +55,23 @@ export class ExerciseData {
 		return muscle.exercises.filter(exercise => !exercise.isUnlocked);
 	}
 
-	saveExercises(){
-		const updatedData = JSON.stringify( this.muscleExercises, null, 2);
-		fs.writeFileSync( this.dataPath, updatedData, 'utf8');
-	}
+	// updateExercises(muscleName:string, exercises:Array<Exercise>){
+	// 	const muscle = this.muscleExercises.find(muscle => muscle.name === muscleName);
+	// 	muscle?.exercises.forEach(exercise => {
+	// 		const workoutExercise = exercises.find(workoutExercise=> workoutExercise.name === exercise.name)
+	// 		if(workoutExercise){
+	// 			exercise.reps = workoutExercise.reps;
+	// 			exercise.weight = workoutExercise.weight;
+	// 			exercise.time = workoutExercise.time;
+
+	// 			// isSuccess doesn't update to false once
+	// 			exercise.isSuccess = workoutExercise.isSuccess;
+	// 		}
+	// 	})
+
+	// 	this.saveExercises();
+	// }
+
 
 	getUnlockedExercisesByMuscle(muscleName: string): Exercise[] {
 		// Find the muscle with the specified name
@@ -72,6 +85,12 @@ export class ExerciseData {
 		// Filter the exercises to include only the unlocked ones
 		// const unlockedExercises = muscle.exercises.filter(exercise => exercise.isUnlocked);
 		return muscle.exercises.filter(exercise => exercise.isUnlocked);
+	}
+
+
+	saveExercises(){
+		const updatedData = JSON.stringify( this.muscleExercises, null, 2);
+		fs.writeFileSync( this.dataPath, updatedData, 'utf8');
 	}
 
 

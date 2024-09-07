@@ -1,7 +1,7 @@
 import {App} from 'obsidian';
 import {WorkoutService} from "../core/WorkoutService";
 import {POST_BREAK_WORKOUTS} from "../../utils/BreakWorkout";
-import {getRandomInt} from "../../utils/AlgorithmUtils";
+import {getRandomInt, getTodayDateUTC} from "../../utils/AlgorithmUtils";
 import {CheckBox} from "../../models/Checkbox";
 
 export class NoteService {
@@ -30,9 +30,12 @@ export class NoteService {
 		if(workoutType === "break"){
 			const index = getRandomInt(0, POST_BREAK_WORKOUTS.length - 1)
 			workout = POST_BREAK_WORKOUTS[index]
+		}else if(workoutType === "cardio") {
+			workout = this.workoutService.createCardioWorkout(workoutType)
 		}else{
 			workout = this.workoutService.createNewWorkout(workoutType)
 		}
+
 
 
 
@@ -60,17 +63,18 @@ export class NoteService {
 		}
 	}
 
-	getAllCheckboxes(content: string): CheckBox[] {
-		const checkboxRegex = /- \[( |x)\] \*\*Completed:\*\*.*<!-- id: (.+?) -->/g;
+	getCheckboxes(type: string, content: string): CheckBox[] {
+		const checkboxRegex = new RegExp(`- \\[( |x)\\] \\*\\*${type}:\\*\\*.*<!-- id: (.+?) -->`, 'g');
 		const checkboxes: CheckBox[] = [];
 		let match;
-
+	
 		while ((match = checkboxRegex.exec(content)) !== null) {
 			checkboxes.push(new CheckBox(match[2], match[1] === 'x'));
 		}
-
+	
 		return checkboxes;
 	}
+	
 
 	isAllChecked(checkboxes: CheckBox[]): boolean {
 		return checkboxes.every(checkbox => checkbox.checked);
@@ -105,7 +109,7 @@ export class NoteService {
 		const daysDifference = Math.floor((date.getTime() - startOfYear.getTime()) / (24 * 60 * 60 * 1000));
 
 		// Determine the day of the week (0 = Sunday, 1 = Monday, ..., 6 = Saturday)
-		const dayOfWeek = (date.getDay() + 6) % 7; // Monday = 0, Sunday = 6
+		const dayOfWeek = (startOfYear.getDay() + 6) % 7; // Convert startOfYear's day of the week
 
 		// Calculate the week number
 		return Math.ceil((daysDifference + dayOfWeek + 1) / 7);
@@ -113,14 +117,18 @@ export class NoteService {
 
 
 	private async getNotePath(): Promise<string> {
-		const today = new Date();
-		const year = today.getFullYear();
+		const todayDateUTC = getTodayDateUTC();
+		const todayDateString = todayDateUTC.toISOString().split('T')[0];
+
+		const year = todayDateString.substring(0, 4);
 		const yearDir = this.notesDir + "/" + year + "/";
-		const latestWeek = this.getWeekNumber(today);
+		const latestWeek = this.getWeekNumber(todayDateUTC);
 		const weekDir = yearDir + "Week " + (latestWeek + 1) + "/";
 		await this.ensureDirectoryExists(weekDir);
-		return weekDir + today.toISOString().split('T')[0];
+
+		return weekDir + todayDateString;
 	}
+
 
 
 }

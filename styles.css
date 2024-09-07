@@ -46,38 +46,118 @@ input[type=checkbox]:checked:after{
 
 .calendar-header {
 	display: flex;
-	justify-content: space-between;
+	justify-content: space-evenly;
+	align-items: center;
 	margin-bottom: 10px;
 }
 
-.calendar-grid {
-	display: grid;
-	grid-template-columns: repeat(7, 1fr);
-	gap: 5px;
+.calendar-btn {
+	padding: 1.5rem 2rem;
+	/* Additional button styling */
 }
 
-.calendar-day-header {
+.calendar-title {
 	font-weight: bold;
+	font-size: 1.5rem;
+
+	/* Additional title styling */
+}
+
+.calendar-grid {
+	padding: 0.5rem;
+	display: grid;
+	grid-template-columns: repeat(7, 1fr);
+	/*gap: 5px;*/
+}
+
+.calendar-header-day {
+	font-size: 0.8rem;
+	letter-spacing: 0.1rem;
 	text-align: center;
 	padding: 5px;
 }
 
 .calendar-day {
-	text-align: center;
-	padding: 10px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	padding: 0.5rem 0.25rem 0.5rem 0.25rem;
 	cursor: pointer;
 	border-radius: 5px;
 }
 
-.calendar-day.empty {
+/* Flex container for date and circles */
+.calendar-day__container {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+
+	gap: 0.35rem;
+}
+
+.calendar-day__container-date {
+	text-align: center;
+}
+
+.calendar-day__container-circles {
+	display: flex;
+	gap: 0.35rem;
+	justify-content: center;
+	align-items: center;
+}
+
+.calendar-day__container-circles-dot {
+	width: 0.5rem;
+	height: 0.5rem;
+	border-radius: 50%;
+	bottom: 5px; /* Position the dot at the bottom */
+}
+
+.calendar-day__container-circles-dot.completed {
+	background-color: orange; /* Customize the color of the dot */
+	border: none;
+}
+
+.calendar-day__container-circles-dot.started {
+	border: 1px solid #AD83FF; /* Customize the outline color */
 	background-color: transparent;
 }
 
+/* Dot for completed workouts on days outside the current month */
+.calendar-day__container-circles-dot.completed-outside-month {
+	background-color: rgba(228, 186, 73); /* Customize the color of the dot */
+	opacity: 0.4;
+}
+
+/* Dot for started workouts on days outside the current month */
+.calendar-day__container-circles-dot.started-outside-month {
+	border: 1px solid #8D6F0B; /* Customize the outline color */
+	opacity: 0.4;
+}
+
 .calendar-day.current-day {
-	background-color: #ffecb3;
+	background-color: rgb(0,0,0,1);
+	border: 1.85px solid rgb(0,0,0,1); /* Customize the outline color */
+
 	font-weight: bold;
 }
 
+.calendar-day.empty {
+	background-color: transparent;
+	opacity: 0.3;
+}
+
 .calendar-day.greyed-out {
-	color: darkslateblue; /* Grey color for days from the previous month */
+	color: rgba(255, 255, 255, 0.2); /* Grey color for days from the previous or next month */
+}
+
+/* Hover effect for days of the current month */
+.calendar-day:hover {
+	background-color: rgba(255, 255, 255, 0.4); /* White with 40% opacity */
+}
+
+/* Hover effect for greyed-out days (from previous or next month) */
+.calendar-day.greyed-out:hover {
+	background-color: rgba(255, 255, 255, 0.2); /* White with 20% opacity */
 }

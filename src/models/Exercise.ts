@@ -179,6 +179,11 @@ export class Exercise {
 		return result;
 	}
 
+	toMarkdownCardio(){
+		if (this.note) {
+			return `${this.note}`;
+		}
+	}
 
 	toMarkdown() {
 		let result = `## 🚀 **${this.name.toUpperCase()}**\n`;
