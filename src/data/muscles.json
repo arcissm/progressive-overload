@@ -1,0 +1,80 @@
+[
+  {
+    "name": "biceps",
+    "minSets": 14,
+    "maxSets": 17,
+    "boosted": 0
+  },
+  {
+    "name": "tricep",
+    "minSets": 14,
+    "maxSets": 17,
+    "boosted": 0
+  },
+  {
+    "name": "forearm",
+    "minSets": 14,
+    "maxSets": 17,
+    "boosted": 0
+  },
+  {
+    "name": "front delt",
+    "minSets": -26,
+    "maxSets": -22,
+    "boosted": 0
+  },
+  {
+    "name": "side delt",
+    "minSets": 5,
+    "maxSets": 8,
+    "boosted": 0
+  },
+  {
+    "name": "rear delt",
+    "minSets": 5,
+    "maxSets": 8,
+    "boosted": 0
+  },
+  {
+    "name": "chest",
+    "minSets": 5,
+    "maxSets": 8,
+    "boosted": 0
+  },
+  {
+    "name": "back",
+    "minSets": 6,
+    "maxSets": 8,
+    "boosted": 0
+  },
+  {
+    "name": "quads",
+    "minSets": 3,
+    "maxSets": 5,
+    "boosted": 0
+  },
+  {
+    "name": "hamstring",
+    "minSets": 6,
+    "maxSets": 8,
+    "boosted": 0
+  },
+  {
+    "name": "abs",
+    "minSets": 6,
+    "maxSets": 8,
+    "boosted": 0
+  },
+  {
+    "name": "cardio",
+    "minSets": 0,
+    "maxSets": 0,
+    "boosted": 0
+  },
+  {
+    "name": "heart",
+    "minSets": 0,
+    "maxSets": 0,
+    "boosted": 0
+  }
+]

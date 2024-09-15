@@ -1,24 +1,17 @@
 import {Exercise} from "./Exercise";
-import {MUSCLE_GROUP} from "../utils/Constants";
-
 
 export class Muscle {
 	name: string;
 	minSets: number;
-	maxSets: number;
-	failed: number;
+	maxSets: number
+	boosted: number;
 	exercises: Exercise[];
 
 
-	constructor(name: string, minSets: number, maxSets: number, failed: number, exercises:Exercise[]) {
-		if (MUSCLE_GROUP.includes(name)) {
-			this.name = name;
-		} else {
-			console.log(`${name} is not in the list of Muscles`);
-		}
+	constructor(name: string, minSets: number, maxSets: number, boosted: number) {
+		this.name = name;
 		this.minSets = minSets;
 		this.maxSets = maxSets;
-		this.failed = failed;
-		this.exercises = exercises;
+		this.boosted = boosted
 	}
 }
