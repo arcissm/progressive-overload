@@ -1,16 +1,16 @@
 import { App, Modal, Notice } from 'obsidian';
-import {WORKOUT_TYPES} from "../../utils/Constants";
-import WorkoutPlugin from "../../main";
+import { WorkoutController } from 'controller/WorkoutController';
+import { BREAK } from 'utils/Constants';
 
 export class WorkoutDropdownModal extends Modal {
-	private plugin: WorkoutPlugin;
+	private controller: WorkoutController;
 	private inputField: HTMLInputElement;
 	private resultsContainer: HTMLDivElement;
 	private items: HTMLDivElement[];
 
-	constructor(app: App, plugin: WorkoutPlugin) {
+	constructor(app: App, controller: WorkoutController) {
 		super(app);
-		this.plugin = plugin;
+		this.controller = controller;
 		this.items = [];
 	}
 
@@ -42,22 +42,22 @@ export class WorkoutDropdownModal extends Modal {
 
 
 		// BREAK BUTTON IF onBreak
-		if (this.plugin.isOnBreak()){
+		if (this.controller.isOnBreak()){
 			const item = document.createElement('div');
-			const workoutType = "break"
+			const workoutType = BREAK
 			item.className = 'workout-option';
 			item.textContent = workoutType;
 			item.onclick = () => {
 				new Notice(`You selected: ${workoutType}`);
 				this.close();
 
-				this.plugin.createNote(workoutType);
+				this.controller.createWorkout(workoutType);
 			};
 			this.resultsContainer.appendChild(item)
 			this.items.push(item)
 		}else{
 			// Create buttons for each workout type
-			this.items = WORKOUT_TYPES.map(workoutType => {
+			this.items = this.controller.getNormalWorkoutTypes().map(workoutType => {
 				const item = document.createElement('div');
 				item.className = 'workout-option';
 				item.textContent = workoutType;
@@ -65,7 +65,7 @@ export class WorkoutDropdownModal extends Modal {
 					new Notice(`You selected: ${workoutType}`);
 					this.close();
 
-					this.plugin.createNote(workoutType);
+					this.controller.createWorkout(workoutType);
 				};
 				this.resultsContainer.appendChild(item);
 				return item;
@@ -81,7 +81,6 @@ export class WorkoutDropdownModal extends Modal {
 	// Filter the options based on input value
 	private filterOptions() {
 		const filterText = this.inputField.value.toLowerCase();
-		console.log(filterText)
 		this.items.forEach(item => {
 			const text = item.textContent?.toLowerCase() || '';
 			item.style.display = text.includes(filterText) ? 'block' : 'none';

@@ -1,0 +1,262 @@
+[
+    {
+        "muscle": "biceps",
+        "exercises": [
+            {
+                "name": "hammer-curls"
+            },
+            {
+                "name": "curls"
+            }
+        ]
+    },
+    {
+        "muscle": "tricep",
+        "exercises": [
+            {
+                "name": "band-triceps"
+            },
+            {
+                "name": "triceps-over-head"
+            },
+            {
+                "name": "dips"
+            }
+        ]
+    },
+    {
+        "muscle": "forearm",
+        "exercises": [
+            {
+                "name": "nyan"
+            },
+            {
+                "name": "nyan-open-palm"
+            }
+        ]
+    },
+    {
+        "muscle": "front delt",
+        "exercises": [
+            {
+                "name": "thrusters"
+            },
+            {
+                "name": "alternating-dumbbell-snatch"
+            },
+            {
+                "name": "archer-push-up"
+            },
+            {
+                "name": "over-head-press"
+            },
+            {
+                "name": "front-raises"
+            },
+            {
+                "name": "handstand"
+            },
+            {
+                "name": "thrusters"
+            },
+            {
+                "name": "alternating-dumbbell-snatch"
+            }
+        ]
+    },
+    {
+        "muscle": "side delt",
+        "exercises": [
+            {
+                "name": "side-laterals"
+            },
+            {
+                "name": "shoulder-twisties"
+            },
+            {
+                "name": "thrusters"
+            }
+        ]
+    },
+    {
+        "muscle": "rear delt",
+        "exercises": [
+            {
+                "name": "rear-delt"
+            }
+        ]
+    },
+    {
+        "muscle": "chest",
+        "exercises": [
+            {
+                "name": "handstand"
+            },
+            {
+                "name": "push-up"
+            },
+            {
+                "name": "diamond-push-up"
+            },
+            {
+                "name": "dips"
+            }
+        ]
+    },
+    {
+        "muscle": "back",
+        "exercises": [
+            {
+                "name": "chin-up"
+            },
+            {
+                "name": "deadlift"
+            },
+            {
+                "name": "row"
+            },
+            {
+                "name": "pull-up"
+            },
+            {
+                "name": "piston-row"
+            },
+            {
+                "name": "band-row"
+            },
+            {
+                "name": "band-pull-down"
+            },
+            {
+                "name": "band-superman"
+            },
+            {
+                "name": "scapula-uppies"
+            },
+            {
+                "name": "ass-up"
+            }
+        ]
+    },
+    {
+        "muscle": "quads",
+        "exercises": [
+            {
+                "name": "ass-up"
+            },
+            {
+                "name": "squat"
+            },
+            {
+                "name": "box-jumps"
+            },
+            {
+                "name": "deadlift"
+            },
+            {
+                "name": "single-leg-hops"
+            },
+            {
+                "name": "lunges"
+            },
+            {
+                "name": "jumps"
+            },
+            {
+                "name": "split-squats"
+            },
+            {
+                "name": "side-lunges"
+            },
+            {
+                "name": "lunges"
+            },
+            {
+                "name": "thrusters"
+            },
+            {
+                "name": "alternating-dumbbell-snatch"
+            },
+            {
+                "name": "split-box-jump"
+            }
+        ]
+    },
+    {
+        "muscle": "hamstring",
+        "exercises": [
+            {
+                "name": "romanian-deadlift"
+            },
+            {
+                "name": "ass-up"
+            },
+            {
+                "name": "ass-up-one-leg"
+            }
+        ]
+    },
+    {
+        "muscle": "abs",
+        "exercises": [
+            {
+                "name": "farmer-carry"
+            },
+            {
+                "name": "deadlift"
+            },
+            {
+                "name": "band-press"
+            },
+            {
+                "name": "roll-forward"
+            },
+            {
+                "name": "roll-backwards"
+            },
+            {
+                "name": "breakdance"
+            },
+            {
+                "name": "mountain-climbers"
+            },
+            {
+                "name": "front-plank-with-rotation"
+            },
+            {
+                "name": "side-plank-with-rotation"
+            },
+            {
+                "name": "side-plank-leg-lift"
+            },
+            {
+                "name": "reverse-plank-marches"
+            },
+            {
+                "name": "inverted-deadlift"
+            },
+            {
+                "name": "russian-twist"
+            },
+            {
+                "name": "cross-body-farmer-carry"
+            },
+            {
+                "name": "front-farmer-carry"
+            }
+        ]
+    },
+    {
+        "muscle": "cardio",
+        "exercises": [
+            {
+                "name": "sweat"
+            }
+        ]
+    },
+    {
+        "muscle": "heart",
+        "exercises": []
+    }
+]
+

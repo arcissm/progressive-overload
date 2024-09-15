@@ -1,0 +1,48 @@
+[
+  {
+    "workout": "legs",
+    "muscles": [
+      {
+        "name": "quads"
+      },
+      {
+        "name": "hamstring"
+      }
+    ]
+  },
+  {
+    "workout": "back",
+    "muscles": [
+      {
+        "name": "back"
+      },
+      {
+        "name": "quads"
+      }
+    ]
+  },
+  {
+    "workout": "abs",
+    "muscles": [
+      {
+        "name": "abs"
+      }
+    ]
+  },
+  {
+    "workout": "cardio",
+    "muscles": [
+      {
+        "name": "cardio"
+      }
+    ]
+  },
+  {
+    "workout": "break",
+    "muscles": [
+      {
+        "name": "heart"
+      }
+    ]
+  }
+]

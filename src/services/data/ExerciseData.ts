@@ -1,59 +1,66 @@
 import {Exercise} from "../../models/Exercise";
 import * as fs from 'fs';
-import {Muscle} from "../../models/Muscle";
+import { EXERCISE_DATA_PATH } from "utils/Constants";
 
 export class ExerciseData {
 	private dataPath: string
-	private muscleExercises: Array<Muscle> = [];
+	private exercises: Array<Exercise> = [];
 
-	constructor(dataPath: string) {
-		this.dataPath = dataPath;
+	constructor(dirPath: string) {
+		this.dataPath = dirPath + EXERCISE_DATA_PATH;
 		// init workouts
 		this.convertDataToExercises(this.dataPath);
 	}
 
-	findExerciseById(id: string): Exercise | null {
-		// Iterate through each Muscle in the muscleExercises array
-		for (const muscle of this.muscleExercises) {
-			// Use the find method to locate the exercise with the matching id
-			const exercise = muscle.exercises.find(ex => ex.id === id);
-			// If an exercise is found, return it
-			if (exercise) {
-				return exercise;
-			}
-		}
-		// If no exercise is found, return undefined
-		return null;
+
+	getExerciseById(id: string): Exercise | undefined {
+		return this.exercises.find(exercise => exercise.id === id);
 	}
+	
 
-	setSuccessful(exercises: Array<Exercise>){
-		const allExercises: Exercise[] = this.muscleExercises.flatMap(muscle => muscle.exercises);
 
-		exercises.forEach(exercise => {
-			const successfulExercises = allExercises.filter(ex => ex.name === exercise.name)
-			successfulExercises.forEach(successfulExercise =>
-				successfulExercise.isSuccess = true
-			)
-		})
-	}
+	// findExerciseById(id: string): Exercise | null {
+	// 	// Iterate through each Muscle in the muscleExercises array
+	// 	for (const muscle of this.muscleExercises) {
+	// 		// Use the find method to locate the exercise with the matching id
+	// 		const exercise = muscle.exercises.find(ex => ex.id === id);
+	// 		// If an exercise is found, return it
+	// 		if (exercise) {
+	// 			return exercise;
+	// 		}
+	// 	}
+	// 	// If no exercise is found, return undefined
+	// 	return null;
+	// }
 
-	getMuscleByName(muscleName: string) {
-		return this.muscleExercises.find(muscle => muscle.name === muscleName) || null;
-	}
+	// setSuccessful(exercises: Array<Exercise>){
+	// 	const allExercises: Exercise[] = this.muscleExercises.flatMap(muscle => muscle.exercises);
 
-	getLockedExercisesByMuscle(muscleName: string): Exercise[] {
-		// Find the muscle with the specified name
-		const muscle = this.muscleExercises.find(muscle => muscle.name === muscleName);
+	// 	exercises.forEach(exercise => {
+	// 		const successfulExercises = allExercises.filter(ex => ex.name === exercise.name)
+	// 		successfulExercises.forEach(successfulExercise =>
+	// 			successfulExercise.isSuccess = true
+	// 		)
+	// 	})
+	// }
 
-		if (!muscle) {
-			// Return an empty array if the muscle is not found
-			return [];
-		}
+	// getMuscleByName(muscleName: string) {
+	// 	return this.muscleExercises.find(muscle => muscle.name === muscleName) || null;
+	// }
 
-		// Filter the exercises to include only the unlocked ones
-		// const unlockedExercises = muscle.exercises.filter(exercise => exercise.isUnlocked);
-		return muscle.exercises.filter(exercise => !exercise.isUnlocked);
-	}
+	// getLockedExercisesByMuscle(muscleName: string): Exercise[] {
+	// 	// Find the muscle with the specified name
+	// 	const muscle = this.muscleExercises.find(muscle => muscle.name === muscleName);
+
+	// 	if (!muscle) {
+	// 		// Return an empty array if the muscle is not found
+	// 		return [];
+	// 	}
+
+	// 	// Filter the exercises to include only the unlocked ones
+	// 	// const unlockedExercises = muscle.exercises.filter(exercise => exercise.isUnlocked);
+	// 	return muscle.exercises.filter(exercise => !exercise.isUnlocked);
+	// }
 
 	// updateExercises(muscleName:string, exercises:Array<Exercise>){
 	// 	const muscle = this.muscleExercises.find(muscle => muscle.name === muscleName);
@@ -73,23 +80,23 @@ export class ExerciseData {
 	// }
 
 
-	getUnlockedExercisesByMuscle(muscleName: string): Exercise[] {
-		// Find the muscle with the specified name
-		const muscle = this.muscleExercises.find(muscle => muscle.name === muscleName);
+	// getUnlockedExercisesByMuscle(muscleName: string): Exercise[] {
+	// 	// Find the muscle with the specified name
+	// 	const muscle = this.muscleExercises.find(muscle => muscle.name === muscleName);
 
-		if (!muscle) {
-			// Return an empty array if the muscle is not found
-			return [];
-		}
+	// 	if (!muscle) {
+	// 		// Return an empty array if the muscle is not found
+	// 		return [];
+	// 	}
 
-		// Filter the exercises to include only the unlocked ones
-		// const unlockedExercises = muscle.exercises.filter(exercise => exercise.isUnlocked);
-		return muscle.exercises.filter(exercise => exercise.isUnlocked);
-	}
+	// 	// Filter the exercises to include only the unlocked ones
+	// 	// const unlockedExercises = muscle.exercises.filter(exercise => exercise.isUnlocked);
+	// 	return muscle.exercises.filter(exercise => exercise.isUnlocked);
+	// }
 
 
 	saveExercises(){
-		const updatedData = JSON.stringify( this.muscleExercises, null, 2);
+		const updatedData = JSON.stringify( this.exercises, null, 2);
 		fs.writeFileSync( this.dataPath, updatedData, 'utf8');
 	}
 
@@ -100,24 +107,24 @@ export class ExerciseData {
 		const parsedData = JSON.parse(rawData);
 
 		// Process each exercise from the parsed data
-		parsedData.forEach((rawMuscle: any) => {
+		parsedData.forEach((rawExercise: any) => {
 
-			const exercises:Array<Exercise> = []
-			rawMuscle.exercises.forEach((rawExercise:any) => {
-				exercises.push(new Exercise(
-					rawExercise.name,
-					rawExercise.weight,
-					rawExercise.sets,
-					rawExercise.reps,
-					rawExercise.time,
-					rawExercise.note,
-					rawExercise.isCore,
-					rawExercise.isSuccess,
-					rawExercise.isUnlocked
-				))
-			})
-			const muscle = new Muscle(rawMuscle.name, rawMuscle.minSets, rawMuscle.maxSets, rawMuscle.failed, exercises)
-			this.muscleExercises.push(muscle)
+			const exercise = new Exercise(
+				rawExercise.name,
+				rawExercise.variation,
+				rawExercise.sets,
+				rawExercise.reps,
+				rawExercise.weight,
+				rawExercise.time,
+				rawExercise.weightIncrease,
+				rawExercise.boosted,
+				rawExercise.note,
+				rawExercise.isSuccess,
+				rawExercise.isCompleted,
+				rawExercise.isUnlocked
+			)
+
+			this.exercises.push(exercise)
 		});
 	}
 }

@@ -1,350 +1,289 @@
-import {WorkoutData} from "../data/WorkoutData";
 import {ExerciseData} from "../data/ExerciseData";
-import {
-	MAXIMUM_ALLOWED_MUSCLE_FAILURES, MINIMUM_MUSCLE_SUCCESS_STREAK,
-	MINIMUM_SUCCESS_TO_UNLOCK_NEW_EXERCISE,
-	WORKOUT_MUSCLE_MAP,
-	WORKOUT_WARMUP_MAP,
-	YOGA_CHANCE,
-	YOGA_WORKOUT
-} from "../../utils/Constants";
 import {Exercise} from "../../models/Exercise";
-import {getRandomInt, getTodayDateUTC} from "../../utils/AlgorithmUtils";
 import {Muscle} from "../../models/Muscle";
 import {Workout} from "../../models/Workout";
+import { DBService } from "./DBService";
+import { getRandomInt, getTodayDateUTC, isSameDate } from "utils/AlgorithmUtils";
 import * as path from "path";
+import { WORKOUT_WARMUP_MAP, YOGA_CHANCE, YOGA_WORKOUT } from "utils/Constants";
 
 //In future use to create workout stats
 export class WorkoutService {
-	private workoutData: WorkoutData;
+	private db: DBService;
 	private exerciseData: ExerciseData;
 
-	constructor(workoutData: WorkoutData, exerciseData: ExerciseData) {
-		this.workoutData = workoutData;
-		this.exerciseData = exerciseData;
+	constructor(db: DBService) {
+		this.db = db;
 	}
 
-	createCardioWorkout(workoutType:string){
-		const musclesName = this.getMuscleGroupsForWorkout(workoutType)[0];
-		const exercisesList = this.exerciseData.getMuscleByName(musclesName)?.exercises;
-		const todayDateUTC = getTodayDateUTC();
-		const date = todayDateUTC.toISOString().split('T')[0];
-		const capitalWorkout = workoutType.charAt(0).toUpperCase() + workoutType.slice(1)
-		const workout =  new Workout(
+
+
+	deleteWorkout(workoutType: string , date: Date, index: number){
+		this.db.deleteWorkout(workoutType, date, index);
+	}
+
+	createWorkout(workoutType: string){
+		const muscles = this.db.getMusclesForWorkoutType(workoutType);
+		if (muscles == null){return null}
+
+		this.useSteroids(muscles);
+		const exercises = this.createExercises(muscles)
+		exercises.forEach(exercise =>{
+			exercise.progressiveOverload();
+		})
+
+		const workout = new Workout(
 			workoutType,
-			date,
-			[],
-			exercisesList,
-			"",
+			getTodayDateUTC(),
+			this.getMotivationalNote(),
 			false,
-			0
-		)
+			false,
+			this.getWarmUForWorkout(workoutType),
+			exercises) 
 
-		this.workoutData.addWorkout(workout);
+		this.db.updateMuscles();
+		this.db.updateExercises()
+		this.db.addWorkout(workout)
 
-		this.updateWorkoutComplete(date + " " + capitalWorkout + ".md")
-
-		return workout;
+		return workout
 	}
 
-	createNewWorkout(workoutType:string){
-
-		const musclesNames = this.getMuscleGroupsForWorkout(workoutType)
-		const successStreak = this.unlockNewExercise(workoutType, musclesNames);
-		const exercisesList: Exercise[] = []
-
-		musclesNames.forEach(muscleName => {
-
-			const exercises = this.makeWorkoutExerciseList(muscleName, successStreak)
-
-			// Apply progressive overload
-			exercises.forEach(exercise => {
-				exercise.progressiveOverload();
-			});
-
-			// If 2 muscle groups selected the same exercise
-			// you only do the exercise once.
-			// but you do it with the most sets between the 2
-			exercises.forEach(newExercise => {
-				const commonExercise = exercisesList.find(savedExercise => newExercise.name === savedExercise.name);
-				if(commonExercise != undefined){
-					commonExercise.sets = Math.max(commonExercise.sets, newExercise.sets);
-				}
-			})
-
-			// Remove exercises that have been updated in the list
-			const filteredExercises = exercises.filter(newExercise =>
-				!exercisesList.some(savedExercise => newExercise.name === savedExercise.name)
-			);
-
-			// Add non-duplicate exercises to the exercisesList
-			exercisesList.push(...filteredExercises);
-
-			// save the exercise data to JSON
-			// this.exerciseData.updateExercises(muscleName, filteredExercises)
-
-		})
-
-		const todayDateUTC = getTodayDateUTC();
-		const todayDateString = todayDateUTC.toISOString().split('T')[0];
-
-
-		const workout =
-			new Workout(
-				workoutType,
-				todayDateString,
-				this.getWarmUForWorkout(workoutType),
-				exercisesList,
-				this.getMotivationalNote(),
-				false,
-				0
-			)
-
-		// save the workout data to JSON
-		this.workoutData.addWorkout(workout);
-		this.exerciseData.saveExercises();
-
-		return workout;
-	}
-
-	deleteWorkout(workoutType: string ,date: string){
-
-		// remove failure debt
-		const musclesNames = this.getMuscleGroupsForWorkout(workoutType);
-		musclesNames.forEach(muscleName => {
-			const muscle = this.exerciseData.getMuscleByName(muscleName)
-			if(muscle != null){
-				muscle.failed = Math.max(0, muscle.failed-1);
+	getWorkoutFromNote(workoutType: string, date: Date, index: number) {
+		const workoutsOfType = this.db.getWorkoutsOfType(workoutType);
+	
+		if (workoutsOfType) {
+			// Filter workouts by date
+			const filteredWorkouts = workoutsOfType.filter(workout => isSameDate(workout.date, date));
+	
+			// Check if the index is within the bounds of the filtered workouts array
+			if (index >= 0 && index < filteredWorkouts.length) {
+				// filteredWorkouts[index] is a reference to the same workout object in workoutsOfType
+				return filteredWorkouts[index];
+			} else {
+				console.error("Index out of range for the filtered workouts");
+				return null;
 			}
-		});
-
-		this.workoutData.deleteWorkout(workoutType,date);
+		} else {
+			console.error("No workouts found for the specified type");
+			return null;
+		}
 	}
 
-	getWorkoutsByDate(date:string){
-		return this.workoutData.getWorkoutsByDate(date);
+	succeedExercise(workout:Workout | null, exerciseId: string){
+		const exercise = this.db.getExerciseById(exerciseId)
+		if(exercise){
+			exercise.isSuccess = true
+		}
+		if(workout){
+			const index = workout.exercises.findIndex(exercise => exercise.id == exerciseId)
+			if(index!= -1){
+				workout.exercises[index].isSuccess = true
+				console.log(workout.exercises[index])
+			}
+		}
+
+		this.db.updateExercises()
+		this.db.updateWorkouts();
 	}
 
+	completeExercise(workout:Workout | null, exerciseId: string){
+		const exercise = this.db.getExerciseById(exerciseId)
+		if(exercise){
+			exercise.isCompleted = true
+		}
+		if(workout){
+			const index = workout.exercises.findIndex(exercise => exercise.id == exerciseId)
+			if(index!= -1){
+				workout.exercises[index].isCompleted = true
+			}
+		}
 
-	updateWorkoutComplete(fileName:string){
-		const { date, workoutType } = this.extractDateAndWorkoutType(fileName)
-
-		this.getMuscleGroupsForWorkout(workoutType).forEach(muscleName => {
-			const muscle = this.exerciseData.getMuscleByName(muscleName)
-			if(muscle != null) muscle.failed = Math.max(0, muscle.failed-1);
-		})
-
-		// completed workout
-		const workout = this.workoutData.getWorkout(workoutType, date)
-
-		if(workout == undefined) return
-		workout.completed = true;
-
-		// the exercise is successful everywhere,
-		// even under another muscle
-		// this.exerciseData.setSuccessful(workout.exercises);
-
-		// add to successful streak
-		let successStreak = this.workoutData.getLastSuccessStreak(workoutType);
-		successStreak++;
-		workout.successStreak = successStreak;
-
-		this.exerciseData.saveExercises();
-		this.workoutData.saveWorkouts();
-
+		this.db.updateExercises()
+		this.db.updateWorkouts();
 	}
+	
+	succeedWorkout(workout:Workout){
+		workout.isSuccess = true;
+		this.db.updateWorkouts();
+	}
+	
 
+	completeWorkout(workout:Workout){
+		workout.isCompleted = true;
+		this.db.updateWorkouts();
+	}
+	
+	// Steroids
+	private useSteroids(muscles: Array<Muscle>){
 
-
-	updateExerciseSuccess(id:string) {
-		console.log("SUCCESS")
-
-		const exercise = this.exerciseData.findExerciseById(id)
-		console.log(exercise)
-		if(exercise == null){
-			// a warmup or rehab exercise not saved in the .json
+		if(muscles == null){
 			return;
 		}
-		if(exercise.isSuccess == false){
-			exercise.isSuccess = true;
-		}
 
-		exercise.note = "AAAAAAAAAA"
-		console.log(exercise)
-		this.exerciseData.saveExercises();
+		muscles.forEach(muscle => {
+			const lastTwoWorkouts = this.db.getLastTwoWorkoutsWithMuscle(muscle.name);
+			
+			let isCompleted = true;
+			let isSuccess = true;
 
-	}
+			lastTwoWorkouts.forEach(workout => {
+				isCompleted = isCompleted && workout.isCompleted
+				isSuccess = isSuccess && workout.isSuccess
+			});
 
-
-	private unlockNewExercise(workoutType:string, musclesNames:string[]){
-
-		const successStreak = this.workoutData.getLastSuccessStreak(workoutType);
-
-		// Did not succeed 3workouts in a row
-		// not unlocking new exercises
-		// Success is defined as 3 workouts with all exercises marked as success = true
-		if(successStreak < MINIMUM_SUCCESS_TO_UNLOCK_NEW_EXERCISE){
-			return successStreak
-		}
-
-		const locked: Array<Exercise> = []
-
-		musclesNames.forEach(muscleName => {
-			locked.push(...this.exerciseData.getLockedExercisesByMuscle(muscleName));
-
+			if(isCompleted && isSuccess){
+				this.chillOnTheRoids(muscle)
+			}
+			if(isCompleted && !isSuccess){
+				this.addCreatine(lastTwoWorkouts, muscle);
+			}
 		})
 
-		// nothing to unlock
-		if(locked.length == 0){
-			return successStreak
+		// this.db.updateMuscles();
+		// this.db.updateExercises();
+	}
+
+	
+	private chillOnTheRoids(muscle: Muscle){
+		if(muscle.boosted > 0){
+			muscle.boosted--;
+			muscle.maxSets--;
+			muscle.minSets--;
+			return
 		}
-		const randomIndex = Math.floor(Math.random() * locked.length);
-		const newExercise = locked[randomIndex];
-		newExercise.isUnlocked = true;
 
-		return 0
+		const exercises = this.db.getExercisesForMuscle(muscle.name)
+		if(exercises == null){
+			return
+		}
+
+		exercises.forEach(exercise => {
+			if(exercise.boosted > 0){
+				exercise.boosted--;
+				exercise.sets--;
+				return
+			}
+		})
 	}
 
-	// Function to get muscle groups for a given workout type
-	private getMuscleGroupsForWorkout(workoutType: string): string[] {
-		return WORKOUT_MUSCLE_MAP[workoutType] || [];
+	private addCreatine(lastTwoWorkouts: Array<Workout>, muscle: Muscle) {
+		// you can't fail if you have done less than 2 of these workouts
+		if (lastTwoWorkouts.length < 2) {
+			return;
+		}
+	
+		const w1FailedExercises = this.getFailedExercises(lastTwoWorkouts[0]);
+		const w2FailedExercises = this.getFailedExercises(lastTwoWorkouts[1]);
+	
+		if (w1FailedExercises.length > 0 && w2FailedExercises.length > 0) {
+			const w2FailedIds = new Set(w2FailedExercises.map(exercise => exercise.id));
+			
+			const commonExercises = w1FailedExercises.filter(exercise => w2FailedIds.has(exercise.id));
+			
+			if (commonExercises.length > 0) {
+				commonExercises.forEach(exercise =>{
+					exercise.sets++;
+					exercise.boosted++;
+				})
+			}else{
+				muscle.boosted++;
+				muscle.maxSets++;
+				muscle.minSets++;
+			}
+		}
+	}
+	
+	
+	private getFailedExercises(workout: Workout){
+		const failedExercises: Array<Exercise> = []
+		workout.exercises.forEach(exercise => {
+			if(!exercise.isSuccess){
+				failedExercises.push(exercise)
+			}
+		})
+		return failedExercises;
 	}
 
-	// Function to get muscle groups for a given workout type
+
+	// Exercise List
+	private createExercises(muscles: Array<Muscle>){
+		const exercises: Array<Exercise> = []
+
+		muscles.forEach(muscle =>{
+			const coreExercises = this.db.getCoreExercises(muscle.name);
+			const chooseFromExercises = this.db.getUnlockedExercisesForMuscle(muscle.name)
+
+			const coreSets = coreExercises.reduce((sum, exercise) => {
+				return sum + exercise.sets;
+			}, 0);
+			let totalSets = getRandomInt(muscle.minSets, muscle.maxSets) - coreSets;
+
+			const pickedExercises = this.pickExercises(totalSets, coreExercises, chooseFromExercises);
+			exercises.push(... pickedExercises);
+		})
+
+		return exercises;
+	}
+
+
+	private pickExercises(remainingSets: number, pickedExercises: Exercise[], chooseFromExercises: Exercise[]): Exercise[] {
+        if (remainingSets <= 0) {
+            return pickedExercises;
+        }
+
+        if(remainingSets < this.getMinimumSets(chooseFromExercises)){
+
+            const lastExerciseIndex = getRandomInt(0, pickedExercises.length - 1)
+            const lastExercise = pickedExercises[lastExerciseIndex]
+            lastExercise.sets += remainingSets
+            return pickedExercises;
+        }
+
+		const exercise = chooseFromExercises[getRandomInt(0, chooseFromExercises.length - 1)];
+        
+        // Check if we can include this exercise
+        if (exercise.sets <= remainingSets) {
+            pickedExercises.push(exercise);
+            remainingSets -= exercise.sets;
+        }
+
+        // Continue picking exercises
+        return this.pickExercises(remainingSets, pickedExercises, chooseFromExercises);
+    }
+
+	private getMinimumSets(chooseFromExercises: Exercise[]): number {
+        if (chooseFromExercises.length === 0) {
+            return 0; // Return null if there are no exercises
+        }
+
+        let minSets = chooseFromExercises[0].sets;
+
+        for (const exercise of chooseFromExercises) {
+            if (exercise.sets < minSets) {
+                minSets = exercise.sets;
+            }
+        }
+
+        return minSets;
+    }
+
+	// Utils to create Workout
 	private getWarmUForWorkout(workoutType: string): Exercise[] {
 		// 25% of the time, you do yoga as a warmup
 		if(Math.random() < YOGA_CHANCE){
 			const index = getRandomInt(0, YOGA_WORKOUT.length -1)
-			const yoga = new Exercise("yoga",0,0,"",0, YOGA_WORKOUT[index])
+			// const yoga = new Exercise("yoga",0,0,"",0, YOGA_WORKOUT[index])
+			const yoga = new Exercise("yoga", 0, 0, "", 0, 0, 0, 0, YOGA_WORKOUT[index], false, false, true)
 			return [yoga];
 		}
 
 		return WORKOUT_WARMUP_MAP[workoutType] || [];
 	}
 
-	private addMuscleSets(muscle: Muscle){
-		muscle.minSets += 1;
-		muscle.maxSets += 1;
-	}
-
-	removeMuscleSets(muscle: Muscle){
-		muscle.minSets -= 1;
-		muscle.maxSets -= 1;
-
-	}
-
-	private setUpSetRangeBasedOnFailure(muscle: Muscle, successStreak: number){
-		// muscle debt
-		muscle.failed++;
-
-		// If I fail 4 times in a row, I have to do more sets
-		if(muscle.failed >= MAXIMUM_ALLOWED_MUSCLE_FAILURES){
-			this.addMuscleSets(muscle);
-		}
-
-		if(successStreak >= MINIMUM_MUSCLE_SUCCESS_STREAK){
-			muscle.failed = 0;
-			this.removeMuscleSets(muscle)
-		}
-
-
-		this.exerciseData.saveExercises();
-	}
-
-	private makeWorkoutExerciseList(muscleName: string, successStreak: number) {
-		const muscle = this.exerciseData.getMuscleByName(muscleName);
-		if(muscle == null){
-			return []
-		}
-
-		this.setUpSetRangeBasedOnFailure(muscle, successStreak)
-
-		const sets = getRandomInt(muscle.minSets, muscle.maxSets);
-		const unlocked = this.exerciseData.getUnlockedExercisesByMuscle(muscleName);
-
-		if (unlocked.length === 0 || sets === 0) {
-			return [];
-		}
-
-		const selectedExercises: Array<Exercise> = [];
-
-		// Step 1: Find all core exercises and calculate the total sets they consume.
-		let coreSets = 0;
-		unlocked.forEach(exercise => {
-			if (exercise.isCore) {
-				selectedExercises.push(Exercise.from(exercise, exercise.sets));
-				coreSets += exercise.sets;
-			}
-		});
-
-		// Step 2: Calculate the remaining sets after accounting for core exercises.
-		let setsLeft = sets - coreSets;
-
-		//If you only have one set for an exercise
-		if(setsLeft === 1){
-			const randomIndex = getRandomInt(0, unlocked.length - 1);
-			const randomExercise = unlocked[randomIndex];
-			selectedExercises.push(Exercise.from(randomExercise, 2));
-			setsLeft = 0;
-		}
-
-		// Step 3: Randomly allocate the remaining sets.
-		while (setsLeft > 0) {
-			const randomIndex = getRandomInt(0, unlocked.length - 1);
-			const randomExercise = unlocked[randomIndex];
-
-
-			// If only 2 sets are left, assign them all to a new exercise.
-			if (setsLeft === 2) {
-				selectedExercises.push(Exercise.from(randomExercise, 2));
-				setsLeft -= 2;
-			}
-			// If only 1 set is left, add it to an already selected exercise.
-			else if (setsLeft === 1) {
-				const existingExercise = selectedExercises[getRandomInt(0, selectedExercises.length - 1)];
-				existingExercise.sets += 1;
-				setsLeft -= 1;
-			}
-			// Otherwise, allocate sets as before.
-			else {
-				const setsToAdd = Math.min(setsLeft, getRandomInt(2, 4));
-
-				selectedExercises.push(Exercise.from(randomExercise, setsToAdd));
-				setsLeft -= setsToAdd;
-			}
-		}
-
-		return this.aggregateUniqueExercises(selectedExercises);
-	}
-
-
-	private aggregateUniqueExercises(exercises: Array<Exercise>): Array<Exercise> {
-		// Create a map to aggregate sets by exercise name and store references to the original Exercise objects
-		const exerciseMap = new Map<string, Exercise>();
-
-		// Iterate through the exercises and aggregate sets by name
-		exercises.forEach(exercise => {
-			const existingExercise = exerciseMap.get(exercise.name);
-			if (existingExercise) {
-				// Aggregate sets by adding to the existing exercise's sets
-				existingExercise.sets += exercise.sets;
-			} else {
-				// Store a reference to the original exercise
-				exerciseMap.set(exercise.name, exercise);
-			}
-		});
-
-		// Convert the map values to an array of Exercise instances
-		return Array.from(exerciseMap.values());
-	}
-
+		
 	private getMotivationalNote() {
-		const imagePath = this.workoutData.getMotivationalImage();
-
-		// Extract the filename from the path
+		const imagePath = this.db.getMotivationalImage();
 		const fileName = path.basename(imagePath);
-
-		// Determine the message based on the filename prefix
 		let message = "";
 		if (fileName.startsWith("bad_")) {
 			message = "<div class=\"motivationalSpeech\">\n" +
@@ -355,24 +294,6 @@ export class WorkoutService {
 				"You can look like this too." +
 				"</div>"
 		}
-
-		// Return the markdown string with the image and the message
 		return `![Motivation](${imagePath})\n\n${message}\n`;
-	}
-
-	private extractDateAndWorkoutType(fileName: string): { date: string, workoutType: string } {
-		// Regular expression to match the date and workout type
-		const regex = /^(\d{4}-\d{2}-\d{2})\s+(.+)\.md$/;
-		const match = fileName.match(regex);
-
-		// If the file name matches the expected pattern
-		if (match) {
-			const date = match[1];                       // Extracted date
-			const workoutType = match[2].trim().toLowerCase();  // Extracted workout type, trimmed and converted to lower case
-			return { date, workoutType };
-		}
-
-		// Return null if the file name doesn't match the expected pattern
-		throw new Error("Invalid file name format");
 	}
 }
