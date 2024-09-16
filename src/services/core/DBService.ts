@@ -72,6 +72,10 @@ export class DBService {
 		}
 	}
 
+	getMuscles(){
+		return this.muscleData.getMuscles()
+	}
+
 	getMusclesForWorkoutType(workoutType: string) {
 		
 		if(this.workoutTypeMuscleMap.has(workoutType)){
