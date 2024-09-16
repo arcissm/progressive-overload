@@ -12,6 +12,10 @@ export class MuscleData {
 		this.convertDataToMuscles(this.dataPath);
 	}
 
+	getMuscles(){
+		return this.muscles
+	}
+	
 	getMuscleByName(muscleName: string) {
 		return this.muscles.find(muscle => muscle.name === muscleName) || null;
 	}

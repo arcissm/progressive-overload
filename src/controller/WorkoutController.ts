@@ -127,6 +127,16 @@ export class WorkoutController {
     isOnBreak() {
         return this.breakService.isOnBreak();
     }
+	addMuscle(muscle: string){
+		console.log("adding Muscle "+ muscle)
+	}
+
+	getMuscles(){
+		return this.db.getMuscles();
+	}
+	getMusclesForWorkoutType(workoutType:string){
+		return this.db.getMusclesForWorkoutType(workoutType)
+	}
 
     getNormalWorkoutTypes(){
         return this.db.getNormalWorkoutTypes();
