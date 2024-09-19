@@ -1,4 +1,3 @@
-import {Exercise} from "../../models/Exercise";
 import * as fs from 'fs';
 import {Muscle} from "../../models/Muscle";
 import { MUSCLE_DATA_PATH } from "utils/Constants";
@@ -12,6 +11,11 @@ export class MuscleData {
 		this.convertDataToMuscles(this.dataPath);
 	}
 
+	addMuscle(muscle: Muscle){
+		this.muscles.push(muscle)
+		this.saveMuscles()
+	}
+
 	getMuscles(){
 		return this.muscles
 	}
@@ -19,6 +23,24 @@ export class MuscleData {
 	getMuscleByName(muscleName: string) {
 		return this.muscles.find(muscle => muscle.name === muscleName) || null;
 	}
+
+	updateMuscle(oldMuscle: Muscle, newMuscle: Muscle) {
+		const index = this.muscles.findIndex(muscle => muscle.equals(oldMuscle));
+		if (index !== -1) {
+			this.muscles[index] = newMuscle;
+		}
+
+		this.saveMuscles();
+	}
+
+	deleteMuscle(muscle: Muscle) {
+		const index = this.muscles.findIndex((m) => m.equals(muscle));
+		if (index !== -1) {
+			this.muscles.splice(index, 1); 
+		}
+		this.saveMuscles();
+	}
+	
 
 	saveMuscles(){
 		const updatedData = JSON.stringify( this.muscles, null, 2);

@@ -39,10 +39,6 @@
   },
   {
     "workout": "break",
-    "muscles": [
-      {
-        "name": "heart"
-      }
-    ]
+    "muscles": []
   }
 ]

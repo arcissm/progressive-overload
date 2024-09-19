@@ -6,6 +6,7 @@ import WorkoutPlugin from "../../main";
 
 export const WORKOUT_VIEW = "workout-view";
 
+// Call it TrackerView
 export class WorkoutView extends ItemView {
 	private plugin: WorkoutPlugin;
 	private calendar: CalendarComponent;

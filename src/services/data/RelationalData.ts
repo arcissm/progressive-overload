@@ -46,6 +46,29 @@ export class RelationalData {
         }
     }
 
+    updateMuscle(oldMuscleName: string, newMuscleName: string) {
+        // Check if the Muscle Exercise contains the old muscle name as a key
+        if (this.muscleExerciseMap.has(oldMuscleName)) {
+            const exercises = this.muscleExerciseMap.get(oldMuscleName);
+            if (exercises) {
+                this.muscleExerciseMap.delete(oldMuscleName);
+                this.muscleExerciseMap.set(newMuscleName, exercises);
+            }
+        }
+
+        // Check if the Workout Muscle contains the old muscle name as a key
+        this.workoutMuscleMap.forEach((muscleList) => {
+            const index = muscleList.indexOf(oldMuscleName);
+            if (index !== -1) {
+                muscleList[index] = newMuscleName;
+            }
+        });
+
+        this.saveMuscleExerciseMap()
+        this.saveWorkoutMuscleMap()
+
+    }
+    
     addWorkoutType(workoutType: string, muscles: string[]){
 		const existingMuscles = this.workoutMuscleMap.get(workoutType);
 		if (existingMuscles) {
@@ -62,6 +85,23 @@ export class RelationalData {
 		this.saveWorkoutMuscleMap();
 		return this.getWorkoutTypes()
 	  }
+
+      deleteMuscle(muscleName: string){
+        if (this.muscleExerciseMap.has(muscleName)) {
+            this.muscleExerciseMap.delete(muscleName);
+        }
+
+        this.workoutMuscleMap.forEach((muscleList, workoutName) => {
+            const index = muscleList.indexOf(muscleName);
+            if (index !== -1) {
+                muscleList.splice(index, 1);
+                this.workoutMuscleMap.set(workoutName, muscleList);
+            }
+        });
+
+        this.saveMuscleExerciseMap()
+        this.saveWorkoutMuscleMap()
+      }
 	  
 
     saveMuscleExerciseMap() {
