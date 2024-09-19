@@ -6,11 +6,12 @@ import {WORKOUT_VIEW, WorkoutView} from "./ui/view/WorkoutView";
 import { WorkoutController } from "controller/WorkoutController";
 import { setEngine } from "crypto";
 import { WorkoutSettingsModal } from "ui/ribbon/WorkoutSettingsModal";
+import { CONFIG_WORKOUT_VIEW, ConfigWorkoutsView } from "ui/view/ConfigWorkoutsView";
 
 export default class WorkoutPlugin extends Plugin {
 	private settings: PluginSettings;
 	private controller: WorkoutController;
-
+	private testView: ConfigWorkoutsView
 
 	// @ts-ignore
 	private dirPath = this.app.vault.adapter.basePath;
@@ -33,11 +34,12 @@ export default class WorkoutPlugin extends Plugin {
 			new WorkoutDropdownModal(this.app, this.controller).open();
 		});			
 
-		this.addRibbonIcon('dice', 'Manage Workouts', () => {
-			new WorkoutSettingsModal(this.app, this.controller).open();
-		});
-
-
+		this.registerView(
+			CONFIG_WORKOUT_VIEW,
+			(leaf: WorkspaceLeaf) => (this.testView = new ConfigWorkoutsView(leaf, this.controller))
+		  );
+	  
+		  this.app.workspace.onLayoutReady(this.onLayoutReady.bind(this));
 
 
 		this.registerEvent(this.app.vault.on('modify', (file) => {
@@ -83,5 +85,17 @@ export default class WorkoutPlugin extends Plugin {
 			await this.saveData(this.settings);
 		}
 	}
+
+
+	onLayoutReady(): void {
+		if (this.app.workspace.getLeavesOfType(CONFIG_WORKOUT_VIEW).length) {
+		  return;
+		}
+		this.app.workspace.getRightLeaf(false)?.setViewState({
+		  type: CONFIG_WORKOUT_VIEW,
+		});
+	  }
+
+
 }
 

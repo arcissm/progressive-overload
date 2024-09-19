@@ -70,11 +70,5 @@
     "minSets": 0,
     "maxSets": 0,
     "boosted": 0
-  },
-  {
-    "name": "heart",
-    "minSets": 0,
-    "maxSets": 0,
-    "boosted": 0
   }
 ]

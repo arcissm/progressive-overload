@@ -33,10 +33,23 @@ export class DBService {
 		this.workoutData = new WorkoutData(dirPath, this.getWorkoutTypes());
 	}
 	
+	addMuscle(muscle: Muscle){
+		this.muscleData.addMuscle(muscle);
+	}
+
+	
 	// D
 	deleteWorkout(workoutType: string , date: Date, index: number){
 		this.workoutData.deleteWorkout(workoutType, date, index);
 	}
+
+	deleteMuscle(muscle:Muscle){
+		this.relationalData.deleteMuscle(muscle.name);
+		this.muscleData.deleteMuscle(muscle);
+		this.initMuscleExerciseMap();
+		this.initWorkoutTypeMuscleMap();
+	}
+
 
 	removeWorkoutType(workoutType: string){
 		const workoutTypes = this.relationalData.removeWorkoutType(workoutType)
@@ -77,7 +90,6 @@ export class DBService {
 	}
 
 	getMusclesForWorkoutType(workoutType: string) {
-		
 		if(this.workoutTypeMuscleMap.has(workoutType)){
 			return this.workoutTypeMuscleMap.get(workoutType)
 		}
@@ -148,8 +160,11 @@ export class DBService {
 
 
 	// U
-	updateMuscles(){
-		this.muscleData.saveMuscles()
+	updateMuscle(oldMuscle: Muscle, newMuscle:Muscle){
+		this.relationalData.updateMuscle(oldMuscle.name, newMuscle.name)
+		this.muscleData.updateMuscle(oldMuscle, newMuscle)
+		this.initMuscleExerciseMap();
+		this.initWorkoutTypeMuscleMap();
 	}
 
 	updateExercises(){
