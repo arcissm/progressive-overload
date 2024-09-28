@@ -3,13 +3,14 @@ import { WorkoutController } from "controller/WorkoutController";
 import WorkoutPanel from "../panels/WorkoutPanel";
 import MusclePanel from "../panels/MusclePanel";
 import ExercisePanel from "../panels/ExercisePanel";
-import { useWorkoutController } from "../w";
+import { useWorkoutController } from "../../../controller/WorkoutControllerProvider";
+import VariationPanel from "../panels/VariationPanel";
 
 
 
 export const Tabs: React.FC = () => {
   // Define the type for the currentTab state to only allow specific string values
-  const [currentTab, setCurrentTab] = useState<"workouts" | "muscles" | "exercises">("workouts");
+  const [currentTab, setCurrentTab] = useState<"workouts" | "muscles" | "exercises" | "variations" >("workouts");
 
   return (
     <div className="config-workout-view">
@@ -32,6 +33,12 @@ export const Tabs: React.FC = () => {
         >
           Exercises
         </button>
+        <button
+          className={`tab-button ${currentTab === "variations" ? "active" : ""}`}
+          onClick={() => setCurrentTab("variations")}
+        >
+          Variations
+        </button>
       </div>
       
       <div className="tab-content">
@@ -39,6 +46,8 @@ export const Tabs: React.FC = () => {
         {currentTab === "workouts" && <WorkoutPanel />}
         {currentTab === "muscles" && <MusclePanel />}
         {currentTab === "exercises" && <ExercisePanel />}
+        {currentTab === "variations" && <VariationPanel />}
+
       </div>
     </div>
   );

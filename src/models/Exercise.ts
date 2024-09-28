@@ -4,7 +4,6 @@ import {LUCKY, PROGRESSION, SPECIAL, TIME_PER_REP} from "../utils/ExerciseConsta
 export class Exercise {
 	name: string;
 	id: string;
-	variation: number; // -1 is core exercise, 0 is a normal exercise, 1,2,3... is a variation with a difficulty level
 	sets: number;
 	reps: string;
 	weight: number;
@@ -19,7 +18,6 @@ export class Exercise {
 
 	constructor(
 		name: string, 
-		variation = 0,
 		sets = 0, 
 		reps = "5",
 		weight = 0, 
@@ -27,19 +25,19 @@ export class Exercise {
 		weightIncrease = 10, 
 		boosted = 0,
 		note = "",
+		isCore = false,
 		isSuccess = false, 
 		isCompleted = false, 
 		isUnlocked = false) {
 			
 		this.name = name;
-		this.id = this.nameToId(this.name);
-		this.variation = variation;
+		this.nameToId();
 		this.weight = weight;
 		this.sets = sets;
 		this.reps = reps;
 		this.time = time;
 		this.note = note;
-		this.isCore = this.variation < 0;
+		this.isCore = isCore;
 		this.isSuccess = isCompleted;
 		this.isCompleted = isSuccess;
 		this.isUnlocked = isUnlocked;
@@ -47,14 +45,14 @@ export class Exercise {
 		this.boosted = boosted;
 	}
 
-	private nameToId(name: string){
-		return name.toLowerCase().replace(/[^a-z0-9]+/g, '-');
+	nameToId(){
+		this.id = this.name.toLowerCase().replace(/[^a-z0-9]+/g, '-');
+		return this.id
 	}
 
 	static from(exercise: Exercise, newSets: number): Exercise {
 		return new Exercise(
 			exercise.name,
-			exercise.variation,
 			newSets,
 			exercise.reps,
 			exercise.weight,
@@ -62,6 +60,7 @@ export class Exercise {
 			exercise.weightIncrease,
 			exercise.boosted,
 			exercise.note,
+			exercise.isCore,
 			exercise.isSuccess,
 			exercise.isCompleted,
 			exercise.isUnlocked

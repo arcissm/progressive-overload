@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useWorkoutController } from "../w";
+import { useWorkoutController } from "../../../controller/WorkoutControllerProvider";
 import { Muscle } from "models/Muscle"; 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus, faTrashCan,  } from '@fortawesome/free-solid-svg-icons'; 
@@ -13,7 +13,7 @@ type MuscleUpdate = {
 };
 
 const MusclePanel: React.FC = () => {
-  const controller = useWorkoutController(); // Get the controller from the context
+  const controller = useWorkoutController();
   const [muscles, setMuscles] = useState<Muscle[]>([]); 
   const [debouncedMuscleUpdates, setDebouncedMuscleUpdates] = useState<MuscleUpdate[]>([]); // Track multiple updates
 
@@ -118,79 +118,82 @@ const MusclePanel: React.FC = () => {
   }, [debouncedMuscleUpdates, controller]);
 
 
-// Utility function to check if the muscle name is unique (considering singular/plural forms)
-const isNameUnique = (muscles: Muscle[], newName: string, currentIndex: number): boolean => {
-  const normalizeMuscleName = (name: string) => {
-    if (name.endsWith("s")) {
-      return name.slice(0, -1); // Remove 's' for singular form
-    } else {
-      return name + "s"; // Add 's' for plural form
-    }
+  // Utility function to check if the muscle name is unique (considering singular/plural forms)
+  const isNameUnique = (muscles: Muscle[], newName: string, currentIndex: number): boolean => {
+    const normalizeMuscleName = (name: string) => {
+      if (name.endsWith("s")) {
+        return name.slice(0, -1); // Remove 's' for singular form
+      } else {
+        return name + "s"; // Add 's' for plural form
+      }
+    };
+    return !muscles.some((muscle, i) => {
+      return (
+        (muscle.name === newName || muscle.name === normalizeMuscleName(newName)) &&
+        i !== currentIndex // Exclude the current muscle being edited
+      );
+    });
   };
-  return !muscles.some((muscle, i) => {
-    return (
-      (muscle.name === newName || muscle.name === normalizeMuscleName(newName)) &&
-      i !== currentIndex // Exclude the current muscle being edited
-    );
-  });
-};
-
 
 
   return (
-    <div className="muscle-panel">
-      <div className="muscle-information">
+    <div className="workout-settings-panel">
+      <div className="workout-settings-information">
         <h1>Muscle Config</h1>
         <p>Add, Remove or Edit muscles</p>
         <p>Every workout will have x number of sets between (Min Sets, Max Sets)</p>
       </div>
 
-      {/* Fixed header */}
-      <div className="muscle-header">
-        <div className="header-item">Name</div>
-        <div className="header-item">Min Sets</div>
-        <div className="header-item">Max Sets</div>
-        <div className="header-trash"></div>
+      {/* Table structure */}
+      <div className="workout-settings-table-container">
+        <table className="workout-settings-table">
+          <thead>
+            <tr>
+              <th className="workout-settings-table-header">Name</th>
+              <th className="workout-settings-table-header">Min Sets</th>
+              <th className="workout-settings-table-header">Max Sets</th>
+              <th className="workout-settings-table-header-trash"></th>
+            </tr>
+          </thead>
+          <tbody>
+            {muscles.map((muscle, index) => (
+              <tr key={index}>
+                <td className="workout-settings-table-cell">
+                  <input
+                    type="text"
+                    value={muscle.name}
+                    onChange={(e) => handleInputChange(index, 'name', e.target.value)}
+                  />
+                </td>
+                <td className="workout-settings-table-cell">
+                  <input
+                    type="number"
+                    value={muscle.minSets}
+                    onChange={(e) => handleInputChange(index, 'minSets', Number(e.target.value))}
+                  />
+                </td>
+                <td className="workout-settings-table-cell">
+                  <input
+                    type="number"
+                    value={muscle.maxSets}
+                    onChange={(e) => handleInputChange(index, 'maxSets', Number(e.target.value))}
+                  />
+                </td>
+                <td className="workout-settings-table-cell">
+                  <button 
+                    className="workout-settings-table-button"
+                    onClick={() => handleDeleteMuscle(muscle, index)}>
+                    <FontAwesomeIcon icon={faTrashCan} />
+                  </button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
       </div>
-
-      {/* Scrollable muscle input section */}
-      <div className="muscle-list">
-        {muscles.map((muscle, index) => (
-          <div key={index} className="muscle-row">
-            <div className="input-container">
-              <input
-                type="text"
-                value={muscle.name}
-                onChange={(e) => handleInputChange(index, 'name', e.target.value)}
-              />
-            </div>
-            <div className="input-container">
-              <input
-                type="number"
-                value={muscle.minSets}
-                onChange={(e) => handleInputChange(index, 'minSets', Number(e.target.value))}
-              />
-            </div>
-            <div className="input-container">
-              <input
-                type="number"
-                value={muscle.maxSets}
-                onChange={(e) => handleInputChange(index, 'maxSets', Number(e.target.value))}
-              />
-            </div>
-            <div className="trash-container">
-              <button 
-                className="muscle-add-button"
-                onClick={() => handleDeleteMuscle(muscle, index)}>
-                  <FontAwesomeIcon icon={faTrashCan} />
-              </button>
-            </div>
-          </div>
-        ))}
-      </div>
-      <div className="muscle-footer">
-        <button className="muscle-add-button"
-         onClick={handleAddMuscle}>
+      
+      <div className="workout-settings-table-footer">
+        <button className="workout-settings-table-button" onClick={handleAddMuscle}>
           <FontAwesomeIcon icon={faPlus} size="2x" />
         </button>
       </div>

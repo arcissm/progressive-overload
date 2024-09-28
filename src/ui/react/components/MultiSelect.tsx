@@ -1,69 +1,97 @@
-import * as React from "react";
+import React, { useState, useEffect } from "react";
 
-const myData = [
-  { value: 1, text: 'Books' },
-  { value: 2, text: 'Movies, Music & Games' },
-  { value: 3, text: 'Electronics & Computers' },
-  { value: 4, text: 'Home, Garden & Tools' },
-  { value: 5, text: 'Health & Beauty' },
-  { value: 6, text: 'Toys, Kids & Baby' },
-  { value: 7, text: 'Clothing & Jewelry' },
-  { value: 8, text: 'Sports & Outdoors' },
-  { value: 9, text: 'Automotive & Industrial' }
-];
+interface MultiSelectInputProps {
+  options: string[];
+  selectedValues?: string[]; // Optional prop to receive pre-selected values
+  onSelectionChange: (selected: string[]) => void; // Callback function prop
+}
 
-function MultipleSelect() {
-  const [selectedValues, setSelectedValues] = React.useState<string[]>([]);
+function MultiSelectInput({ options, selectedValues = [], onSelectionChange }: MultiSelectInputProps) {
+  const [internalSelectedValues, setInternalSelectedValues] = useState<string[]>(selectedValues);
+  const [inputValue, setInputValue] = useState("");
+  const [showDropdown, setShowDropdown] = useState(false);
 
-  // Handles change in the select element
-  const handleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    const clickedValue = e.target.value;
+  // Update internal selected values if the parent updates the selectedValues prop
+  useEffect(() => {
+    setInternalSelectedValues(selectedValues);
+  }, [selectedValues]);
 
-    // Add or remove value from selectedValues array
-    setSelectedValues((prevSelectedValues) => {
-      if (prevSelectedValues.includes(clickedValue)) {
-        // Remove if already selected
-        return prevSelectedValues.filter((value) => value !== clickedValue);
-      } else {
-        // Add to array if not selected
-        return [...prevSelectedValues, clickedValue];
-      }
-    });
+  // Filter options based on the input value and exclude already selected values
+  const filteredOptions = options.filter((item) =>
+    item.toLowerCase().includes(inputValue.toLowerCase()) &&
+    !internalSelectedValues.includes(item)
+  );
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    console.log("Multiseelect")
+    console.log(showDropdown)
+    console.log(inputValue)
+    setInputValue(e.target.value);
+    setShowDropdown(true);
+  };
+
+  const handleOptionClick = (optionText: string) => {
+    if (!internalSelectedValues.includes(optionText)) {
+      const newSelectedValues = [...internalSelectedValues, optionText];
+      setInternalSelectedValues(newSelectedValues);
+      onSelectionChange(newSelectedValues); // Notify the parent of the change
+    }
+    setInputValue("");
+    setShowDropdown(false);
+  };
+
+  const handleRemoveClick = (optionText: string) => {
+    const updatedValues = internalSelectedValues.filter((value) => value !== optionText);
+    setInternalSelectedValues(updatedValues);
+    onSelectionChange(updatedValues); // Notify the parent of the change
+  };
+
+  const handleBlur = () => {
+    setTimeout(() => setShowDropdown(false), 150);
   };
 
   return (
-    <div>
-      <label htmlFor="multi-select" style={{ marginBottom: '8px', display: 'block' }}>Multi-select</label>
-      <select
-        id="multi-select"
-        multiple
-        onChange={handleChange}
-        style={{ width: '250px', height: '120px', padding: '8px', border: '1px solid #ccc', borderRadius: '4px' }}
-      >
-        {myData.map((item) => (
-          <option
-            key={item.value}
-            value={item.text}
-            className={selectedValues.includes(item.text) ? 'selected' : ''} // Apply 'selected' class if it's selected
-          >
-            {item.text}
-          </option>
+    <div className="multi-select-container">
+      <div className="selected-values-container">
+        {internalSelectedValues.map((value) => (
+          <div key={value} className="selected-tag">
+            {value}
+            <span
+              className="remove-icon"
+              onClick={() => handleRemoveClick(value)}
+            >
+              ×
+            </span>
+          </div>
         ))}
-      </select>
-      <div style={{ marginTop: '10px' }}>
-        <strong>Selected:</strong> {selectedValues.length > 0 ? selectedValues.join(', ') : 'None'}
+        </div>
+        <div>
+          <input
+            type="text"
+            value={inputValue}
+            onChange={handleInputChange}
+            onClick={() => setShowDropdown(true)}
+            onBlur={handleBlur}
+            placeholder="Select..."
+            className="multi-select-input"
+          />
       </div>
+      {showDropdown && filteredOptions.length > 0 && (
+        <ul className="dropdown-list">
+          {filteredOptions.map((item, index) => (
+            <li
+              key={index}
+              onClick={() => handleOptionClick(item)}
+              className={`dropdown-item ${internalSelectedValues.includes(item) ? 'selected' : ''}`}
+              onMouseDown={(e) => e.preventDefault()} 
+            >
+              {item}
+            </li>
+          ))}
+        </ul>
+      )}
     </div>
   );
 }
 
-//
-export default function MultiSelect(): JSX.Element {
-  const [result, setResult] = React.useState<number | null>(null);
-
-  return (
-    <>
-      <MultipleSelect />
-    </>
-  );
-}
+export default MultiSelectInput;

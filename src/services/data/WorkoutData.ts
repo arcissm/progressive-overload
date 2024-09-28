@@ -118,7 +118,6 @@ export class WorkoutData{
 			const warmUps = rawWorkout.exercises.map((rawWarmUp: any) => {
 				return new Exercise(
 					rawWarmUp.name,
-					rawWarmUp.variation,
 					rawWarmUp.sets,
 					rawWarmUp.reps,
 					rawWarmUp.weight,
@@ -126,6 +125,7 @@ export class WorkoutData{
 					rawWarmUp.weightIncrease,
 					rawWarmUp.boosted,
 					rawWarmUp.note,
+					rawWarmUp.isCore,
 					rawWarmUp.isSuccess,
 					rawWarmUp.isCompleted,
 					rawWarmUp.isUnlocked
@@ -134,7 +134,6 @@ export class WorkoutData{
 			const exercises = rawWorkout.exercises.map((rawExercise: any) => {
 				return new Exercise(
 					rawExercise.name,
-					rawExercise.variation,
 					rawExercise.sets,
 					rawExercise.reps,
 					rawExercise.weight,
@@ -142,6 +141,7 @@ export class WorkoutData{
 					rawExercise.weightIncrease,
 					rawExercise.boosted,
 					rawExercise.note,
+					rawExercise.isCore,
 					rawExercise.isSuccess,
 					rawExercise.isCompleted,
 					rawExercise.isUnlocked

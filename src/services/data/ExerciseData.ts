@@ -17,8 +17,21 @@ export class ExerciseData {
 		return this.exercises.find(exercise => exercise.id === id);
 	}
 	
+	getAllExercises(){
+		return this.exercises;
+	}
 
+	addExercise(newExercise: Exercise){
+		this.exercises.push(newExercise)
+	}
 
+	deleteExercise(id: string) {
+		const index = this.exercises.findIndex(exercise => exercise.nameToId() === id);
+		if (index !== -1) {
+			this.exercises.splice(index, 1);
+		}
+	}
+	
 	// findExerciseById(id: string): Exercise | null {
 	// 	// Iterate through each Muscle in the muscleExercises array
 	// 	for (const muscle of this.muscleExercises) {
@@ -111,7 +124,6 @@ export class ExerciseData {
 
 			const exercise = new Exercise(
 				rawExercise.name,
-				rawExercise.variation,
 				rawExercise.sets,
 				rawExercise.reps,
 				rawExercise.weight,
@@ -119,6 +131,7 @@ export class ExerciseData {
 				rawExercise.weightIncrease,
 				rawExercise.boosted,
 				rawExercise.note,
+				rawExercise.isCore,
 				rawExercise.isSuccess,
 				rawExercise.isCompleted,
 				rawExercise.isUnlocked
