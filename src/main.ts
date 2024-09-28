@@ -5,7 +5,6 @@ import {WorkoutDropdownModal} from "./ui/ribbon/WorkoutDropdownModal";
 import {WORKOUT_VIEW, WorkoutView} from "./ui/view/WorkoutView";
 import { WorkoutController } from "controller/WorkoutController";
 import { setEngine } from "crypto";
-import { WorkoutSettingsModal } from "ui/ribbon/WorkoutSettingsModal";
 import { CONFIG_WORKOUT_VIEW, ConfigWorkoutsView } from "ui/view/ConfigWorkoutsView";
 
 export default class WorkoutPlugin extends Plugin {

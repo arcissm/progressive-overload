@@ -139,8 +139,6 @@ export class WorkoutService {
 			}
 		})
 
-		// this.db.updateMuscles();
-		// this.db.updateExercises();
 	}
 
 	
@@ -273,7 +271,7 @@ export class WorkoutService {
 		if(Math.random() < YOGA_CHANCE){
 			const index = getRandomInt(0, YOGA_WORKOUT.length -1)
 			// const yoga = new Exercise("yoga",0,0,"",0, YOGA_WORKOUT[index])
-			const yoga = new Exercise("yoga", 0, 0, "", 0, 0, 0, 0, YOGA_WORKOUT[index], false, false, true)
+			const yoga = new Exercise("yoga", 0, "", 0, 0, 0, 0, YOGA_WORKOUT[index], false, false, false, true)
 			return [yoga];
 		}
 

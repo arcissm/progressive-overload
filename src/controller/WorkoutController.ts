@@ -1,3 +1,5 @@
+import { ExerciseConfig } from "models/configs/ExerciseConfig";
+import { Exercise } from "models/Exercise";
 import { Muscle } from "models/Muscle";
 import { Workout } from "models/Workout";
 import { App, Notice, TFile, WorkspaceLeaf } from "obsidian";
@@ -31,6 +33,7 @@ export class WorkoutController {
 	}
 
 
+	// Workout
     async createWorkout(workoutType:string) {
         // check if should be on break
         if (this.breakService.isOnBreak()){
@@ -50,7 +53,31 @@ export class WorkoutController {
 		// await this.updateStatsView(); // Update the stats view if necessary
     }
 
-	
+    isOnBreak() {
+        return this.breakService.isOnBreak();
+    }
+
+	private async workoutIsSuccessful(workout: Workout){
+
+		this.workoutService.succeedWorkout(workout);
+		// await this.updateCalendarView(); // Update the calendar view
+		// await this.updateChecklistView(); // Optionally update other views
+		// await this.updateStatsView();    // Optionally update stats
+		
+	}
+
+
+	private async workoutIsCompleted(workout: Workout){
+
+		this.workoutService.completeWorkout(workout);
+		// await this.updateCalendarView(); // Update the calendar view
+		// await this.updateChecklistView(); // Optionally update other views
+		// await this.updateStatsView();    // Optionally update stats
+		
+	}
+
+
+	// File
 	async handleFileChange(file: TFile) {
 		const content = await this.app.vault.read(file);
 	
@@ -103,31 +130,9 @@ export class WorkoutController {
 		}
 	}
 
-	private async workoutIsSuccessful(workout: Workout){
+	
 
-		this.workoutService.succeedWorkout(workout);
-		// await this.updateCalendarView(); // Update the calendar view
-		// await this.updateChecklistView(); // Optionally update other views
-		// await this.updateStatsView();    // Optionally update stats
-		
-	}
-
-
-	private async workoutIsCompleted(workout: Workout){
-
-		this.workoutService.completeWorkout(workout);
-		// await this.updateCalendarView(); // Update the calendar view
-		// await this.updateChecklistView(); // Optionally update other views
-		// await this.updateStatsView();    // Optionally update stats
-		
-	}
-
-
-
-    isOnBreak() {
-        return this.breakService.isOnBreak();
-    }
-
+	// MUSCLES
 	addMuscle(muscle: Muscle){
 		this.db.addMuscle(muscle)
 	}
@@ -140,21 +145,41 @@ export class WorkoutController {
 	}
 
 	updateMuscle(oldMuscle: Muscle, newMuscle:Muscle){
-		console.log("OLD")
-		console.log(oldMuscle)
-
-		console.log("New")
-		console.log(newMuscle)
 		this.db.updateMuscle(oldMuscle, newMuscle)
 	}
 
 	deleteMuscle(muscle:Muscle){
-		console.log("DELETING")
-		console.log(muscle)
-
 		this.db.deleteMuscle(muscle)
 	}
 
+
+
+	// EXERCISES
+	getExercises(){
+		return this.db.getExercises();
+	}
+
+	getExerciseConfigs(){
+		return this.db.getExerciseConfigs();
+	}
+	
+	saveExerciseConfigs(oldConfig:ExerciseConfig, newConfig:ExerciseConfig) {
+		return this.db.saveExerciseConfigs(oldConfig, newConfig);
+	}
+
+	deleteExerciseConfig(id:string){
+		return this.db.deleteExerciseConfig(id)
+	}
+
+	addExerciseConfig(newExercise: Exercise){
+		return this.db.addExerciseConfig(newExercise)
+	}
+
+	getVariations(){
+		return this.db.getVariations()
+	}
+
+	// WORKOUT TYPE
     getNormalWorkoutTypes(){
         return this.db.getNormalWorkoutTypes();
     }
@@ -163,12 +188,20 @@ export class WorkoutController {
         return this.db.getWorkoutTypes();
     }
 
-	addWorkoutType(workoutType: string, muscles: Muscle[]){
-		return this.db.addWorkoutType(workoutType, muscles);
+	getWorkoutTypeMuscleArray() {
+		return this.db.getWorkoutTypeMuscleArray();
+	}
+
+	updateWorkoutTypeMuscleMap(workoutMuscleArray:  [string, string[]][]){
+		this.db.updateWorkoutTypeMuscleMap(workoutMuscleArray)
+	}
+
+	addWorkoutType(){
+		this.db.addWorkoutType();
 	}
 
 	removeWorkoutType(workoutType: string){
-		return this.db.removeWorkoutType(workoutType)
+		this.db.removeWorkoutType(workoutType)
 	}
  
 	

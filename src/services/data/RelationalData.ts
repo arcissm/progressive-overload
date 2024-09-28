@@ -46,6 +46,25 @@ export class RelationalData {
         }
     }
 
+    deleteExercise(id:string){
+        this.muscleExerciseMap.forEach((exerciseIds, muscle) => {
+            const updatedIds = exerciseIds.filter(exerciseId => exerciseId !== id);
+            this.muscleExerciseMap.set(muscle, updatedIds);
+        });
+    }
+
+    getMusclesForExerciseId(id: string): string[] {
+        const muscles: string[] = [];
+        this.muscleExerciseMap.forEach((exerciseIds, muscle) => {
+            if (exerciseIds.includes(id)) {
+                muscles.push(muscle);
+            }
+        });
+    
+        return muscles;
+    }
+    
+
     updateMuscle(oldMuscleName: string, newMuscleName: string) {
         // Check if the Muscle Exercise contains the old muscle name as a key
         if (this.muscleExerciseMap.has(oldMuscleName)) {
@@ -69,21 +88,14 @@ export class RelationalData {
 
     }
     
-    addWorkoutType(workoutType: string, muscles: string[]){
-		const existingMuscles = this.workoutMuscleMap.get(workoutType);
-		if (existingMuscles) {
-		  this.workoutMuscleMap.set(workoutType, [...existingMuscles, ...muscles]);
-		} else {
-		  this.workoutMuscleMap.set(workoutType, muscles);
-		}
+    addWorkoutType(){
+        this.workoutMuscleMap.set("", []);
 		this.saveWorkoutMuscleMap();
-        return this.getWorkoutTypes()
     }
 
-    removeWorkoutType(workoutType: string): string[] {
+    removeWorkoutType(workoutType: string) {
 		this.workoutMuscleMap.delete(workoutType);
 		this.saveWorkoutMuscleMap();
-		return this.getWorkoutTypes()
 	  }
 
       deleteMuscle(muscleName: string){
@@ -126,12 +138,10 @@ export class RelationalData {
             };
         });
 
-        console.log(mapAsArray)
 
         // Save the updated JSON back to the file
         fs.writeFileSync(this.workoutMuscleDataPath, JSON.stringify(mapAsArray, null, 2), 'utf8');
     }
-
     
     private initializeMuscleExerciseMap(dataPath: string) {
         // Read and parse the JSON file

@@ -9,6 +9,7 @@ export const MUSCLE_EXERCISE_DATA_PATH = "/.obsidian/plugins/obsidian-but-better
 export const WORKOUT_MUSCLE_DATA_PATH = "/.obsidian/plugins/obsidian-but-better/src/data/workout-muscle.json";
 export const BREAK_DATA_PATH = "/.obsidian/plugins/obsidian-but-better/src/data/break.json";
 export const BREAK_TRACKER_DATA_PATH = "/.obsidian/plugins/obsidian-but-better/src/data/break-tracker.json";
+export const VARIATION_DATA_PATH = "/.obsidian/plugins/obsidian-but-better/src/data/variations.json";
 
 export const IMAGES_DIR = "/.obsidian/plugins/obsidian-but-better/assets/images/motivation";
 
@@ -19,6 +20,7 @@ export const MINIMUM_MUSCLE_SUCCESS_STREAK = 2;
 export const MINIMUM_WORKOUT_DAYS_2_WEEKS = 8;
 
 export const BREAK = "break"
+export const REPS = ["N/A", "5", "6-8", "8-10", "10-12", "12-15", "15-20", "max"];
 
 export const WORKOUT_WARMUP_MAP: Record<string, Exercise[]> = {
 	fff: REHAB, // Example mapping

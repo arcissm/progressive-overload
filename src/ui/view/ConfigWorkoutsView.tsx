@@ -1,12 +1,11 @@
-import { ItemView, Plugin, WorkspaceLeaf } from "obsidian";
+import { ItemView, WorkspaceLeaf } from "obsidian";
 import React from "react";
-import ReactDOM from "react-dom";
 
-import MultiSelect from "../react/components/MultiSelect";
-import { Tabs } from "ui/react/components/Tabs";
+
 import { WorkoutController } from "controller/WorkoutController";
-import { WorkoutControllerProvider } from "ui/react/w";
 import { createRoot } from "react-dom/client";
+import { Tabs } from "ui/react/components/Tabs";
+import { WorkoutControllerProvider } from "controller/WorkoutControllerProvider";
 
 export const CONFIG_WORKOUT_VIEW = "config-workouts-view";
 

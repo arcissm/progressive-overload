@@ -8,7 +8,7 @@ const WorkoutControllerContext = createContext<WorkoutController | undefined>(un
 export const useWorkoutController = () => {
   const context = useContext(WorkoutControllerContext);
   if (!context) {
-    throw new Error("useWorkoutController must be used within a WorkoutControllerProvider");
+    throw new Error("use WorkoutController must be used within a WorkoutControllerProvider");
   }
   return context;
 };
