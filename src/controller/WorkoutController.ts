@@ -10,10 +10,12 @@ import { NoteService } from "services/note/NoteService";
 import { PluginSettings } from "services/settings/Settings";
 import { WORKOUT_VIEW, WorkoutView } from "ui/view/WorkoutView";
 import { getTitleInfo } from "utils/AlgorithmUtils";
+import { TreeNode } from "utils/data-structure/TreeNode";
 
 
 
 export class WorkoutController {
+
     private app: App;
     private db: DBService;
 	private noteService: NoteService;
@@ -177,6 +179,33 @@ export class WorkoutController {
 
 	getVariations(){
 		return this.db.getVariations()
+	}
+
+	getVariationForExercise(exerciseName: string){
+		return this.db.getVariationForExercise(exerciseName);
+	}
+
+	setVariationForExercise(exerciseName: string, data: string) {
+		this.db.setVariationForExercise(exerciseName, data)
+	}
+
+	updateExerciseForVariation(oldExerciseName: string, newExerciseName: string){
+		this.db.updateExerciseForVariation(oldExerciseName, newExerciseName)
+
+	}
+
+	addNode(exerciseName: string, node: TreeNode<string>){
+		return this.db.addNode(exerciseName, node)
+	}
+	removeNode(exerciseName: string, node: TreeNode<string>){
+		return this.db.removeNode(exerciseName, node)
+	}
+
+	updateVariationName(exerciseName: string, oldValue: string, newValue: string) {
+		return this.db.updateVariationName(exerciseName, oldValue, newValue)
+	}
+	addTree(){
+		return this.db.addTree()
 	}
 
 	// WORKOUT TYPE

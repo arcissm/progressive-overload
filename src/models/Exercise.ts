@@ -9,6 +9,7 @@ export class Exercise {
 	weight: number;
 	time: number;
 	weightIncrease: number;
+	variation: string;
 	boosted: number;
 	note: string;
 	isCore: boolean;
@@ -23,6 +24,7 @@ export class Exercise {
 		weight = 0, 
 		time = 30, 
 		weightIncrease = 10, 
+		variation = "",
 		boosted = 0,
 		note = "",
 		isCore = false,
@@ -37,6 +39,7 @@ export class Exercise {
 		this.reps = reps;
 		this.time = time;
 		this.note = note;
+		this.variation = variation;
 		this.isCore = isCore;
 		this.isSuccess = isCompleted;
 		this.isCompleted = isSuccess;
@@ -58,6 +61,7 @@ export class Exercise {
 			exercise.weight,
 			exercise.time,
 			exercise.weightIncrease,
+			exercise.variation,
 			exercise.boosted,
 			exercise.note,
 			exercise.isCore,
