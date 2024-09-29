@@ -145,10 +145,7 @@
         "name": "band-press"
       },
       {
-        "name": "roll-forward"
-      },
-      {
-        "name": "roll-backwards"
+        "name": "roll"
       },
       {
         "name": "breakdance"

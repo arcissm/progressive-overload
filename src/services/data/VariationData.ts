@@ -29,14 +29,61 @@ printTrees() {
             }
 
             // Print the node with the appropriate indentation
-            console.log(`${'--'.repeat(depth)}${node.data}`);
+            console.log(`${'--'.repeat(depth)}${node.id} ::: ${node.data}`);
         }
     });
 }
 
+    updateVariationData(oldData: string, newData: string) {
+        const tree = this.variations.get(oldData);
+    
+        if (tree) {
+            tree.root.data = newData; // Update the root node's data
+            this.variations.delete(oldData); // Remove the old key
+            this.variations.set(newData, tree); // Add the tree with the new key
+        } else {
+            console.error(`No tree found for key: ${oldData}`);
+        }
+    }
+
+	addNode(exerciseName: string, node: TreeNode<string>){
+        const tree = this.variations.get(exerciseName);
+        if(tree){
+            const treeNode = tree.findNode(node.data)
+            if(treeNode)
+            tree.addNode("New Variation", treeNode)
+        }
+        return this.variations
+	}
+
+    removeNode(exerciseName: string, node: TreeNode<string>){
+        const tree = this.variations.get(exerciseName);
+        if(tree){
+            tree.deleteNode(node.data)
+        }
+        return this.variations
+	}
+
+    updateVariationName(exerciseName: string, oldValue: string, newValue: string) {
+        const tree = this.variations.get(exerciseName);
+        if(tree){
+            const node =tree.findNode(oldValue)
+            if(node)
+            node.data = newValue
+        }
+        return this.variations	
+    }
+
+    addTree(){
+        const root = "New Variations"
+		const tree = new Tree(root)
+        this.variations.set(root, tree)
+        return this.variations
+	}
+
 
     // Function to save the Map data structure back to the JSON file
-	saveTree() {
+	saveVariations() {
 	    // Convert the variations Map back into the JSON structure
 	    const dataToSave = Array.from(this.variations.values()).map(tree => {
 	        const rootNode = tree.root;
@@ -97,9 +144,7 @@ printTrees() {
 
             // Create children nodes for the current variation
             rawEdge.next.forEach((childName: string) => {
-                const childNode = new TreeNode(childName);
-                childNode.parent = parentNode;
-                parentNode.children.push(childNode);
+                const childNode = tree.addNode(childName, parentNode);
 
                 // Add the child node to the map for future reference
                 nodeMap.set(childName, childNode);
@@ -109,7 +154,6 @@ printTrees() {
         // Add the constructed tree to the Map using the root's data as the key
         this.variations.set(tree.root.data, tree);
     });
-    this.printTrees()
+    // this.printTrees()
 }
-
 }

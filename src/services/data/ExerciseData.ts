@@ -129,6 +129,7 @@ export class ExerciseData {
 				rawExercise.weight,
 				rawExercise.time,
 				rawExercise.weightIncrease,
+				rawExercise.variation,
 				rawExercise.boosted,
 				rawExercise.note,
 				rawExercise.isCore,

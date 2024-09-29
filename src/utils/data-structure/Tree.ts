@@ -7,6 +7,7 @@ export class Tree<T> {
     // Constructor
     constructor(rootData: T) {
         this.root = new TreeNode(rootData);
+        this.root.generateId()
     }
 
     // Find a node with given data
@@ -24,6 +25,14 @@ export class Tree<T> {
         return false;
     }
 
+    addNode(data: T, parentNode: TreeNode<T>){
+        const childNode = new TreeNode(data);
+        childNode.parent = parentNode;
+        parentNode.children.push(childNode);
+        childNode.generateId()
+        return childNode
+    }
+
     // Delete a node with given data
     deleteNode(data: T) {
         const nodeToDelete = this.findNode(data);
@@ -39,7 +48,9 @@ export class Tree<T> {
                 // Update parent references for the deleted node's children
                 for (const child of nodeToDelete.children) {
                     child.parent = parent;
+                    child.generateId(); 
                 }
+                parent.generateId();
             }
         } else if (nodeToDelete === this.root) {
             console.error("Cannot delete the root node.");

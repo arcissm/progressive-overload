@@ -8,6 +8,7 @@ import { MuscleData } from "services/data/MuscleData";
 import { RelationalData } from "services/data/RelationalData";
 import { VariationData } from "services/data/VariationData";
 import { WorkoutData } from "services/data/WorkoutData";
+import { TreeNode } from "utils/data-structure/TreeNode";
 
 
 
@@ -39,6 +40,54 @@ export class DBService {
 
 	getVariations(){
 		return this.variationData.variations
+	}
+
+	setVariationForExercise(exerciseName: string, data: string) {
+		const id = exerciseName.toLowerCase().replace(/[^a-z0-9]+/g, '-');
+		const exercise = this.exerciseData.getExerciseById(id)
+
+		if(exercise){
+			exercise.variation = data
+			this.updateExercises()
+		}
+	}
+
+	getVariationForExercise(exerciseName: string){
+		const id = exerciseName.toLowerCase().replace(/[^a-z0-9]+/g, '-');
+		const exercise = this.exerciseData.getExerciseById(id)
+		if(exercise){
+			return exercise.variation;
+		}
+		return null
+	}
+
+	updateExerciseForVariation(oldExerciseName: string, newExerciseName: string){
+		this.variationData.updateVariationData(oldExerciseName, newExerciseName)
+		this.variationData.saveVariations()
+	}
+
+	addNode(exerciseName: string, node: TreeNode<string>){
+		const variations = this.variationData.addNode(exerciseName, node)
+		this.variationData.saveVariations()
+		return variations;
+	}
+
+	removeNode(exerciseName: string, node: TreeNode<string>){
+		const variations = this.variationData.removeNode(exerciseName, node)
+		this.variationData.saveVariations()
+		return variations;
+	}
+
+	updateVariationName(exerciseName: string, oldValue: string, newValue: string) {
+		const variations = this.variationData.updateVariationName(exerciseName, oldValue, newValue);
+		this.variationData.saveVariations()
+		return variations;
+	}
+
+	addTree(){
+		const variations = this.variationData.addTree();
+		this.variationData.saveVariations()
+		return variations;
 	}
 
 
@@ -185,6 +234,8 @@ export class DBService {
 	
 	updateExercises(){
 		this.exerciseData.saveExercises()
+		this.initExerciseConfig()
+
 	}
 
 	saveExerciseConfigs(oldConfig:ExerciseConfig, newConfig:ExerciseConfig) {
@@ -192,7 +243,7 @@ export class DBService {
 		const newId = newConfig.exercise.id
 
 		this.saveExercise(oldId, newConfig.exercise)
-		this.exerciseData.saveExercises()
+		this.updateExercises()
 
 
 		this.saveExerciseMuscleRelation(oldId, oldConfig.muscles, newId, newConfig.muscles)
@@ -205,15 +256,14 @@ export class DBService {
 
 	addExerciseConfig(newExercise: Exercise){
 		this.exerciseData.addExercise(newExercise)
-		this.exerciseData.saveExercises()
-		this.initExerciseConfig()
+		this.updateExercises()
 		return this.exerciseConfigs
 	}
 
 	deleteExerciseConfig(id:string){
 		this.exerciseData.deleteExercise(id);
-		this.exerciseData.saveExercises()
-
+		this.updateExercises()
+		
 		this.relationalData.deleteExercise(id);
 		this.relationalData.saveMuscleExerciseMap();
 		this.initMuscleExerciseMap();
@@ -235,7 +285,7 @@ export class DBService {
 			exercise.isUnlocked = newExercise.isUnlocked;
 			exercise.nameToId();
 		}
-		this.exerciseData.saveExercises()
+		this.updateExercises()
 	}
 
 	private saveExerciseMuscleRelation(oldId:string, oldMuscles:string[], newId:string, newMuscles:string[]){
