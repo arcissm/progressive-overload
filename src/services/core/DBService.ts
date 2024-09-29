@@ -64,6 +64,7 @@ export class DBService {
 	updateExerciseForVariation(oldExerciseName: string, newExerciseName: string){
 		this.variationData.updateVariationData(oldExerciseName, newExerciseName)
 		this.variationData.saveVariations()
+		return this.variationData.variations;
 	}
 
 	addNode(exerciseName: string, node: TreeNode<string>){

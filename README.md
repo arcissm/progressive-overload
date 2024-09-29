@@ -28,9 +28,13 @@ I'm at 18.3%
 
 
 ## TO DO
-- time the workout 
-- stats of all the muscle sets right for each muscle group (12 max)
-- calendar on the right
-- checklist on the right
-- problem with image not displaying in preview mode
-- when delete workout, muscle.failed--
+there's a lot of missing verifications but I can't be bothered. These are configs not the main stuff.
+
+make sure there are no name duplicates
+handle bad tree ui in variations
+Should have one add button with a dropdown that asks child or sibling
+Should have collapse component
+Should have search component
+are all the backends calls necessary? Could update variations in front and send it clean to the back
+DBService might need to be split into 4 services for each dataset
+controller might need to be split into settings and workout

@@ -1,50 +1,50 @@
 [
   {
     "name": "biceps",
-    "minSets": 14,
-    "maxSets": 17,
+    "minSets": 3,
+    "maxSets": 5,
     "boosted": 0
   },
   {
     "name": "tricep",
-    "minSets": 14,
-    "maxSets": 17,
+    "minSets": 3,
+    "maxSets": 5,
     "boosted": 0
   },
   {
     "name": "forearm",
-    "minSets": 14,
-    "maxSets": 17,
+    "minSets": 3,
+    "maxSets": 5,
     "boosted": 0
   },
   {
     "name": "front delt",
-    "minSets": -26,
-    "maxSets": -20,
+    "minSets": 3,
+    "maxSets": 5,
     "boosted": 0
   },
   {
     "name": "side delt",
-    "minSets": 5,
-    "maxSets": 8,
+    "minSets": 3,
+    "maxSets": 5,
     "boosted": 0
   },
   {
     "name": "rear delt",
-    "minSets": 5,
-    "maxSets": 8,
+    "minSets": 3,
+    "maxSets": 5,
     "boosted": 0
   },
   {
     "name": "chest",
-    "minSets": 5,
-    "maxSets": 8,
+    "minSets": 3,
+    "maxSets": 5,
     "boosted": 0
   },
   {
     "name": "back",
-    "minSets": 6,
-    "maxSets": 8,
+    "minSets": 3,
+    "maxSets": 5,
     "boosted": 0
   },
   {
@@ -55,14 +55,14 @@
   },
   {
     "name": "hamstring",
-    "minSets": 6,
-    "maxSets": 8,
+    "minSets": 3,
+    "maxSets": 5,
     "boosted": 0
   },
   {
     "name": "abs",
-    "minSets": 6,
-    "maxSets": 8,
+    "minSets": 2,
+    "maxSets": 4,
     "boosted": 0
   },
   {

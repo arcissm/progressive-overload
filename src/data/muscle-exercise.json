@@ -1,26 +1,34 @@
 [
   {
-    "muscle": "forearm",
+    "muscle": "cardio",
     "exercises": [
       {
-        "name": "nyan"
-      },
-      {
-        "name": "nyan-open-palm"
+        "name": "sweat"
       }
     ]
   },
   {
-    "muscle": "side delt",
+    "muscle": "hamstring",
     "exercises": [
       {
-        "name": "side-laterals"
+        "name": "ass-up"
       },
       {
-        "name": "shoulder-twisties"
+        "name": "romanian-deadlift"
+      }
+    ]
+  },
+  {
+    "muscle": "biceps",
+    "exercises": [
+      {
+        "name": "hammer-curls"
       },
       {
-        "name": "thrusters"
+        "name": "curls"
+      },
+      {
+        "name": "chin-up"
       }
     ]
   },
@@ -34,9 +42,6 @@
         "name": "deadlift"
       },
       {
-        "name": "ass-up"
-      },
-      {
         "name": "squat"
       },
       {
@@ -44,9 +49,6 @@
       },
       {
         "name": "single-leg-hops"
-      },
-      {
-        "name": "lunges"
       },
       {
         "name": "lunges"
@@ -65,35 +67,9 @@
       },
       {
         "name": "split-box-jump"
-      }
-    ]
-  },
-  {
-    "muscle": "front delt",
-    "exercises": [
-      {
-        "name": "thrusters"
       },
       {
-        "name": "thrusters"
-      },
-      {
-        "name": "alternating-dumbbell-snatch"
-      },
-      {
-        "name": "alternating-dumbbell-snatch"
-      },
-      {
-        "name": "handstand"
-      },
-      {
-        "name": "archer-push-up"
-      },
-      {
-        "name": "over-head-press"
-      },
-      {
-        "name": "front-raises"
+        "name": "one-arm-deadlift"
       }
     ]
   },
@@ -129,6 +105,102 @@
       },
       {
         "name": "scapula-uppies"
+      },
+      {
+        "name": "one-arm-deadlift"
+      },
+      {
+        "name": "inverted-deadlift"
+      }
+    ]
+  },
+  {
+    "muscle": "chest",
+    "exercises": [
+      {
+        "name": "handstand"
+      },
+      {
+        "name": "push-up"
+      },
+      {
+        "name": "diamond-push-up"
+      },
+      {
+        "name": "dips"
+      }
+    ]
+  },
+  {
+    "muscle": "rear delt",
+    "exercises": [
+      {
+        "name": "rear-delt-dumbell"
+      }
+    ]
+  },
+  {
+    "muscle": "side delt",
+    "exercises": [
+      {
+        "name": "side-laterals"
+      },
+      {
+        "name": "shoulder-twisties"
+      },
+      {
+        "name": "cartwheel"
+      }
+    ]
+  },
+  {
+    "muscle": "front delt",
+    "exercises": [
+      {
+        "name": "handstand"
+      },
+      {
+        "name": "archer-push-up"
+      },
+      {
+        "name": "over-head-press"
+      },
+      {
+        "name": "front-raises"
+      },
+      {
+        "name": "dips"
+      },
+      {
+        "name": "thrusters"
+      }
+    ]
+  },
+  {
+    "muscle": "forearm",
+    "exercises": [
+      {
+        "name": "nyan"
+      },
+      {
+        "name": "nyan-open-palm"
+      }
+    ]
+  },
+  {
+    "muscle": "tricep",
+    "exercises": [
+      {
+        "name": "dips"
+      },
+      {
+        "name": "band-triceps"
+      },
+      {
+        "name": "triceps-over-head"
+      },
+      {
+        "name": "archer-push-up"
       }
     ]
   },
@@ -176,78 +248,9 @@
       },
       {
         "name": "front-farmer-carry"
-      }
-    ]
-  },
-  {
-    "muscle": "hamstring",
-    "exercises": [
-      {
-        "name": "ass-up"
       },
       {
-        "name": "romanian-deadlift"
-      },
-      {
-        "name": "ass-up-one-leg"
-      }
-    ]
-  },
-  {
-    "muscle": "chestic",
-    "exercises": [
-      {
-        "name": "handstand"
-      },
-      {
-        "name": "push-up"
-      },
-      {
-        "name": "diamond-push-up"
-      },
-      {
-        "name": "dips"
-      }
-    ]
-  },
-  {
-    "muscle": "rear delt",
-    "exercises": [
-      {
-        "name": "rear-delt"
-      }
-    ]
-  },
-  {
-    "muscle": "tricep",
-    "exercises": [
-      {
-        "name": "dips"
-      },
-      {
-        "name": "band-triceps"
-      },
-      {
-        "name": "triceps-over-head"
-      }
-    ]
-  },
-  {
-    "muscle": "cardio",
-    "exercises": [
-      {
-        "name": "sweat"
-      }
-    ]
-  },
-  {
-    "muscle": "biceps",
-    "exercises": [
-      {
-        "name": "hammer-curls"
-      },
-      {
-        "name": "curls"
+        "name": "cartwheel"
       }
     ]
   }

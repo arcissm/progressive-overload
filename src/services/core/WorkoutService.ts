@@ -5,7 +5,7 @@ import {Workout} from "../../models/Workout";
 import { DBService } from "./DBService";
 import { getRandomInt, getTodayDateUTC, isSameDate } from "utils/AlgorithmUtils";
 import * as path from "path";
-import { WORKOUT_WARMUP_MAP, YOGA_CHANCE, YOGA_WORKOUT } from "utils/Constants";
+import { YOGA_CHANCE, YOGA_WORKOUT } from "utils/Constants";
 
 //In future use to create workout stats
 export class WorkoutService {
@@ -265,17 +265,16 @@ export class WorkoutService {
         return minSets;
     }
 
-	// Utils to create Workout
+	// TODO: Make a warm up config
 	private getWarmUForWorkout(workoutType: string): Exercise[] {
 		// 25% of the time, you do yoga as a warmup
 		if(Math.random() < YOGA_CHANCE){
 			const index = getRandomInt(0, YOGA_WORKOUT.length -1)
-			// const yoga = new Exercise("yoga",0,0,"",0, YOGA_WORKOUT[index])
-			const yoga = new Exercise("yoga", 0, "", 0, 0, 0, 0, YOGA_WORKOUT[index], false, false, false, true)
+			const yoga = new Exercise("yoga", 0, "", 0, 0, 0, "", 0, YOGA_WORKOUT[index], false, false, false,)
 			return [yoga];
 		}
 
-		return WORKOUT_WARMUP_MAP[workoutType] || [];
+		return [];
 	}
 
 		

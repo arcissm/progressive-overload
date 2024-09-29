@@ -360,5 +360,20 @@
         "next": []
       }
     ]
+  },
+  {
+    "exercise": "ass up",
+    "variations": [
+      {
+        "name": "ass up",
+        "next": [
+          "ass up one leg"
+        ]
+      },
+      {
+        "name": "ass up one leg",
+        "next": []
+      }
+    ]
   }
 ]

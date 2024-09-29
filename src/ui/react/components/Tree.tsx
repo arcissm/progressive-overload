@@ -47,7 +47,7 @@ const TreeComponent = <T extends string>({
         // Pass the old node value along with the new value
         onChangeNode(value, oldValue);
       }
-    }, 500); // Adjust the debounce delay as needed
+    }, 1000); // Adjust the debounce delay as needed
 
     setDebounceTimeout(newTimeout);
   };

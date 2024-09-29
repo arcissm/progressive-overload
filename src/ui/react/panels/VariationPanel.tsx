@@ -10,24 +10,19 @@ const VariationPanel: React.FC = () => {
   const controller = useWorkoutController();
   const [variations, setVariations] = useState<Map<string, Tree<string>>>();
   const [checkedNodes, setCheckedNodes] = useState<Map<string, string | null>>(new Map());
-  const [isHovered, setIsHovered] = useState(false);
   const [editingVariations, setEditingVariations] = useState<Map<string, string>>(new Map());
   const [debounceTimeout, setDebounceTimeout] = useState<NodeJS.Timeout | null>(null);
 
-  const handleMouseEnter = () => setIsHovered(true);
-  const handleMouseLeave = () => setIsHovered(false);
 
-  // Use useEffect to load the variations when the component mounts
+  //  load the variations when the component mounts
   useEffect(() => {
     const loadTrees = async () => {
       const fetchedVariations = await controller.getVariations();
       const updatedCheckedNodes = new Map<string, string | null>();
 
-      // Iterate through each tree to fetch the checked exercise for that tree
       for (const [rootName, tree] of fetchedVariations.entries()) {
         const checkedVariation = await controller.getVariationForExercise(rootName);
 
-        // If there's a checked exercise, set it in the map
         if (checkedVariation) {
           const checkedNode = tree.findNode(checkedVariation);
           if (checkedNode) {
@@ -39,54 +34,55 @@ const VariationPanel: React.FC = () => {
       }
 
       setVariations(fetchedVariations);
-      setCheckedNodes(updatedCheckedNodes); // Update the checked nodes state
+      setCheckedNodes(updatedCheckedNodes);
     };
 
     loadTrees();
   }, [controller]);
 
   const handleAddVariation = () => {
-    const updatedVariations = controller.addTree(); // This should return the updated map
-    setVariations(new Map(updatedVariations)); // Update the state with the new map  
+    const updatedVariations = controller.addTree();
+    setVariations(new Map(updatedVariations));
   };
 
   const handleAddChildNode = (exerciseName: string, node: TreeNode<string>) => {
-    const updatedVariations = controller.addNode(exerciseName, node); // This should return the updated map
-    setVariations(new Map(updatedVariations)); // Update the state with the new map
+    const updatedVariations = controller.addNode(exerciseName, node);
+    setVariations(new Map(updatedVariations));
 };
 
-const handleAddSiblingNode = (exerciseName: string, node: TreeNode<string>) => {
-    if (node.parent) {
-        const updatedVariations = controller.addNode(exerciseName, node.parent); // This should return the updated map
-        setVariations(new Map(updatedVariations)); // Update the state with the new map
-    }
-};
-
+  const handleAddSiblingNode = (exerciseName: string, node: TreeNode<string>) => {
+      if (node.parent) {
+          const updatedVariations = controller.addNode(exerciseName, node.parent); 
+          setVariations(new Map(updatedVariations));
+      }
+  };
 
   const handleRemoveNode = (exerciseName: string, node: TreeNode<string>) => {
-    const updatedVariations = controller.removeNode(exerciseName, node); // This should return the updated map
-    setVariations(new Map(updatedVariations)); // Update the state with the new map  };
+    const updatedVariations = controller.removeNode(exerciseName, node);
+    setVariations(new Map(updatedVariations)); 
   }
 
 
   const handleChangeNode = (exerciseName: string, newValue: string, oldValue: string) => {
     const updatedVariations = controller.updateVariationName(exerciseName, oldValue, newValue);
-    setVariations(new Map(updatedVariations)); // Update the state with the new map
-  };
+    setVariations(new Map(updatedVariations));
+  }
   
   const handleCheckboxChange = (exerciseName: string, node: TreeNode<string>) => {
     setCheckedNodes((prevCheckedNodes) => {
       const newCheckedNodes = new Map(prevCheckedNodes);
       const currentCheckedNode = newCheckedNodes.get(exerciseName);
+      let checkedVariaiton = exerciseName; // this one line implies that you have a variation because its the exercise not a empty string
 
       // If the clicked node is already checked, uncheck it
       if (currentCheckedNode === node.id) {
         newCheckedNodes.set(exerciseName, null);
       } else {
         newCheckedNodes.set(exerciseName, node.id);
+        checkedVariaiton = node.data;
       }
 
-      controller.setVariationForExercise(exerciseName, node.data);
+      controller.setVariationForExercise(exerciseName, checkedVariaiton);
       return newCheckedNodes;
     });
   };
@@ -94,21 +90,13 @@ const handleAddSiblingNode = (exerciseName: string, node: TreeNode<string>) => {
 
   const handleExerciseNameChange = (e: React.ChangeEvent<HTMLInputElement>, rootNode: TreeNode<string>) => {
     const oldName = rootNode.data;
+    console.log(oldName)
 
     const value = e.target.value;
     const newEditingVariations = new Map(editingVariations);
     newEditingVariations.set(rootNode.data, value);
     setEditingVariations(newEditingVariations);
   
-    // Update the root node data temporarily for display purposes
-    const updatedVariations = new Map(variations);
-    const tree = updatedVariations.get(rootNode.data);
-    if (tree) {
-      tree.root.data = value;
-      updatedVariations.set(value, tree);
-      updatedVariations.delete(rootNode.data);
-    }
-    setVariations(updatedVariations);
   
     // Clear previous debounce timeout if it exists
     if (debounceTimeout) {
@@ -118,16 +106,28 @@ const handleAddSiblingNode = (exerciseName: string, node: TreeNode<string>) => {
     // Set a new debounce timeout
     const newTimeout = setTimeout(() => {
       if (oldName !== value) {
-        // Make the backend call to update the exercise variation
-        controller.updateExerciseForVariation(oldName, value);
-      }
-    }, 500); // 500ms delay for debouncing
-  
-    setDebounceTimeout(newTimeout);
+        const updatedVariations = controller.updateExerciseForVariation(oldName, value);
+        setVariations(new Map(updatedVariations));      
+        }
+      }, 1000);
+
+  setDebounceTimeout(newTimeout);
   };
-  
+
+
+  useEffect(() => {
+    // Cleanup the debounce timeout on component unmount
+    return () => {
+      if (debounceTimeout) {
+        clearTimeout(debounceTimeout);
+      }
+    };
+  }, [debounceTimeout]);
+
 
   
+
+
   return (
     <div className="workout-settings-panel">
       <div className="workout-settings-information">
@@ -137,14 +137,12 @@ const handleAddSiblingNode = (exerciseName: string, node: TreeNode<string>) => {
 
       {variations ? (
         Array.from(variations.entries()).map(([name, tree]) => {
-          const editingValue = editingVariations.get(tree.root.data) || tree.root.data;
+        const editingValue = editingVariations.get(tree.root.data) || tree.root.data;
 
           return (
             <div className="workout-settings-variations-container" key={name}>
               <div
                 className="workout-settings-variations-container-header"
-                onMouseEnter={handleMouseEnter}
-                onMouseLeave={handleMouseLeave}
               >
                 <div className="workout-settings-variations-container-header-title">
                   <input

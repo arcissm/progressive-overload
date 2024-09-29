@@ -190,7 +190,7 @@ export class WorkoutController {
 	}
 
 	updateExerciseForVariation(oldExerciseName: string, newExerciseName: string){
-		this.db.updateExerciseForVariation(oldExerciseName, newExerciseName)
+		return this.db.updateExerciseForVariation(oldExerciseName, newExerciseName)
 
 	}
 

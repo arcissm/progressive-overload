@@ -97,6 +97,7 @@ const ExercisePanel: React.FC = () => {
         editedConfig.exercise.weight,
         editedConfig.exercise.time,
         editedConfig.exercise.weightIncrease,
+        editedConfig.exercise.variation,
         editedConfig.exercise.boosted,
         editedConfig.exercise.note,
         editedConfig.exercise.isCore,
@@ -104,6 +105,7 @@ const ExercisePanel: React.FC = () => {
         editedConfig.exercise.isCompleted,
         editedConfig.exercise.isUnlocked
       );
+        
       (updatedExercise as any)[field] = value;
       updatedExercise.nameToId()
       setEditedConfig((prevConfig)=>{
@@ -251,7 +253,7 @@ const ExercisePanel: React.FC = () => {
                           readOnly={!isEditMode}
                           onChange={(e) => handleInputChange('isUnlocked', e.target.checked)}
                         />
-                        <label htmlFor={`locked-${config.exercise.id}`}>Locked</label>
+                        <label htmlFor={`locked-${config.exercise.id}`}>Unlocked</label>
                       </div>
                     </div>
                   </div>
@@ -278,11 +280,12 @@ const ExercisePanel: React.FC = () => {
 
                   </div>
                 </div>
+                
                 <div className="workout-settings-exercise-container-note">
                   <textarea 
                     rows={4} 
                     placeholder="Enter notes here..." 
-                    value={editedConfig?.exercise.note ||config. exercise.note}
+                    value={isEditMode?editedConfig?.exercise.note || "":  config.exercise.note}
                     readOnly={!isEditMode}
                     onChange={(e) => handleInputChange('note', e.target.value)}
                   />

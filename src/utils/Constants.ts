@@ -1,4 +1,4 @@
-import {ABS_WARM_UP, ARMS_WARM_UP, BACK_WARM_UP, CHEST_WARM_UP, LEGS_WARM_UP, REHAB} from "./WarmUps";
+// import {ABS_WARM_UP, ARMS_WARM_UP, BACK_WARM_UP, CHEST_WARM_UP, LEGS_WARM_UP, REHAB} from "./WarmUps";
 import {Exercise} from "../models/Exercise";
 
 
@@ -22,14 +22,14 @@ export const MINIMUM_WORKOUT_DAYS_2_WEEKS = 8;
 export const BREAK = "break"
 export const REPS = ["N/A", "5", "6-8", "8-10", "10-12", "12-15", "15-20", "max"];
 
-export const WORKOUT_WARMUP_MAP: Record<string, Exercise[]> = {
-	fff: REHAB, // Example mapping
-	abs: [...REHAB, ...ABS_WARM_UP], // Example mapping
-	arms: [...REHAB, ...ARMS_WARM_UP],
-	legs: [...REHAB, ...LEGS_WARM_UP],
-	chest: [...REHAB, ...CHEST_WARM_UP],
-	back: [...REHAB, ...BACK_WARM_UP],
-};
+// export const WORKOUT_WARMUP_MAP: Record<string, Exercise[]> = {
+// 	fff: REHAB, // Example mapping
+// 	abs: [...REHAB, ...ABS_WARM_UP], // Example mapping
+// 	arms: [...REHAB, ...ARMS_WARM_UP],
+// 	legs: [...REHAB, ...LEGS_WARM_UP],
+// 	chest: [...REHAB, ...CHEST_WARM_UP],
+// 	back: [...REHAB, ...BACK_WARM_UP],
+// };
 
 export const YOGA_WORKOUT: string[] = [
 	"https://www.youtube.com/watch?v=iY-rGdoLX_8",
