@@ -23,9 +23,6 @@ function MultiSelectInput({ options, selectedValues = [], onSelectionChange }: M
   );
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    console.log("Multiseelect")
-    console.log(showDropdown)
-    console.log(inputValue)
     setInputValue(e.target.value);
     setShowDropdown(true);
   };

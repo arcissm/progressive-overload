@@ -1,5 +1,13 @@
 [
   {
+    "muscle": "cardio",
+    "exercises": [
+      {
+        "name": "sweat"
+      }
+    ]
+  },
+  {
     "muscle": "forearm",
     "exercises": [
       {
@@ -7,128 +15,6 @@
       },
       {
         "name": "nyan-open-palm"
-      }
-    ]
-  },
-  {
-    "muscle": "side delt",
-    "exercises": [
-      {
-        "name": "side-laterals"
-      },
-      {
-        "name": "shoulder-twisties"
-      },
-      {
-        "name": "thrusters"
-      }
-    ]
-  },
-  {
-    "muscle": "quads",
-    "exercises": [
-      {
-        "name": "thrusters"
-      },
-      {
-        "name": "deadlift"
-      },
-      {
-        "name": "ass-up"
-      },
-      {
-        "name": "squat"
-      },
-      {
-        "name": "box-jumps"
-      },
-      {
-        "name": "single-leg-hops"
-      },
-      {
-        "name": "lunges"
-      },
-      {
-        "name": "lunges"
-      },
-      {
-        "name": "jumps"
-      },
-      {
-        "name": "split-squats"
-      },
-      {
-        "name": "side-lunges"
-      },
-      {
-        "name": "alternating-dumbbell-snatch"
-      },
-      {
-        "name": "split-box-jump"
-      }
-    ]
-  },
-  {
-    "muscle": "front delt",
-    "exercises": [
-      {
-        "name": "thrusters"
-      },
-      {
-        "name": "thrusters"
-      },
-      {
-        "name": "alternating-dumbbell-snatch"
-      },
-      {
-        "name": "alternating-dumbbell-snatch"
-      },
-      {
-        "name": "handstand"
-      },
-      {
-        "name": "archer-push-up"
-      },
-      {
-        "name": "over-head-press"
-      },
-      {
-        "name": "front-raises"
-      }
-    ]
-  },
-  {
-    "muscle": "back",
-    "exercises": [
-      {
-        "name": "deadlift"
-      },
-      {
-        "name": "ass-up"
-      },
-      {
-        "name": "chin-up"
-      },
-      {
-        "name": "row"
-      },
-      {
-        "name": "pull-up"
-      },
-      {
-        "name": "piston-row"
-      },
-      {
-        "name": "band-row"
-      },
-      {
-        "name": "band-pull-down"
-      },
-      {
-        "name": "band-superman"
-      },
-      {
-        "name": "scapula-uppies"
       }
     ]
   },
@@ -176,25 +62,93 @@
       },
       {
         "name": "front-farmer-carry"
+      },
+      {
+        "name": "cartwheel"
       }
     ]
   },
   {
-    "muscle": "hamstring",
+    "muscle": "rear delt",
     "exercises": [
       {
-        "name": "ass-up"
-      },
-      {
-        "name": "romanian-deadlift"
-      },
-      {
-        "name": "ass-up-one-leg"
+        "name": "rear-delt-dumbell"
       }
     ]
   },
   {
-    "muscle": "chestic",
+    "muscle": "side delt",
+    "exercises": [
+      {
+        "name": "side-laterals"
+      },
+      {
+        "name": "shoulder-twisties"
+      },
+      {
+        "name": "cartwheel"
+      },
+      {
+        "name": "thrusters"
+      }
+    ]
+  },
+  {
+    "muscle": "front delt",
+    "exercises": [
+      {
+        "name": "handstand"
+      },
+      {
+        "name": "archer-push-up"
+      },
+      {
+        "name": "over-head-press"
+      },
+      {
+        "name": "front-raises"
+      },
+      {
+        "name": "dips"
+      },
+      {
+        "name": "thrusters"
+      }
+    ]
+  },
+  {
+    "muscle": "biceps",
+    "exercises": [
+      {
+        "name": "hammer-curls"
+      },
+      {
+        "name": "curls"
+      },
+      {
+        "name": "chin-up"
+      }
+    ]
+  },
+  {
+    "muscle": "tricep",
+    "exercises": [
+      {
+        "name": "dips"
+      },
+      {
+        "name": "band-triceps"
+      },
+      {
+        "name": "triceps-over-head"
+      },
+      {
+        "name": "archer-push-up"
+      }
+    ]
+  },
+  {
+    "muscle": "chest",
     "exercises": [
       {
         "name": "handstand"
@@ -211,43 +165,95 @@
     ]
   },
   {
-    "muscle": "rear delt",
+    "muscle": "back",
     "exercises": [
       {
-        "name": "rear-delt"
+        "name": "deadlift"
+      },
+      {
+        "name": "ass-up"
+      },
+      {
+        "name": "chin-up"
+      },
+      {
+        "name": "row"
+      },
+      {
+        "name": "pull-up"
+      },
+      {
+        "name": "piston-row"
+      },
+      {
+        "name": "band-row"
+      },
+      {
+        "name": "band-pull-down"
+      },
+      {
+        "name": "band-superman"
+      },
+      {
+        "name": "scapula-uppies"
+      },
+      {
+        "name": "one-arm-deadlift"
+      },
+      {
+        "name": "inverted-deadlift"
       }
     ]
   },
   {
-    "muscle": "tricep",
+    "muscle": "quads",
     "exercises": [
       {
-        "name": "dips"
+        "name": "thrusters"
       },
       {
-        "name": "band-triceps"
+        "name": "deadlift"
       },
       {
-        "name": "triceps-over-head"
+        "name": "squat"
+      },
+      {
+        "name": "box-jumps"
+      },
+      {
+        "name": "single-leg-hops"
+      },
+      {
+        "name": "lunges"
+      },
+      {
+        "name": "jumps"
+      },
+      {
+        "name": "split-squats"
+      },
+      {
+        "name": "side-lunges"
+      },
+      {
+        "name": "alternating-dumbbell-snatch"
+      },
+      {
+        "name": "split-box-jump"
+      },
+      {
+        "name": "one-arm-deadlift"
       }
     ]
   },
   {
-    "muscle": "cardio",
+    "muscle": "hamstring",
     "exercises": [
       {
-        "name": "sweat"
-      }
-    ]
-  },
-  {
-    "muscle": "biceps",
-    "exercises": [
-      {
-        "name": "hammer-curls"
+        "name": "ass-up"
       },
       {
-        "name": "curls"
+        "name": "romanian-deadlift"
       }
     ]
   }

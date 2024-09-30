@@ -7,6 +7,9 @@
       },
       {
         "name": "hamstring"
+      },
+      {
+        "name": "abs"
       }
     ]
   },
@@ -17,15 +20,43 @@
         "name": "back"
       },
       {
-        "name": "quads"
+        "name": "abs"
       }
     ]
   },
   {
-    "workout": "abs",
+    "workout": "chest",
     "muscles": [
       {
-        "name": "abs"
+        "name": "chest"
+      },
+      {
+        "name": "front delt"
+      }
+    ]
+  },
+  {
+    "workout": "arms",
+    "muscles": [
+      {
+        "name": "biceps"
+      },
+      {
+        "name": "tricep"
+      }
+    ]
+  },
+  {
+    "workout": "shoulder",
+    "muscles": [
+      {
+        "name": "front delt"
+      },
+      {
+        "name": "side delt"
+      },
+      {
+        "name": "rear delt"
       }
     ]
   },

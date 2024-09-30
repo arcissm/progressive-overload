@@ -64,6 +64,7 @@ export class DBService {
 	updateExerciseForVariation(oldExerciseName: string, newExerciseName: string){
 		this.variationData.updateVariationData(oldExerciseName, newExerciseName)
 		this.variationData.saveVariations()
+		return this.variationData.variations;
 	}
 
 	addNode(exerciseName: string, node: TreeNode<string>){
@@ -214,12 +215,15 @@ export class DBService {
 	}
 
 
+	// TODO: CHANGE THIS
 	getCoreExercises(muscleName: string){
 		const exercies = this.getExercisesForMuscle(muscleName);
 		if(exercies == null) {
 			return [];
 		} else{
-			return exercies.filter(ex => ex.isCore)
+			return []
+
+			// return exercies.filter(ex => ex.isCore)
 		}
 	}
 
@@ -231,6 +235,11 @@ export class DBService {
 	getExerciseConfigs(){
 		return this.exerciseConfigs;
 	}
+
+	getMuscleExerciseMap(){
+		return this.relationalData.muscleExerciseMap;
+	}
+
 	
 	updateExercises(){
 		this.exerciseData.saveExercises()
@@ -281,7 +290,6 @@ export class DBService {
 			exercise.time = newExercise.time;
 			exercise.weightIncrease = newExercise.weightIncrease;
 			exercise.note = newExercise.note;
-			exercise.isCore = newExercise.isCore;
 			exercise.isUnlocked = newExercise.isUnlocked;
 			exercise.nameToId();
 		}

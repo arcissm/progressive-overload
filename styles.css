@@ -222,7 +222,7 @@ input[type=checkbox]:checked:after{
 
 
 
-
+/* Workout Type Settings */
 
 .workout-settings-panel{
 	width: 100%;
@@ -324,6 +324,86 @@ input[type=checkbox]:checked:after{
 	opacity: 1;  /* Ensures full opacity (default is 0.5 in some browsers) */
 }
  
+
+/* MUSCLE SETTINGS */
+.workout-settings-muscle-container {
+	display: flex;
+	flex-direction: column;
+	width: 100%;
+  }
+
+  .workout-settings-muscle-header{
+	padding: 1rem;
+	font-size: 1.2rem;
+    background-color: var(--interactive-accent);
+	margin-bottom: 1rem;
+    
+  }
+  .workout-settings-muscle-data {
+	gap: 1rem;
+  }
+  
+  .workout-settings-muscle-header,
+  .workout-settings-muscle-data {
+	display: flex;
+	flex-direction: column;
+	width: 100%;
+  }
+  
+  .workout-settings-muscle-row {
+	display: flex;
+	width: 100%;
+  }
+  
+  /* Header cells and data cells styling */
+  .workout-settings-muscle-header-cell,
+  .workout-settings-muscle-cell {
+	flex: 1; /* Make each cell take up an equal amount of space */
+	box-sizing: border-box;
+	align-items: center;
+	text-align: left; /* Align the text to the left */
+}
+  
+  /* Make the trash column smaller */
+  .workout-settings-muscle-cell.trash-cell,
+  .workout-settings-muscle-header-cell.trash-header {
+	flex: 0; /* Take up as little space as needed */
+	width: auto; /* Adjust according to the content */
+  }
+  
+  /* Specific styling for header cells */
+  .workout-settings-muscle-header-cell {
+	font-weight: bold;
+	justify-content: center;
+  }
+  
+  /* Input field styling within cells */
+  .workout-settings-muscle-cell input {
+	width: 90%; /* Ensure the input fields don't overflow */
+	padding: 5px;
+	font-size: 1rem;
+  }
+  
+  /* MultiSelectInput container */
+  .workout-settings-muscle-multiselect {
+	padding: 5px;
+	box-sizing: border-box;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	flex-grow: 1;
+  }
+
+  .workout-settings-muscle-multiselect-label{
+	flex-grow: 0;
+	align-self: flex-end;
+	font-size: 1rem;
+	padding: 1rem;
+
+	}
+
+
+
 
 
 /* EXERCISES SETTINGS */
@@ -661,7 +741,7 @@ input[type=checkbox]:checked:after{
 	margin: 0;
 	max-height: 150px;
 	overflow-y: auto;
-	z-index: 1;
+	z-index: 11;
   }
   
   /* Each option in the dropdown list */

@@ -1,0 +1,113 @@
+[
+  {
+    "muscle": "cardio",
+    "exercises": [
+      {
+        "name": "sweat"
+      }
+    ]
+  },
+  {
+    "muscle": "hamstring",
+    "exercises": [
+      {
+        "name": "romanian-deadlift"
+      }
+    ]
+  },
+  {
+    "muscle": "biceps",
+    "exercises": [
+      {
+        "name": "curls"
+      }
+    ]
+  },
+  {
+    "muscle": "quads",
+    "exercises": [
+      {
+        "name": "squat"
+      },
+      {
+        "name": "box-jumps"
+      }
+    ]
+  },
+  {
+    "muscle": "back",
+    "exercises": [
+      {
+        "name": "deadlift"
+      },
+      {
+        "name": "row"
+      },
+      {
+        "name": "pull-up"
+      }
+    ]
+  },
+  {
+    "muscle": "chest",
+    "exercises": [
+      {
+        "name": "dips"
+      }
+    ]
+  },
+  {
+    "muscle": "rear delt",
+    "exercises": [
+      {
+        "name": "rear-delt-dumbell"
+      }
+    ]
+  },
+  {
+    "muscle": "side delt",
+    "exercises": [
+      {
+        "name": "side-laterals"
+      }
+    ]
+  },
+  {
+    "muscle": "front delt",
+    "exercises": [
+      {
+        "name": "over-head-press"
+      },
+      {
+        "name": "thrusters"
+      }
+    ]
+  },
+  {
+    "muscle": "forearm",
+    "exercises": [
+      {
+        "name": "nyan-open-palm"
+      }
+    ]
+  },
+  {
+    "muscle": "tricep",
+    "exercises": [
+      {
+        "name": "triceps-over-head"
+      }
+    ]
+  },
+  {
+    "muscle": "abs",
+    "exercises": [
+      {
+        "name": "band-press"
+      },
+      {
+        "name": "roll"
+      }
+    ]
+  }
+]

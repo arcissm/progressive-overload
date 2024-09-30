@@ -132,7 +132,6 @@ export class ExerciseData {
 				rawExercise.variation,
 				rawExercise.boosted,
 				rawExercise.note,
-				rawExercise.isCore,
 				rawExercise.isSuccess,
 				rawExercise.isCompleted,
 				rawExercise.isUnlocked
