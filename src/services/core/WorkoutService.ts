@@ -223,6 +223,8 @@ export class WorkoutService {
 	private progressiveOverload(exercise: Exercise){
 		if(exercise.isSuccess){
 			exercise.isSuccess = false;
+			exercise.isCompleted = false;
+
 			const nextVariation = this.db.getNextVariation(exercise)
 			exercise.progressiveOverload(nextVariation);
 		}
