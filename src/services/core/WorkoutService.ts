@@ -10,7 +10,6 @@ import { YOGA_CHANCE, YOGA_WORKOUT } from "utils/Constants";
 //In future use to create workout stats
 export class WorkoutService {
 	private db: DBService;
-	private exerciseData: ExerciseData;
 
 	constructor(db: DBService) {
 		this.db = db;
@@ -212,7 +211,7 @@ export class WorkoutService {
 			const chooseFromExercises = this.db.getUnlockedExercisesForMuscle(muscle.name)
 
 			const coreSets = coreExercises.reduce((sum, exercise) => {
-				return sum + exercise.sets;
+				return sum + 1 //exercise.sets;
 			}, 0);
 			let totalSets = getRandomInt(muscle.minSets, muscle.maxSets) - coreSets;
 

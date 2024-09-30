@@ -52,12 +52,17 @@ export class MuscleData {
 		// Read and parse the JSON file
 		const rawData = fs.readFileSync(dataPath, 'utf8');
 		const parsedData = JSON.parse(rawData);
-
+	
 		// Process each exercise from the parsed data
 		parsedData.forEach((rawMuscle: any) => {
-
-			const muscle = new Muscle(rawMuscle.name, rawMuscle.minSets, rawMuscle.maxSets, rawMuscle.boosted)
-			this.muscles.push(muscle)
+			const muscle = new Muscle(
+				rawMuscle.name, 
+				rawMuscle.minSets, 
+				rawMuscle.maxSets, 
+				rawMuscle.boosted,
+				rawMuscle.coreExercises || [] // Read coreExercises or set it to an empty array if not present
+			);
+			this.muscles.push(muscle);
 		});
 	}
 }

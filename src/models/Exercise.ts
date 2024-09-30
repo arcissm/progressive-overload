@@ -12,7 +12,6 @@ export class Exercise {
 	variation: string;
 	boosted: number;
 	note: string;
-	isCore: boolean;
 	isSuccess: boolean;
 	isCompleted: boolean;
 	isUnlocked: boolean;
@@ -27,7 +26,6 @@ export class Exercise {
 		variation = "",
 		boosted = 0,
 		note = "",
-		isCore = false,
 		isSuccess = false, 
 		isCompleted = false, 
 		isUnlocked = false) {
@@ -40,7 +38,6 @@ export class Exercise {
 		this.time = time;
 		this.note = note;
 		this.variation = variation;
-		this.isCore = isCore;
 		this.isSuccess = isCompleted;
 		this.isCompleted = isSuccess;
 		this.isUnlocked = isUnlocked;
@@ -64,7 +61,6 @@ export class Exercise {
 			exercise.variation,
 			exercise.boosted,
 			exercise.note,
-			exercise.isCore,
 			exercise.isSuccess,
 			exercise.isCompleted,
 			exercise.isUnlocked

@@ -1,74 +1,111 @@
 [
   {
     "name": "biceps",
-    "minSets": 3,
-    "maxSets": 5,
-    "boosted": 0
+    "minSets": 4,
+    "maxSets": 6,
+    "boosted": 0,
+    "coreExercises": [
+      "curls"
+    ]
   },
   {
     "name": "tricep",
-    "minSets": 3,
-    "maxSets": 5,
-    "boosted": 0
+    "minSets": 4,
+    "maxSets": 2,
+    "boosted": 0,
+    "coreExercises": [
+      "triceps-over-head"
+    ]
   },
   {
     "name": "forearm",
     "minSets": 3,
     "maxSets": 5,
-    "boosted": 0
+    "boosted": 0,
+    "coreExercises": [
+      "nyan-open-palm"
+    ]
   },
   {
     "name": "front delt",
     "minSets": 3,
     "maxSets": 5,
-    "boosted": 0
+    "boosted": 0,
+    "coreExercises": [
+      "handstand"
+    ]
   },
   {
     "name": "side delt",
     "minSets": 3,
     "maxSets": 5,
-    "boosted": 0
+    "boosted": 0,
+    "coreExercises": [
+      "side-laterals"
+    ]
   },
   {
     "name": "rear delt",
     "minSets": 3,
     "maxSets": 5,
-    "boosted": 0
+    "boosted": 0,
+    "coreExercises": [
+      "rear-delt-dumbell"
+    ]
   },
   {
     "name": "chest",
-    "minSets": 3,
-    "maxSets": 5,
-    "boosted": 0
+    "minSets": 5,
+    "maxSets": 6,
+    "boosted": 0,
+    "coreExercises": [
+      "dips"
+    ]
   },
   {
     "name": "back",
     "minSets": 3,
-    "maxSets": 5,
-    "boosted": 0
+    "maxSets": 8,
+    "boosted": 0,
+    "coreExercises": [
+      "deadlift",
+      "row",
+      "pull-up"
+    ]
   },
   {
     "name": "quads",
-    "minSets": 3,
-    "maxSets": 5,
-    "boosted": 0
+    "minSets": 5,
+    "maxSets": 6,
+    "boosted": 0,
+    "coreExercises": [
+      "squat"
+    ]
   },
   {
     "name": "hamstring",
-    "minSets": 3,
-    "maxSets": 5,
-    "boosted": 0
+    "minSets": 4,
+    "maxSets": 6,
+    "boosted": 0,
+    "coreExercises": [
+      "romanian-deadlift"
+    ]
   },
   {
     "name": "abs",
     "minSets": 2,
     "maxSets": 4,
-    "boosted": 0
+    "boosted": 0,
+    "coreExercises": [
+      "roll",
+      "band-press"
+    ]
   },
   {
     "name": "cardio",
     "minSets": 0,
     "maxSets": 0,
-    "boosted": 0
+    "boosted": 0,
+    "coreExercises": []
   }
 ]

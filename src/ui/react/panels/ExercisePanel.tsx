@@ -100,7 +100,6 @@ const ExercisePanel: React.FC = () => {
         editedConfig.exercise.variation,
         editedConfig.exercise.boosted,
         editedConfig.exercise.note,
-        editedConfig.exercise.isCore,
         editedConfig.exercise.isSuccess,
         editedConfig.exercise.isCompleted,
         editedConfig.exercise.isUnlocked
@@ -235,16 +234,6 @@ const ExercisePanel: React.FC = () => {
 
                     {/* Checkboxes for Core and Locked */}
                     <div className="workout-settings-exercise-container-details-checkboxes">
-                      <div className="workout-settings-exercise-container-details-checkboxes-box">
-                        <input
-                          type="checkbox"
-                          id={`core-${config.exercise.id}`}
-                          checked={editedConfig ? editedConfig?.exercise.isCore: config.exercise.isCore}
-                          readOnly={!isEditMode}
-                          onChange={(e) => handleInputChange('isCore', e.target.checked)}
-                        />
-                        <label htmlFor={`core-${config.exercise.id}`}>Core</label>
-                      </div>
                       <div className="workout-settings-exercise-container-details-checkboxes-box">
                         <input
                           type="checkbox"

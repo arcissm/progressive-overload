@@ -4,6 +4,7 @@ import { Muscle } from "models/Muscle";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus, faTrashCan,  } from '@fortawesome/free-solid-svg-icons'; 
 import { Notice } from "obsidian";
+import MultiSelectInput from "../components/MultiSelect";
 
 
 // Define a new type for debouncing multiple muscles
@@ -15,17 +16,21 @@ type MuscleUpdate = {
 const MusclePanel: React.FC = () => {
   const controller = useWorkoutController();
   const [muscles, setMuscles] = useState<Muscle[]>([]); 
+  const [muscleExerciseMap, setMuscleExerciseMap] = useState< Map<string, string[]>>(new Map());
   const [debouncedMuscleUpdates, setDebouncedMuscleUpdates] = useState<MuscleUpdate[]>([]); // Track multiple updates
 
 
   // Use useEffect to load the muscles when the component mounts
   useEffect(() => {
-    const loadMuscles = async () => {
-      const fetchedMuscles = await controller.getMuscles();
+    const loadData = async () => {
+      const fetchedMuscles = controller.getMuscles();
       setMuscles(fetchedMuscles);
+
+      const fetchedMuscleExerciseMap = controller.getMuscleExerciseMap();  
+      setMuscleExerciseMap(fetchedMuscleExerciseMap)    
     };
     
-    loadMuscles();
+    loadData();
   }, [controller]);
 
 
@@ -34,7 +39,7 @@ const MusclePanel: React.FC = () => {
   
     if (!muscleWithEmptyNameExists) {
       setMuscles((prevMuscles) => {
-        const newMuscle = new Muscle("", 0, 0, 0)
+        const newMuscle = new Muscle("", 0, 0, 0, [])
         const updatedMuscles = [...prevMuscles, newMuscle];
         controller.addMuscle(newMuscle)
         return updatedMuscles
@@ -58,46 +63,42 @@ const MusclePanel: React.FC = () => {
   };
 
   
-  const handleInputChange = (index: number, field: keyof Muscle, value: string | number) => {
-    setMuscles((prevMuscles) => {
-      const updatedMuscles = [...prevMuscles]; // Best practice to copy state
-      const oldMuscle = new Muscle(
-        updatedMuscles[index].name,
-        updatedMuscles[index].minSets,
-        updatedMuscles[index].maxSets,
-        updatedMuscles[index].boosted
-      );
 
-      // Use the isNameUnique utility function to check if the new name is unique
+  const handleInputChange = (index: number, field: keyof Muscle, value: string | number | string[]) => {
+    setMuscles((prevMuscles) => {
+      const updatedMuscles = [...prevMuscles]; // Copy the previous state
+  
+      
       if (field === 'name' && !isNameUnique(prevMuscles, String(value), index)) {
         new Notice("Be original");
-        return updatedMuscles; // Do not update if the name is not unique
+        return updatedMuscles;
       }
-
-      // Update muscle based on changed field
+      
+      // Create the new Muscle object with updated fields
       updatedMuscles[index] = new Muscle(
         field === 'name' ? String(value) : updatedMuscles[index].name,
         field === 'minSets' ? Number(value) : updatedMuscles[index].minSets,
         field === 'maxSets' ? Number(value) : updatedMuscles[index].maxSets,
-        updatedMuscles[index].boosted
+        updatedMuscles[index].boosted,
+        field === 'coreExercises' ? (value as string[]) : updatedMuscles[index].coreExercises
       );
-
+  
+      // Handle debouncing logic (unchanged from your original function)
       setDebouncedMuscleUpdates((prevUpdates) => {
-        const lastUpdateIndex = prevUpdates.findIndex(update => update.newMuscle.name === oldMuscle.name);
+        const lastUpdateIndex = prevUpdates.findIndex(update => update.newMuscle.name === updatedMuscles[index].name);
         if (lastUpdateIndex > -1) {
-          // If there is a previous update with the same muscle name, replace it with the new one
           const updatedQueue = [...prevUpdates];
           updatedQueue[lastUpdateIndex].newMuscle = updatedMuscles[index];
           return updatedQueue;
         } else {
-          // If not in the queue, add it
-          return [...prevUpdates, { oldMuscle, newMuscle: updatedMuscles[index] }];
+          return [...prevUpdates, { oldMuscle: prevMuscles[index], newMuscle: updatedMuscles[index] }];
         }
       });
+  
       return updatedMuscles;
     });
   };
-
+  
 
   // UseEffect for debouncing multiple muscle updates
   useEffect(() => {
@@ -136,6 +137,8 @@ const MusclePanel: React.FC = () => {
   };
 
 
+    
+
   return (
     <div className="workout-settings-panel">
       <div className="workout-settings-information">
@@ -144,59 +147,70 @@ const MusclePanel: React.FC = () => {
         <p>Every workout will have x number of sets between (Min Sets, Max Sets)</p>
       </div>
 
-      {/* Table structure */}
-      <div className="workout-settings-table-container">
-        <table className="workout-settings-table">
-          <thead>
-            <tr>
-              <th className="workout-settings-table-header">Name</th>
-              <th className="workout-settings-table-header">Min Sets</th>
-              <th className="workout-settings-table-header">Max Sets</th>
-              <th className="workout-settings-table-header-trash"></th>
-            </tr>
-          </thead>
-          <tbody>
-            {muscles.map((muscle, index) => (
-              <tr key={index}>
-                <td className="workout-settings-table-cell">
-                  <input
-                    type="text"
-                    value={muscle.name}
-                    onChange={(e) => handleInputChange(index, 'name', e.target.value)}
-                  />
-                </td>
-                <td className="workout-settings-table-cell">
-                  <input
-                    type="number"
-                    value={muscle.minSets}
-                    onChange={(e) => handleInputChange(index, 'minSets', Number(e.target.value))}
-                  />
-                </td>
-                <td className="workout-settings-table-cell">
-                  <input
-                    type="number"
-                    value={muscle.maxSets}
-                    onChange={(e) => handleInputChange(index, 'maxSets', Number(e.target.value))}
-                  />
-                </td>
-                <td className="workout-settings-table-cell">
-                  <button 
-                    className="workout-settings-table-button"
-                    onClick={() => handleDeleteMuscle(muscle, index)}>
-                    <FontAwesomeIcon icon={faTrashCan} />
-                  </button>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
+      {/* Div-based structure */}
+      <div className="workout-settings-muscle-container">
+        <div className="workout-settings-muscle-header">
+          <div className="workout-settings-muscle-row">
+            <div className="workout-settings-muscle-header-cell">Name</div>
+            <div className="workout-settings-muscle-header-cell">Min Sets</div>
+            <div className="workout-settings-muscle-header-cell">Max Sets</div>
+            <div className="workout-settings-muscle-header-cell trash-header"></div>
+          </div>
+        </div>
+
+        {muscles.map((muscle, index) => (
+          <div  key={index} className="workout-settings-muscle-data">
+            <div className="workout-settings-muscle-row">
+              <div className="workout-settings-muscle-cell">
+                <input
+                  type="text"
+                  value={muscle.name}
+                  onChange={(e) => handleInputChange(index, 'name', e.target.value)}
+                />
+              </div>
+              <div className="workout-settings-muscle-cell">
+                <input
+                  type="number"
+                  value={muscle.minSets}
+                  onChange={(e) => handleInputChange(index, 'minSets', Number(e.target.value))}
+                />
+              </div>
+              <div className="workout-settings-muscle-cell">
+                <input
+                  type="number"
+                  value={muscle.maxSets}
+                  onChange={(e) => handleInputChange(index, 'maxSets', Number(e.target.value))}
+                />
+              </div>
+              <div className="workout-settings-muscle-cell trash-cell">
+                <button 
+                  className="workout-settings-table-button"
+                  onClick={() => handleDeleteMuscle(muscle, index)}>
+                  <FontAwesomeIcon icon={faTrashCan} />
+                </button>
+              </div>
+            </div>
+            <div className="workout-settings-muscle-row">
+              <div className="workout-settings-muscle-multiselect-label">Core Exercises</div>
+              <div className="workout-settings-muscle-multiselect">
+                <MultiSelectInput
+                  options={muscleExerciseMap.get(muscle.name) || []}
+                  selectedValues={muscle.coreExercises}
+                  onSelectionChange={(selected) => handleInputChange(index, 'coreExercises', selected)}
+                />
+              </div>
+            </div >
+            <hr/>
+          </div>
+
+        ))}
       </div>
-      
+
       <div className="workout-settings-table-footer">
-        <button className="workout-settings-table-button" onClick={handleAddMuscle}>
-          <FontAwesomeIcon icon={faPlus} size="2x" />
-        </button>
-      </div>
+          <button className="workout-settings-table-button" onClick={handleAddMuscle}>
+            <FontAwesomeIcon icon={faPlus} size="2x" />
+          </button>
+        </div>
     </div>
   );
 };

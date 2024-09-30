@@ -165,6 +165,10 @@ export class WorkoutController {
 		return this.db.getExerciseConfigs();
 	}
 	
+	getMuscleExerciseMap(){
+		return this.db.getMuscleExerciseMap();
+	}
+
 	saveExerciseConfigs(oldConfig:ExerciseConfig, newConfig:ExerciseConfig) {
 		return this.db.saveExerciseConfigs(oldConfig, newConfig);
 	}
@@ -176,6 +180,10 @@ export class WorkoutController {
 	addExerciseConfig(newExercise: Exercise){
 		return this.db.addExerciseConfig(newExercise)
 	}
+
+
+
+
 
 	getVariations(){
 		return this.db.getVariations()
