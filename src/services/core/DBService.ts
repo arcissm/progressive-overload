@@ -217,13 +217,19 @@ export class DBService {
 
 	// TODO: CHANGE THIS
 	getCoreExercises(muscleName: string){
-		const exercies = this.getExercisesForMuscle(muscleName);
-		if(exercies == null) {
+		const muscle = this.muscleData.getMuscleByName(muscleName)
+		if(muscle == null) {
 			return [];
 		} else{
-			return []
-
-			// return exercies.filter(ex => ex.isCore)
+			const exerciseIds = muscle.coreExercises;
+			const coreExercises: (Exercise)[] = []
+			exerciseIds.forEach(id => {
+				const exercise = this.exerciseData.getExerciseById(id)
+				if(exercise){
+					coreExercises.push(exercise)
+				}
+			})
+			return coreExercises
 		}
 	}
 
