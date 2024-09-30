@@ -28,7 +28,7 @@ export class WorkoutService {
 		this.useSteroids(muscles);
 		const exercises = this.createExercises(muscles)
 		exercises.forEach(exercise =>{
-			exercise.progressiveOverload();
+			// exercise.progressiveOverload();
 		})
 
 		const workout = new Workout(
@@ -203,24 +203,31 @@ export class WorkoutService {
 
 
 	// Exercise List
-	private createExercises(muscles: Array<Muscle>){
-		const exercises: Array<Exercise> = []
-
-		muscles.forEach(muscle =>{
+	private createExercises(muscles: Array<Muscle>): Exercise[] {
+		const exercises: Set<Exercise> = new Set(); // Initialize the Set
+	
+		muscles.forEach(muscle => {
 			const coreExercises = this.db.getCoreExercises(muscle.name);
-			const chooseFromExercises = this.db.getUnlockedExercisesForMuscle(muscle.name)
-
+			const chooseFromExercises = this.db.getUnlockedExercisesForMuscle(muscle.name);
+	
 			const coreSets = coreExercises.reduce((sum, exercise) => {
-				return sum + 1 //exercise.sets;
+				return sum + 1; // Assuming exercise.sets should be 1 for each core exercise
 			}, 0);
+			
 			let totalSets = getRandomInt(muscle.minSets, muscle.maxSets) - coreSets;
-
+	
 			const pickedExercises = this.pickExercises(totalSets, coreExercises, chooseFromExercises);
-			exercises.push(... pickedExercises);
-		})
-
-		return exercises;
-	}
+			
+			pickedExercises.forEach(exercise => {
+				console.log(exercises)
+				console.log(exercise)
+				console.log(exercises.has(exercise))
+				exercises.add(exercise)
+			}); // Add exercises to the Set
+		});
+	
+		return Array.from(exercises); // Convert the Set to an array and return
+	}	
 
 
 	private pickExercises(remainingSets: number, pickedExercises: Exercise[], chooseFromExercises: Exercise[]): Exercise[] {
