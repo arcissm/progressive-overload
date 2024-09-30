@@ -170,8 +170,7 @@
       {
         "name": "triangle handstand tuck ups",
         "next": [
-          "triangle handstand straddle",
-          "crow wiggle"
+          "triangle handstand straddle"
         ]
       },
       {
@@ -182,7 +181,7 @@
       },
       {
         "name": "triangle handstand split legs",
-        "next": []
+        "next": ["crow wiggle"]
       },
       {
         "name": "crow wiggle",

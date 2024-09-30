@@ -21,6 +21,8 @@ export const MINIMUM_WORKOUT_DAYS_2_WEEKS = 8;
 
 export const BREAK = "break"
 export const REPS = ["N/A", "5", "6-8", "8-10", "10-12", "12-15", "15-20", "max"];
+export const PRGRESSIVE_OVERLOAD_REPS = ["5", "6-8", "8-10", "10-12"];
+
 
 // export const WORKOUT_WARMUP_MAP: Record<string, Exercise[]> = {
 // 	fff: REHAB, // Example mapping

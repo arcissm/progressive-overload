@@ -50,13 +50,6 @@ const VariationPanel: React.FC = () => {
     setVariations(new Map(updatedVariations));
 };
 
-  const handleAddSiblingNode = (exerciseName: string, node: TreeNode<string>) => {
-      if (node.parent) {
-          const updatedVariations = controller.addNode(exerciseName, node.parent); 
-          setVariations(new Map(updatedVariations));
-      }
-  };
-
   const handleRemoveNode = (exerciseName: string, node: TreeNode<string>) => {
     const updatedVariations = controller.removeNode(exerciseName, node);
     setVariations(new Map(updatedVariations)); 
@@ -164,7 +157,6 @@ const VariationPanel: React.FC = () => {
               <TreeCompoenent
                 node={tree.root}
                 onAddChildNode={(node) => handleAddChildNode(tree.root.data, node)}
-                onAddSiblingNode={(node) => handleAddSiblingNode(tree.root.data, node)}
                 onRemoveNode={(node) => handleRemoveNode(tree.root.data, node)}
                 onChangeNode={(newValue, oldValue) => handleChangeNode(tree.root.data, newValue, oldValue)}
                 onCheckboxChange={(node) => handleCheckboxChange(tree.root.data, node)}
