@@ -214,8 +214,6 @@ export class DBService {
    		 return exercises ? exercises.filter(exercise => exercise.isUnlocked) : [];
 	}
 
-
-	// TODO: CHANGE THIS
 	getCoreExercises(muscleName: string){
 		const muscle = this.muscleData.getMuscleByName(muscleName)
 		if(muscle == null) {

@@ -2,23 +2,23 @@
   {
     "name": "curls",
     "id": "curls",
-    "weight": "10",
-    "sets": "1",
+    "weight": 10,
+    "sets": 2,
     "reps": "5",
-    "time": "30",
+    "time": 30,
     "note": "",
     "variation": "",
     "isSuccess": false,
     "isCompleted": false,
     "isUnlocked": true,
     "weightIncrease": 10,
-    "boosted": 0
+    "boosted": null
   },
   {
     "name": "hammer curls",
     "id": "hammer-curls",
-    "weight": "10",
-    "sets": "1",
+    "weight": 10,
+    "sets": 1,
     "reps": "5",
     "time": 30,
     "note": "",
@@ -26,14 +26,14 @@
     "isSuccess": false,
     "isCompleted": false,
     "isUnlocked": false,
-    "weightIncrease": "5",
-    "boosted": 0
+    "weightIncrease": 5,
+    "boosted": null
   },
   {
     "name": "band triceps",
     "id": "band-triceps",
     "weight": 0,
-    "sets": "1",
+    "sets": 1,
     "reps": "5",
     "time": 30,
     "note": "",
@@ -41,29 +41,29 @@
     "isSuccess": false,
     "isCompleted": false,
     "isUnlocked": false,
-    "weightIncrease": "0",
-    "boosted": 0
+    "weightIncrease": 0,
+    "boosted": null
   },
   {
     "name": "triceps over head",
     "id": "triceps-over-head",
-    "weight": "20",
-    "sets": "1",
+    "weight": 20,
+    "sets": 1,
     "reps": "5",
-    "time": "30",
+    "time": 30,
     "note": "",
     "variation": "",
     "isSuccess": false,
     "isCompleted": false,
     "isUnlocked": false,
     "weightIncrease": 10,
-    "boosted": 0
+    "boosted": null
   },
   {
     "name": "nyan",
     "id": "nyan",
     "weight": 0,
-    "sets": "1",
+    "sets": 1,
     "reps": "12-15",
     "time": 30,
     "note": "",
@@ -71,14 +71,14 @@
     "isSuccess": false,
     "isCompleted": false,
     "isUnlocked": false,
-    "weightIncrease": "5",
-    "boosted": 0
+    "weightIncrease": 5,
+    "boosted": null
   },
   {
     "name": "nyan open palm",
     "id": "nyan-open-palm",
-    "weight": "0",
-    "sets": "1",
+    "weight": 0,
+    "sets": 1,
     "reps": "10-12",
     "time": 30,
     "note": "",
@@ -86,29 +86,14 @@
     "isSuccess": false,
     "isCompleted": false,
     "isUnlocked": true,
-    "weightIncrease": "0",
-    "boosted": 0
+    "weightIncrease": 0,
+    "boosted": null
   },
   {
     "name": "thrusters",
     "id": "thrusters",
-    "weight": "5",
-    "sets": "1",
-    "reps": "5",
-    "time": 10000,
-    "note": "",
-    "variation": "",
-    "isSuccess": false,
-    "isCompleted": false,
-    "isUnlocked": false,
-    "weightIncrease": "5",
-    "boosted": 0
-  },
-  {
-    "name": "archer push up",
-    "id": "archer-push-up",
-    "weight": "0",
-    "sets": "1",
+    "weight": 5,
+    "sets": 1,
     "reps": "5",
     "time": 30,
     "note": "",
@@ -116,29 +101,44 @@
     "isSuccess": false,
     "isCompleted": false,
     "isUnlocked": false,
-    "weightIncrease": "5",
-    "boosted": 0
+    "weightIncrease": 5,
+    "boosted": null
+  },
+  {
+    "name": "archer push up",
+    "id": "archer-push-up",
+    "weight": 0,
+    "sets": 1,
+    "reps": "5",
+    "time": 30,
+    "note": "",
+    "variation": "",
+    "isSuccess": false,
+    "isCompleted": false,
+    "isUnlocked": false,
+    "weightIncrease": 5,
+    "boosted": null
   },
   {
     "name": "rear delt dumbell",
     "id": "rear-delt-dumbell",
-    "weight": "0",
-    "sets": "1",
+    "weight": 0,
+    "sets": 1,
     "reps": "12-15",
-    "time": "30",
+    "time": 30,
     "note": "left arm's got it. Palm down. Touch shoulder with right arm\n\nExplanation: https://www.youtube.com/watch?v=DyOtTMCKTPg&list=LL&index=33&t=10s&ab_channel=RyanHumiston at 8:18\nHow to do: https://www.youtube.com/watch?v=np-18tjx9ak&t=172s&ab_channel=RyanHumiston at 7:22",
     "variation": "",
     "isSuccess": false,
     "isCompleted": false,
     "isUnlocked": true,
-    "weightIncrease": "5",
-    "boosted": 0
+    "weightIncrease": 5,
+    "boosted": null
   },
   {
     "name": "over head press",
     "id": "over-head-press",
-    "weight": "10",
-    "sets": "1",
+    "weight": 10,
+    "sets": 1,
     "reps": "5",
     "time": 30,
     "note": "one hand as note",
@@ -147,28 +147,28 @@
     "isCompleted": false,
     "isUnlocked": false,
     "weightIncrease": 10,
-    "boosted": 0
+    "boosted": null
   },
   {
     "name": "side laterals",
     "id": "side-laterals",
     "weight": 0,
-    "sets": "1",
+    "sets": 1,
     "reps": "15-20",
-    "time": "30",
+    "time": 30,
     "note": "twist your arms like you got run over by a car",
     "variation": "",
     "isSuccess": false,
     "isCompleted": false,
     "isUnlocked": true,
-    "weightIncrease": "5",
-    "boosted": 0
+    "weightIncrease": 5,
+    "boosted": null
   },
   {
     "name": "front raises",
     "id": "front-raises",
-    "weight": "5",
-    "sets": "1",
+    "weight": 5,
+    "sets": 1,
     "reps": "5",
     "time": 30,
     "note": "",
@@ -176,14 +176,14 @@
     "isSuccess": false,
     "isCompleted": false,
     "isUnlocked": false,
-    "weightIncrease": "5",
-    "boosted": 0
+    "weightIncrease": 5,
+    "boosted": null
   },
   {
     "name": "shoulder twisties",
     "id": "shoulder-twisties",
-    "weight": "5",
-    "sets": "1",
+    "weight": 5,
+    "sets": 1,
     "reps": "5",
     "time": 30,
     "note": false,
@@ -191,29 +191,29 @@
     "isSuccess": false,
     "isCompleted": false,
     "isUnlocked": false,
-    "weightIncrease": "5",
-    "boosted": 0
+    "weightIncrease": 5,
+    "boosted": null
   },
   {
     "name": "handstand",
     "id": "handstand",
-    "weight": "0",
-    "sets": "1",
+    "weight": 0,
+    "sets": 1,
     "reps": "5",
-    "time": "30",
+    "time": 30,
     "note": "",
     "variation": "",
     "isSuccess": false,
     "isCompleted": false,
     "isUnlocked": true,
-    "weightIncrease": "0",
-    "boosted": 0
+    "weightIncrease": 0,
+    "boosted": null
   },
   {
     "name": "push up",
     "id": "push-up",
-    "weight": "0",
-    "sets": "1",
+    "weight": 0,
+    "sets": 1,
     "reps": "5",
     "time": 30,
     "note": "",
@@ -221,14 +221,14 @@
     "isSuccess": false,
     "isCompleted": false,
     "isUnlocked": false,
-    "weightIncrease": "5",
-    "boosted": 0
+    "weightIncrease": 5,
+    "boosted": null
   },
   {
     "name": "diamond push up",
     "id": "diamond-push-up",
-    "weight": "0",
-    "sets": "1",
+    "weight": 0,
+    "sets": 1,
     "reps": "5",
     "time": 30,
     "note": "",
@@ -236,89 +236,89 @@
     "isSuccess": false,
     "isCompleted": false,
     "isUnlocked": false,
-    "weightIncrease": "5",
-    "boosted": 0
+    "weightIncrease": 5,
+    "boosted": null
   },
   {
     "name": "dips",
     "id": "dips",
-    "weight": "0",
-    "sets": "1",
+    "weight": 0,
+    "sets": 1,
     "reps": "5",
-    "time": "30",
+    "time": 30,
     "note": "",
     "variation": "",
     "isSuccess": false,
     "isCompleted": false,
     "isUnlocked": true,
-    "weightIncrease": "5",
-    "boosted": 0
+    "weightIncrease": 5,
+    "boosted": null
   },
   {
     "name": "chin up",
     "id": "chin-up",
-    "weight": "0",
-    "sets": "1",
+    "weight": 0,
+    "sets": 1,
     "reps": "5",
-    "time": "30",
+    "time": 30,
     "note": "",
     "variation": "",
     "isSuccess": false,
     "isCompleted": false,
     "isUnlocked": false,
-    "weightIncrease": "5",
-    "boosted": 0
+    "weightIncrease": 5,
+    "boosted": null
   },
   {
     "name": "deadlift",
     "id": "deadlift",
     "weight": 20,
-    "sets": "1",
+    "sets": 1,
     "reps": "5",
-    "time": 10000,
+    "time": 30,
     "note": "",
     "variation": "",
     "isSuccess": false,
     "isCompleted": false,
     "isUnlocked": true,
     "weightIncrease": 10,
-    "boosted": 0
+    "boosted": null
   },
   {
     "name": "row",
     "id": "row",
-    "weight": "20",
-    "sets": "1",
+    "weight": 20,
+    "sets": 2,
     "reps": "8-10",
-    "time": "30",
+    "time": 30,
     "note": "",
     "variation": "",
     "isSuccess": false,
     "isCompleted": false,
     "isUnlocked": true,
     "weightIncrease": 10,
-    "boosted": 0
+    "boosted": null
   },
   {
     "name": "pull up",
     "id": "pull-up",
-    "weight": "0",
-    "sets": "1",
+    "weight": 0,
+    "sets": 3,
     "reps": "5",
-    "time": 10000,
+    "time": 30,
     "note": "",
     "variation": "",
     "isSuccess": false,
     "isCompleted": false,
     "isUnlocked": true,
-    "weightIncrease": "5",
-    "boosted": 0
+    "weightIncrease": 5,
+    "boosted": null
   },
   {
     "name": "piston row",
     "id": "piston-row",
-    "weight": "10",
-    "sets": "1",
+    "weight": 10,
+    "sets": 1,
     "reps": "8-10",
     "time": 30,
     "note": "",
@@ -327,13 +327,13 @@
     "isCompleted": false,
     "isUnlocked": false,
     "weightIncrease": 10,
-    "boosted": 0
+    "boosted": null
   },
   {
     "name": "band row",
     "id": "band-row",
-    "weight": "0",
-    "sets": "1",
+    "weight": 0,
+    "sets": 1,
     "reps": "10-12",
     "time": 30,
     "note": "",
@@ -341,14 +341,14 @@
     "isSuccess": false,
     "isCompleted": false,
     "isUnlocked": false,
-    "weightIncrease": "0",
-    "boosted": 0
+    "weightIncrease": 0,
+    "boosted": null
   },
   {
     "name": "band pull down",
     "id": "band-pull-down",
-    "weight": "0",
-    "sets": "1",
+    "weight": 0,
+    "sets": 1,
     "reps": "10-12",
     "time": 30,
     "note": "",
@@ -356,14 +356,14 @@
     "isSuccess": false,
     "isCompleted": false,
     "isUnlocked": false,
-    "weightIncrease": "0",
-    "boosted": 0
+    "weightIncrease": 0,
+    "boosted": null
   },
   {
     "name": "band superman",
     "id": "band-superman",
-    "weight": "0",
-    "sets": "1",
+    "weight": 0,
+    "sets": 1,
     "reps": "10-12",
     "time": 30,
     "note": "",
@@ -371,14 +371,14 @@
     "isSuccess": false,
     "isCompleted": false,
     "isUnlocked": false,
-    "weightIncrease": "0",
-    "boosted": 0
+    "weightIncrease": 0,
+    "boosted": null
   },
   {
     "name": "scapula uppies",
     "id": "scapula-uppies",
     "weight": 0,
-    "sets": "2",
+    "sets": 2,
     "reps": "5",
     "time": 30,
     "note": "",
@@ -386,8 +386,8 @@
     "isSuccess": false,
     "isCompleted": false,
     "isUnlocked": false,
-    "weightIncrease": "0",
-    "boosted": 0
+    "weightIncrease": 0,
+    "boosted": null
   },
   {
     "name": "ass up",
@@ -401,44 +401,44 @@
     "isSuccess": false,
     "isCompleted": false,
     "isUnlocked": false,
-    "weightIncrease": "0",
-    "boosted": 0
+    "weightIncrease": 0,
+    "boosted": null
   },
   {
     "name": "squat",
     "id": "squat",
-    "weight": "0",
-    "sets": "3",
-    "reps": "15-20",
-    "time": "30",
+    "weight": 10,
+    "sets": 2,
+    "reps": "5",
+    "time": 30,
     "note": "",
     "variation": "",
     "isSuccess": false,
     "isCompleted": false,
     "isUnlocked": true,
     "weightIncrease": 10,
-    "boosted": 0
+    "boosted": null
   },
   {
     "name": "box jumps",
     "id": "box-jumps",
-    "weight": "0",
-    "sets": "2",
+    "weight": 0,
+    "sets": 2,
     "reps": "6-8",
-    "time": "30",
+    "time": 30,
     "note": "",
     "variation": "",
     "isSuccess": false,
     "isCompleted": false,
     "isUnlocked": true,
-    "weightIncrease": "0",
-    "boosted": 0
+    "weightIncrease": 0,
+    "boosted": null
   },
   {
     "name": "single leg hops",
     "id": "single-leg-hops",
-    "weight": "0",
-    "sets": "1",
+    "weight": 0,
+    "sets": 1,
     "reps": "10-12",
     "time": 30,
     "note": "",
@@ -446,14 +446,14 @@
     "isSuccess": false,
     "isCompleted": false,
     "isUnlocked": false,
-    "weightIncrease": "0",
-    "boosted": 0
+    "weightIncrease": 0,
+    "boosted": null
   },
   {
     "name": "lunges",
     "id": "lunges",
-    "weight": "0",
-    "sets": "1",
+    "weight": 0,
+    "sets": 1,
     "reps": "5",
     "time": 30,
     "note": "",
@@ -461,14 +461,14 @@
     "isSuccess": false,
     "isCompleted": false,
     "isUnlocked": false,
-    "weightIncrease": "0",
-    "boosted": 0
+    "weightIncrease": 0,
+    "boosted": null
   },
   {
     "name": "jumps",
     "id": "jumps",
     "weight": 0,
-    "sets": "1",
+    "sets": 1,
     "reps": "5",
     "time": 30,
     "note": "",
@@ -476,14 +476,14 @@
     "isSuccess": false,
     "isCompleted": false,
     "isUnlocked": false,
-    "weightIncrease": "0",
-    "boosted": 0
+    "weightIncrease": 0,
+    "boosted": null
   },
   {
     "name": "split squats",
     "id": "split-squats",
     "weight": 0,
-    "sets": "1",
+    "sets": 1,
     "reps": "5",
     "time": 30,
     "note": "",
@@ -491,14 +491,14 @@
     "isSuccess": false,
     "isCompleted": false,
     "isUnlocked": false,
-    "weightIncrease": "5",
-    "boosted": 0
+    "weightIncrease": 5,
+    "boosted": null
   },
   {
     "name": "side lunges",
     "id": "side-lunges",
     "weight": 0,
-    "sets": "1",
+    "sets": 1,
     "reps": "5",
     "time": 30,
     "note": "",
@@ -506,14 +506,14 @@
     "isSuccess": false,
     "isCompleted": false,
     "isUnlocked": false,
-    "weightIncrease": "0",
-    "boosted": 0
+    "weightIncrease": 0,
+    "boosted": null
   },
   {
     "name": "alternating dumbbell snatch",
     "id": "alternating-dumbbell-snatch",
     "weight": 10,
-    "sets": "1",
+    "sets": 1,
     "reps": "5",
     "time": 30,
     "note": "",
@@ -521,14 +521,14 @@
     "isSuccess": false,
     "isCompleted": false,
     "isUnlocked": false,
-    "weightIncrease": "10",
-    "boosted": 0
+    "weightIncrease": 10,
+    "boosted": null
   },
   {
     "name": "split box jump",
     "id": "split-box-jump",
-    "weight": "0",
-    "sets": "1",
+    "weight": 0,
+    "sets": 1,
     "reps": "5",
     "time": 30,
     "note": "",
@@ -536,44 +536,29 @@
     "isSuccess": false,
     "isCompleted": false,
     "isUnlocked": false,
-    "weightIncrease": "0",
-    "boosted": 0
+    "weightIncrease": 0,
+    "boosted": null
   },
   {
     "name": "romanian deadlift",
     "id": "romanian-deadlift",
-    "weight": "5",
-    "sets": "3",
+    "weight": 5,
+    "sets": 4,
     "reps": "5",
-    "time": 10000,
+    "time": 30,
     "note": "",
     "variation": "",
     "isSuccess": false,
     "isCompleted": false,
     "isUnlocked": true,
     "weightIncrease": 10,
-    "boosted": 0
+    "boosted": null
   },
   {
     "name": "farmer carry",
     "id": "farmer-carry",
     "weight": 20,
-    "sets": "1",
-    "reps": "5",
-    "time": "30",
-    "note": "",
-    "variation": "",
-    "isSuccess": false,
-    "isCompleted": false,
-    "isUnlocked": false,
-    "weightIncrease": 10,
-    "boosted": 0
-  },
-  {
-    "name": "one arm deadlift",
-    "id": "one-arm-deadlift",
-    "weight": "10",
-    "sets": "1",
+    "sets": 1,
     "reps": "5",
     "time": 30,
     "note": "",
@@ -582,43 +567,58 @@
     "isCompleted": false,
     "isUnlocked": false,
     "weightIncrease": 10,
-    "boosted": 0
+    "boosted": null
+  },
+  {
+    "name": "one arm deadlift",
+    "id": "one-arm-deadlift",
+    "weight": 10,
+    "sets": 1,
+    "reps": "5",
+    "time": 30,
+    "note": "",
+    "variation": "",
+    "isSuccess": false,
+    "isCompleted": false,
+    "isUnlocked": false,
+    "weightIncrease": 10,
+    "boosted": null
   },
   {
     "name": "band press",
     "id": "band-press",
-    "weight": "0",
-    "sets": "2",
+    "weight": 0,
+    "sets": 2,
     "reps": "5",
-    "time": "30",
+    "time": 30,
     "note": "",
     "variation": "",
     "isSuccess": false,
     "isCompleted": false,
     "isUnlocked": true,
-    "weightIncrease": "0",
-    "boosted": 0
+    "weightIncrease": 0,
+    "boosted": null
   },
   {
     "name": "roll",
     "id": "roll",
-    "weight": "0",
-    "sets": "1",
+    "weight": 0,
+    "sets": 1,
     "reps": "15-20",
-    "time": "30",
+    "time": 30,
     "note": false,
     "variation": "",
     "isSuccess": false,
     "isCompleted": false,
     "isUnlocked": true,
-    "weightIncrease": "0",
-    "boosted": 0
+    "weightIncrease": 0,
+    "boosted": null
   },
   {
     "name": "breakdance",
     "id": "breakdance",
     "weight": 0,
-    "sets": "1",
+    "sets": 1,
     "reps": "8-10",
     "time": 30,
     "note": "",
@@ -626,14 +626,14 @@
     "isSuccess": false,
     "isCompleted": false,
     "isUnlocked": false,
-    "weightIncrease": "0",
-    "boosted": 0
+    "weightIncrease": 0,
+    "boosted": null
   },
   {
     "name": "mountain climbers",
     "id": "mountain-climbers",
     "weight": 0,
-    "sets": "1",
+    "sets": 1,
     "reps": "8-10",
     "time": 30,
     "note": "",
@@ -641,14 +641,14 @@
     "isSuccess": false,
     "isCompleted": false,
     "isUnlocked": false,
-    "weightIncrease": "0",
-    "boosted": 0
+    "weightIncrease": 0,
+    "boosted": null
   },
   {
     "name": "front plank with rotation",
     "id": "front-plank-with-rotation",
     "weight": 0,
-    "sets": "1",
+    "sets": 1,
     "reps": "8-10",
     "time": 30,
     "note": "https://www.youtube.com/watch?v=lNmX7xvJTjg&list=LL&index=3",
@@ -656,14 +656,14 @@
     "isSuccess": false,
     "isCompleted": false,
     "isUnlocked": false,
-    "weightIncrease": "0",
-    "boosted": 0
+    "weightIncrease": 0,
+    "boosted": null
   },
   {
     "name": "side plank with rotation",
     "id": "side-plank-with-rotation",
     "weight": 0,
-    "sets": "1",
+    "sets": 1,
     "reps": "8-10",
     "time": 30,
     "note": "https://www.youtube.com/watch?v=lNmX7xvJTjg&list=LL&index=3",
@@ -671,14 +671,14 @@
     "isSuccess": false,
     "isCompleted": false,
     "isUnlocked": false,
-    "weightIncrease": "0",
-    "boosted": 0
+    "weightIncrease": 0,
+    "boosted": null
   },
   {
     "name": "side plank leg lift",
     "id": "side-plank-leg-lift",
     "weight": 0,
-    "sets": "1",
+    "sets": 1,
     "reps": "8-10",
     "time": 30,
     "note": "https://www.youtube.com/watch?v=lNmX7xvJTjg&list=LL&index=3",
@@ -686,14 +686,14 @@
     "isSuccess": false,
     "isCompleted": false,
     "isUnlocked": false,
-    "weightIncrease": "0",
-    "boosted": 0
+    "weightIncrease": 0,
+    "boosted": null
   },
   {
     "name": "reverse plank marches",
     "id": "reverse-plank-marches",
     "weight": 0,
-    "sets": "1",
+    "sets": 1,
     "reps": "8-10",
     "time": 30,
     "note": "https://www.youtube.com/watch?v=lNmX7xvJTjg&list=LL&index=3",
@@ -701,14 +701,14 @@
     "isSuccess": false,
     "isCompleted": false,
     "isUnlocked": false,
-    "weightIncrease": "0",
-    "boosted": 0
+    "weightIncrease": 0,
+    "boosted": null
   },
   {
     "name": "inverted deadlift",
     "id": "inverted-deadlift",
     "weight": 0,
-    "sets": "1",
+    "sets": 1,
     "reps": "5",
     "time": 30,
     "note": "on dip bar or pull up (but mine is too close to the ceiling)",
@@ -716,14 +716,14 @@
     "isSuccess": false,
     "isCompleted": false,
     "isUnlocked": false,
-    "weightIncrease": "0",
-    "boosted": 0
+    "weightIncrease": 0,
+    "boosted": null
   },
   {
     "name": "russian twist",
     "id": "russian-twist",
     "weight": 0,
-    "sets": "1",
+    "sets": 1,
     "reps": "8-10",
     "time": 30,
     "note": "on dip bar",
@@ -731,14 +731,14 @@
     "isSuccess": false,
     "isCompleted": false,
     "isUnlocked": false,
-    "weightIncrease": "0",
-    "boosted": 0
+    "weightIncrease": 0,
+    "boosted": null
   },
   {
     "name": "cross body farmer carry",
     "id": "cross-body-farmer-carry",
     "weight": 20,
-    "sets": "1",
+    "sets": 1,
     "reps": "5",
     "time": 30,
     "note": "https://www.youtube.com/watch?v=a9qOLQFmTXE\n",
@@ -747,13 +747,13 @@
     "isCompleted": false,
     "isUnlocked": false,
     "weightIncrease": 10,
-    "boosted": 0
+    "boosted": null
   },
   {
     "name": "front farmer carry",
     "id": "front-farmer-carry",
     "weight": 20,
-    "sets": "1",
+    "sets": 1,
     "reps": "5",
     "time": 30,
     "note": "https://www.youtube.com/watch?v=a9qOLQFmTXE\n",
@@ -762,7 +762,7 @@
     "isCompleted": false,
     "isUnlocked": false,
     "weightIncrease": 10,
-    "boosted": 0
+    "boosted": null
   },
   {
     "name": "sweat",
@@ -777,13 +777,13 @@
     "isCompleted": false,
     "isUnlocked": false,
     "weightIncrease": 10,
-    "boosted": 0
+    "boosted": null
   },
   {
     "name": "cartwheel",
     "id": "cartwheel",
-    "weight": "0",
-    "sets": "2",
+    "weight": 0,
+    "sets": 2,
     "reps": "5",
     "time": 30,
     "note": false,
@@ -791,7 +791,7 @@
     "isSuccess": false,
     "isCompleted": false,
     "isUnlocked": false,
-    "weightIncrease": "0",
-    "boosted": 0
+    "weightIncrease": 0,
+    "boosted": null
   }
 ]

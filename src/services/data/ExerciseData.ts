@@ -123,19 +123,18 @@ export class ExerciseData {
 		parsedData.forEach((rawExercise: any) => {
 
 			const exercise = new Exercise(
-				rawExercise.name,
-				rawExercise.sets,
-				rawExercise.reps,
-				rawExercise.weight,
-				rawExercise.time,
-				rawExercise.weightIncrease,
-				rawExercise.variation,
-				rawExercise.boosted,
+				rawExercise.name, 
+				Number(rawExercise.sets), 
+				rawExercise.reps, 
+				Number(rawExercise.weight), 
+				Number(rawExercise.time), 
+				Number(rawExercise.weightIncrease), 
+				rawExercise.variation, 
+				Number(rawExercise.boolean), 
 				rawExercise.note,
 				rawExercise.isSuccess,
-				rawExercise.isCompleted,
-				rawExercise.isUnlocked
-			)
+				rawExercise.isCompleted, 
+				rawExercise.isUnlocked)
 
 			this.exercises.push(exercise)
 		});

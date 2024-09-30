@@ -109,13 +109,14 @@ export class WorkoutData{
 	}
 
 
-	private convertDataToWorkout(dataPath: string, workoutTypes: Array<string>) {
+	private convertDataToWorkout(dataPath: string, workoutTypes: Array<string>) { 
 		const rawData = fs.readFileSync(dataPath, 'utf8');
 		const parsedData = JSON.parse(rawData);
-
+	
 		// Assuming parsedData is an array of workouts
 		const workouts: Workout[] = parsedData.map((rawWorkout: any) => {
-			const warmUps = rawWorkout.exercises.map((rawWarmUp: any) => {
+			// Create Exercise instances for warm-ups
+			const warmUps = (rawWorkout.warmUps || []).map((rawWarmUp: any) => {
 				return new Exercise(
 					rawWarmUp.name,
 					rawWarmUp.sets,
@@ -123,15 +124,17 @@ export class WorkoutData{
 					rawWarmUp.weight,
 					rawWarmUp.time,
 					rawWarmUp.weightIncrease,
+					rawWarmUp.variation,    
 					rawWarmUp.boosted,
 					rawWarmUp.note,
-					rawWarmUp.isCore,
 					rawWarmUp.isSuccess,
 					rawWarmUp.isCompleted,
 					rawWarmUp.isUnlocked
 				);
 			});
-			const exercises = rawWorkout.exercises.map((rawExercise: any) => {
+	
+			// Create Exercise instances for exercises
+			const exercises = (rawWorkout.exercises || []).map((rawExercise: any) => {
 				return new Exercise(
 					rawExercise.name,
 					rawExercise.sets,
@@ -139,17 +142,17 @@ export class WorkoutData{
 					rawExercise.weight,
 					rawExercise.time,
 					rawExercise.weightIncrease,
+					rawExercise.variation,  
 					rawExercise.boosted,
 					rawExercise.note,
-					rawExercise.isCore,
 					rawExercise.isSuccess,
 					rawExercise.isCompleted,
 					rawExercise.isUnlocked
 				);
 			});
-
+	
 			return new Workout(
-				rawWorkout.wokroutType,
+				rawWorkout.workoutType,
 				new Date(rawWorkout.date),
 				rawWorkout.note,
 				rawWorkout.isCompleted,
@@ -158,10 +161,11 @@ export class WorkoutData{
 				exercises
 			);
 		});
-
+	
 		// Update the cache with the loaded workouts
 		this.updateCache(workouts, workoutTypes);
 	}
+	
 
 		
 	// Cache functions
