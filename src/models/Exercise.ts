@@ -18,13 +18,13 @@ export class Exercise {
 
 	constructor(
 		name: string, 
-		sets = 0, 
+		sets: number = 0, 
 		reps = "5",
-		weight = 0, 
-		time = 30, 
-		weightIncrease = 10, 
+		weight: number = 0, 
+		time: number = 30, 
+		weightIncrease: number = 10, 
 		variation = "",
-		boosted = 0,
+		boosted: number = 0,
 		note = "",
 		isSuccess = false, 
 		isCompleted = false, 
@@ -66,6 +66,24 @@ export class Exercise {
 			exercise.isUnlocked
 		);
 	}
+
+	clone(): Exercise {
+		return new Exercise(
+		  this.name,
+		  this.sets,
+		  this.reps,
+		  this.weight,
+		  this.time,
+		  this.weightIncrease,
+		  this.variation,
+		  this.boosted,
+		  this.note,
+		  this.isSuccess,
+		  this.isCompleted,
+		  this.isUnlocked
+		);
+	  }
+	
 
 
 	weightlessProgression(){
@@ -109,7 +127,7 @@ export class Exercise {
 
 
 	progressiveOverload() {
-		this.time = 10000
+		// this.time = 10000
 	}
 
 	// progressiveOverload() {

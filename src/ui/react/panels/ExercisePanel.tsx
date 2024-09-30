@@ -104,15 +104,20 @@ const ExercisePanel: React.FC = () => {
         editedConfig.exercise.isCompleted,
         editedConfig.exercise.isUnlocked
       );
-        
-      (updatedExercise as any)[field] = value;
-      updatedExercise.nameToId()
-      setEditedConfig((prevConfig)=>{
-        return new ExerciseConfig(updatedExercise, prevConfig?.muscles || [])
+  
+      // Convert the value to a number if the field is expected to be numeric
+      if (['sets', 'weight', 'time', 'weightIncrease'].includes(field)) {
+        (updatedExercise as any)[field] = value === "" ? 0 : Number(value);
+      } else {
+        (updatedExercise as any)[field] = value;
+      }
+  
+      updatedExercise.nameToId();
+      setEditedConfig((prevConfig) => {
+        return new ExerciseConfig(updatedExercise, prevConfig?.muscles || []);
       });
     }
-
-  }
+  };
 
   const handleSave = (oldConfig: ExerciseConfig) =>{
     if (isEditMode && editedConfig) {

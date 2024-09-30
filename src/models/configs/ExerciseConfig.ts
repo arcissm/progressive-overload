@@ -1,5 +1,4 @@
-import { Exercise } from "./Exercise";
-import { Muscle } from "./Muscle";
+import { Exercise } from "models/Exercise";
 
 
 export class ExerciseConfig{

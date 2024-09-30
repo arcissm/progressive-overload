@@ -27,6 +27,11 @@ export class WorkoutService {
 
 		this.useSteroids(muscles);
 		const exercises = this.createExercises(muscles)
+		console.log("EXERCISES LIST")
+
+		console.log(typeof exercises)
+
+		console.log(exercises)
 		exercises.forEach(exercise =>{
 			// exercise.progressiveOverload();
 		})
@@ -40,10 +45,10 @@ export class WorkoutService {
 			this.getWarmUForWorkout(workoutType),
 			exercises) 
 
-		this.db.updateMuscles();
-		this.db.updateExercises()
+		// ADD back jsut chill for now
+		// this.db.updateMuscles();
+		// this.db.updateExercises()
 		this.db.addWorkout(workout)
-
 		return workout
 	}
 
@@ -204,30 +209,45 @@ export class WorkoutService {
 
 	// Exercise List
 	private createExercises(muscles: Array<Muscle>): Exercise[] {
-		const exercises: Set<Exercise> = new Set(); // Initialize the Set
+		const exercises: Map<string, Exercise> = new Map(); // Use a Map to store exercises by their ID
 	
 		muscles.forEach(muscle => {
-			const coreExercises = this.db.getCoreExercises(muscle.name);
-			const chooseFromExercises = this.db.getUnlockedExercisesForMuscle(muscle.name);
+			// Deep copy because we are going to edit this
+			const coreExercises = this.db.getCoreExercises(muscle.name).map(exercise => 
+				exercise.clone()
+			);
+			const chooseFromExercises = this.db.getUnlockedExercisesForMuscle(muscle.name).map(exercise => 
+				exercise.clone()
+			);
 	
 			const coreSets = coreExercises.reduce((sum, exercise) => {
-				return sum + 1; // Assuming exercise.sets should be 1 for each core exercise
+				console.log(typeof exercise.sets)
+				return sum + exercise.sets; // should be 1 for each core exercise
 			}, 0);
-			
+	
 			let totalSets = getRandomInt(muscle.minSets, muscle.maxSets) - coreSets;
 	
-			const pickedExercises = this.pickExercises(totalSets, coreExercises, chooseFromExercises);
-			
-			pickedExercises.forEach(exercise => {
-				console.log(exercises)
-				console.log(exercise)
-				console.log(exercises.has(exercise))
-				exercises.add(exercise)
-			}); // Add exercises to the Set
-		});
+			// muscle set range
+			console.log(muscle.name);
+			console.log("[ " + muscle.minSets + ", " + muscle.maxSets + " ]");
+			console.log(coreSets);
+			console.log(totalSets);
 	
-		return Array.from(exercises); // Convert the Set to an array and return
-	}	
+			const pickedExercises = this.pickExercises(totalSets, coreExercises, chooseFromExercises);
+			console.log(pickedExercises);
+	
+			pickedExercises.forEach(pickedExercise => {
+				const existingExercise = exercises.get(pickedExercise.id);
+				if(existingExercise){
+					existingExercise.sets += pickedExercise.sets;
+				} else {
+					exercises.set(pickedExercise.id, pickedExercise);
+				}
+			});
+		});
+		return Array.from(exercises.values()); // Convert the Map values to an array and return
+	}
+	
 
 
 	private pickExercises(remainingSets: number, pickedExercises: Exercise[], chooseFromExercises: Exercise[]): Exercise[] {
@@ -247,13 +267,22 @@ export class WorkoutService {
         
         // Check if we can include this exercise
         if (exercise.sets <= remainingSets) {
-            pickedExercises.push(exercise);
-            remainingSets -= exercise.sets;
+			const existingExerciseIndex = pickedExercises.findIndex(e => e.id === exercise.id);
+
+			// if exercise already exists in the list, add the sets
+			if (existingExerciseIndex !== -1) {
+				pickedExercises[existingExerciseIndex].sets += exercise.sets;
+			} else {
+				pickedExercises.push(exercise); 
+			}
+			remainingSets -= exercise.sets;
         }
 
         // Continue picking exercises
         return this.pickExercises(remainingSets, pickedExercises, chooseFromExercises);
     }
+
+	
 
 	private getMinimumSets(chooseFromExercises: Exercise[]): number {
         if (chooseFromExercises.length === 0) {

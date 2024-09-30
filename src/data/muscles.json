@@ -1,7 +1,7 @@
 [
   {
     "name": "biceps",
-    "minSets": 4,
+    "minSets": 3,
     "maxSets": 6,
     "boosted": 0,
     "coreExercises": [
@@ -64,7 +64,7 @@
   },
   {
     "name": "back",
-    "minSets": 3,
+    "minSets": 6,
     "maxSets": 8,
     "boosted": 0,
     "coreExercises": [
@@ -75,8 +75,8 @@
   },
   {
     "name": "quads",
-    "minSets": 5,
-    "maxSets": 6,
+    "minSets": 6,
+    "maxSets": 8,
     "boosted": 0,
     "coreExercises": [
       "squat"
@@ -93,7 +93,7 @@
   },
   {
     "name": "abs",
-    "minSets": 2,
+    "minSets": 3,
     "maxSets": 4,
     "boosted": 0,
     "coreExercises": [
