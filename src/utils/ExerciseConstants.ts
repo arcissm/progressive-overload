@@ -7,7 +7,7 @@ export const SPECIAL = [
 	"Normal",
 	"Drop Weight by ",
 	"Extra 5 Half Reps At The End"]
-export const LUCKY = 0.95;
+export const UNLUCKY = 0.90;
 export const TIME_PER_REP = 4; // seconds
 
 

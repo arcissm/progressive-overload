@@ -1,5 +1,6 @@
-import {findIndexOfSetList, findSetsList, getRandomInt} from "../utils/AlgorithmUtils";
-import {LUCKY, PROGRESSION, SPECIAL, TIME_PER_REP} from "../utils/ExerciseConstants";
+import { PRGRESSIVE_OVERLOAD_REPS } from "utils/Constants";
+import {getRandomInt} from "../utils/AlgorithmUtils";
+import { SPECIAL, TIME_PER_REP, UNLUCKY} from "../utils/ExerciseConstants";
 
 export class Exercise {
 	name: string;
@@ -50,6 +51,14 @@ export class Exercise {
 		return this.id
 	}
 
+	
+	private setTime(){
+		const repsNumber = parseInt(this.reps.split("-")[1] || this.reps);
+		this.time = TIME_PER_REP * repsNumber
+	}
+
+
+
 	static from(exercise: Exercise, newSets: number): Exercise {
 		return new Exercise(
 			exercise.name,
@@ -67,6 +76,7 @@ export class Exercise {
 		);
 	}
 
+	// Deep Copy
 	clone(): Exercise {
 		return new Exercise(
 		  this.name,
@@ -85,110 +95,40 @@ export class Exercise {
 	  }
 	
 
+	private isMaxedOutReps(){
+		// last rep in the list? then we maxed out
+		return this.reps === "12-15" || 
+		this.reps === "15-20" || 
+		this.reps === "max" || 
+		((PRGRESSIVE_OVERLOAD_REPS.length-1) === PRGRESSIVE_OVERLOAD_REPS.findIndex(reps => reps === this.reps))
+	}
 
-	weightlessProgression(){
-		// HANDSTAND
-		if(this.name.contains("handstand")){
-			const handstandRepList = findSetsList(10)
-			const indexLastReps = findIndexOfSetList(handstandRepList, this.reps) - 1
-			if(indexLastReps <= 0 ){
-				this.note =
-					"Congrats 🎉\n" +
-					"find a new variant, change the reps, or add an exercise"
-				this.reps = "12"
-			} else{
-				this.reps = handstandRepList[indexLastReps]
+
+
+	progressiveOverload(variation:string) {
+		// no reps
+		if(this.reps === "N/A")return
+
+		this.setTime()
+
+		// we upgrade the exercise weight or variation
+		if(this.isMaxedOutReps()){
+			this.reps = PRGRESSIVE_OVERLOAD_REPS[0]
+			if(this.weight === 0 && this.variation){
+				this.variation = variation;
+			}else{
+				this.weight += this.weightIncrease
+			}
+		}else{ // we add sets
+			const index = PRGRESSIVE_OVERLOAD_REPS.findIndex(reps => reps === this.reps)
+			if ((Math.random() > UNLUCKY)){ // 10% chanche you do 12-15 reps
+				this.reps = "12-15"
+			}else{
+				this.reps = PRGRESSIVE_OVERLOAD_REPS[index + 1]
+
 			}
 		}
-		// ROLLING EXERCISE
-		else if(this.name.contains("rolling")){
-			this.reps = "15-20"
-		// OTHERS
-		}else{
-			const currentRepIndex = PROGRESSION.indexOf(this.reps) + 1;
-			// MAXED OUT
-			if(currentRepIndex >= PROGRESSION.length) {
-				if(this.reps.contains("20")){
-					this.note = "Can you try a harder variant?"
-				}
-				this.reps = "15-20"
-			}
-			// NORMAL PROGRESSION
-			else{
-				this.reps = PROGRESSION[currentRepIndex]
-			}
-		}
 	}
-
-	setTime(){
-		const repsNumber = parseInt(this.reps.split("-")[1] || this.reps);
-		this.time = TIME_PER_REP * repsNumber
-	}
-
-
-	progressiveOverload() {
-		// this.time = 10000
-	}
-
-	// progressiveOverload() {
-
-	// 	if (!this.isSuccess){
-	// 		return
-	// 	}
-
-	// 	this.isSuccess = false;
-
-	// 	this.setTime()
-
-	// 	// Weightless Exercises
-	// 	if (this.weightIncrease == 0){
-	// 		this.weightlessProgression()
-	// 		return;
-	// 	}
-
-	// 	// More than 4 sets, we get funky
-	// 	if (this.isCore && this.sets > 4){
-	// 		this.specialNote()
-	// 	}
-
-
-	// 	const currentRepIndex = PROGRESSION.indexOf(this.reps);
-	// 	if (currentRepIndex === -1) {
-	// 		this.reps = "5"
-	// 	}
-
-	// 	const nextRepIndex = currentRepIndex + 1
-
-	// 	// if you're about to do 12-15 reps and you're not lucky, you will actually do them
-	// 	if ((nextRepIndex == PROGRESSION.length - 1) && (Math.random() > LUCKY)){
-	// 		this.reps = "12-15"
-	// 	}
-
-	// 	// if we reached the max reps -> you're about to do 12-15 or you've already done them
-	// 	else if (nextRepIndex >= (PROGRESSION.length - 1)){
-	// 		this.reps = PROGRESSION[0]
-	// 		this.weight += this.weightIncrease
-	// 	}
-	// 	// add more reps
-	// 	else {
-	// 		this.reps = PROGRESSION[nextRepIndex];
-	// 	}
-	// }
-
-	specialNote(){
-		const index = getRandomInt(0, SPECIAL.length-1)
-		let special = SPECIAL[index]
-		if (special.toLowerCase() === "normal"){
-			this.note = "";
-			return
-		}
-		else if (special.toLowerCase().contains("weight")){
-			special += this.weightIncrease
-		}
-		this.note = `** 1-4 sets**: Normal reps  \n` +
-			`> > **5-${this.sets} sets**: ${special}\n`
-	}
-
 
 
 	toMarkdownWarmUp() {
@@ -227,6 +167,11 @@ export class Exercise {
 
 	toMarkdown() {
 		let result = `## 🚀 **${this.name.toUpperCase()}**\n`;
+
+		if (this.variation){
+			result += `#### ${this.variation}\n`;
+
+		}
 
 		if (this.sets > 0) {
 			result += `> **Sets**: ${this.sets}\n`;

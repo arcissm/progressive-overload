@@ -402,7 +402,9 @@ input[type=checkbox]:checked:after{
 
 	}
 
-
+.custom-select-input-container input{
+	width: 100%;
+}
 
 
 
@@ -505,13 +507,24 @@ input[type=checkbox]:checked:after{
 }
 
 .workout-settings-variations-container-header{
+	display: flex;
 
 }
 
+.workout-settings-variations-container-header-title{
+	flex: 1;
+}
+
+
 .workout-settings-variations-container-header-title input{
 	font-size: 1.5rem;
-	width: 100%;
 	padding: 1.5rem;
+}
+
+.workout-settings-variations-container-header-title-trash{
+	flex:0;
+	margin-left: 1rem;
+
 }
 
 .first-edge-container{
@@ -746,7 +759,8 @@ input[type=checkbox]:checked:after{
   
   /* Each option in the dropdown list */
   .dropdown-item {
-	padding: 8px;
+	font-size: 1rem;
+	padding: 0.7rem;
 	cursor: pointer;
   }
   
@@ -755,3 +769,6 @@ input[type=checkbox]:checked:after{
 	background-color: var(--interactive-accent);
   }
   
+  .single-select-container{
+	position: relative;
+  }

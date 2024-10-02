@@ -6,7 +6,6 @@ import { TreeNode } from 'utils/data-structure/TreeNode';
 interface TreeProps<T extends string> {
   node: TreeNode<T>;
   onAddChildNode: (node: TreeNode<T>) => void;
-  onAddSiblingNode: (node: TreeNode<T>) => void;
   onRemoveNode: (node: TreeNode<T>) => void;
   onChangeNode: (newValue: string, oldValue: string) => void; // Adjusted type to pass old value
   checkedNodeId: T | null;
@@ -16,7 +15,6 @@ interface TreeProps<T extends string> {
 const TreeComponent = <T extends string>({
   node,
   onAddChildNode,
-  onAddSiblingNode,
   onRemoveNode,
   onChangeNode,
   checkedNodeId,
@@ -90,14 +88,6 @@ const TreeComponent = <T extends string>({
               </div>
             </div>
 
-            <div className="tree-add-sibling-container">
-              {isHovered && (
-                <button className="edge-add-button" onClick={() => onAddSiblingNode(node)}>
-                  <FontAwesomeIcon icon={faPlus} size="2x" />
-                </button>
-              )}
-            </div>
-
             <div className="edge-container">
               {isHovered && (
                 <button className="edge-add-button" onClick={() => onAddChildNode(node)}>
@@ -116,7 +106,6 @@ const TreeComponent = <T extends string>({
             key={childNode.data}
             node={childNode}
             onAddChildNode={onAddChildNode}
-            onAddSiblingNode={onAddSiblingNode}
             onRemoveNode={onRemoveNode}
             onChangeNode={onChangeNode}
             checkedNodeId={checkedNodeId}

@@ -5,7 +5,8 @@ import {Workout} from "../../models/Workout";
 import { DBService } from "./DBService";
 import { getRandomInt, getTodayDateUTC, isSameDate } from "utils/AlgorithmUtils";
 import * as path from "path";
-import { YOGA_CHANCE, YOGA_WORKOUT } from "utils/Constants";
+import { PRGRESSIVE_OVERLOAD_REPS, YOGA_CHANCE, YOGA_WORKOUT } from "utils/Constants";
+import { SPECIAL } from "utils/ExerciseConstants";
 
 //In future use to create workout stats
 export class WorkoutService {
@@ -25,16 +26,7 @@ export class WorkoutService {
 		const muscles = this.db.getMusclesForWorkoutType(workoutType);
 		if (muscles == null){return null}
 
-		this.useSteroids(muscles);
-		const exercises = this.createExercises(muscles)
-		console.log("EXERCISES LIST")
-
-		console.log(typeof exercises)
-
-		console.log(exercises)
-		exercises.forEach(exercise =>{
-			// exercise.progressiveOverload();
-		})
+		const workoutExercises = this.createWorkoutExercises(muscles)
 
 		const workout = new Workout(
 			workoutType,
@@ -43,14 +35,14 @@ export class WorkoutService {
 			false,
 			false,
 			this.getWarmUForWorkout(workoutType),
-			exercises) 
+			workoutExercises) 
 
 		// ADD back jsut chill for now
-		// this.db.updateMuscles();
-		// this.db.updateExercises()
+
 		this.db.addWorkout(workout)
 		return workout
 	}
+
 
 	getWorkoutFromNote(workoutType: string, date: Date, index: number) {
 		const workoutsOfType = this.db.getWorkoutsOfType(workoutType);
@@ -86,7 +78,7 @@ export class WorkoutService {
 			}
 		}
 
-		this.db.updateExercises()
+		this.db.saveExercises()
 		this.db.updateWorkouts();
 	}
 
@@ -102,7 +94,7 @@ export class WorkoutService {
 			}
 		}
 
-		this.db.updateExercises()
+		this.db.saveExercises()
 		this.db.updateWorkouts();
 	}
 	
@@ -207,9 +199,60 @@ export class WorkoutService {
 	}
 
 
+	private createWorkoutExercises(muscles: Muscle[]){
+		this.useSteroids(muscles);
+		this.db.updateMuscles();
+
+		const exercises = this.createExercises(muscles) // returns a deepCopied subset of Exercises list from DB (because we edit the exercises so we can't use the direct reference)
+		exercises.forEach(exercise =>{
+			this.progressiveOverload(exercise)
+			this.db.updateExercise(exercise)
+		})
+
+		this.db.saveExercises();
+
+		// fun stuff that shouldn't be saved
+		this.makeExtraSetsFun(exercises)
+
+		this.tasteTestNextVariation(exercises)
+		// return 
+		
+		return exercises;
+	}
+
+	private progressiveOverload(exercise: Exercise){
+		if(exercise.isSuccess){
+			exercise.isSuccess = false;
+			exercise.isCompleted = false;
+
+			const nextVariation = this.db.getNextVariation(exercise)
+			exercise.progressiveOverload(nextVariation);
+		}
+	}
+
+
+	makeExtraSetsFun(exercises:Exercise[]){
+		exercises.forEach(exercise => {
+			if(exercise.sets > 4){
+				const index = getRandomInt(0, SPECIAL.length-1)
+				let special = SPECIAL[index]
+				if (special.toLowerCase() === "normal"){
+					return
+				}
+				else if (special.toLowerCase().contains("weight")){
+					special += exercise.weightIncrease
+				}
+				exercise.note = `** 1-4 sets**: Normal reps  \n` +
+					`> > **5-${exercise.sets} sets**: ${special}\n` +
+					`\n` + exercise.note
+			}
+		})
+	}
+
+
 	// Exercise List
 	private createExercises(muscles: Array<Muscle>): Exercise[] {
-		const exercises: Map<string, Exercise> = new Map(); // Use a Map to store exercises by their ID
+		const exercises: Map<string, Exercise> = new Map();
 	
 		muscles.forEach(muscle => {
 			// Deep copy because we are going to edit this
@@ -222,7 +265,7 @@ export class WorkoutService {
 	
 			const coreSets = coreExercises.reduce((sum, exercise) => {
 				console.log(typeof exercise.sets)
-				return sum + exercise.sets; // should be 1 for each core exercise
+				return sum + exercise.sets;
 			}, 0);
 	
 			let totalSets = getRandomInt(muscle.minSets, muscle.maxSets) - coreSets;
@@ -300,6 +343,32 @@ export class WorkoutService {
         return minSets;
     }
 
+	private tasteTestNextVariation(exercises: Exercise[]) {
+		const variedExercises = exercises.filter(exercise => exercise.variation);
+	
+		variedExercises.forEach(exercise => {
+			
+			if(exercise.sets > 2){
+				const nextVariationExercise = exercise.clone();
+				let sharedSets = 1;
+				if(exercise.sets > 4){
+					sharedSets = 2;
+					nextVariationExercise.note = ""
+				}
+				exercise.sets = exercise.sets - sharedSets
+				nextVariationExercise.sets = sharedSets
+				
+				nextVariationExercise.reps = PRGRESSIVE_OVERLOAD_REPS[0]
+				nextVariationExercise.variation = this.db.getNextVariation(exercise);
+				const index = exercises.findIndex(e => e.id === exercise.id);
+				// Insert the next variation right after the original exercise
+				if (index !== -1) {
+					exercises.splice(index + 1, 0, nextVariationExercise);
+				}
+			}
+		});
+	}
+	
 	// TODO: Make a warm up config
 	private getWarmUForWorkout(workoutType: string): Exercise[] {
 		// 25% of the time, you do yoga as a warmup

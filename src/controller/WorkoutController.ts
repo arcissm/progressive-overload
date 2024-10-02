@@ -216,6 +216,10 @@ export class WorkoutController {
 		return this.db.addTree()
 	}
 
+	deleteTree(root: string){
+		return this.db.deleteTree(root)
+	}
+
 	// WORKOUT TYPE
     getNormalWorkoutTypes(){
         return this.db.getNormalWorkoutTypes();
