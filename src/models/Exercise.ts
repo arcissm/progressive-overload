@@ -168,6 +168,11 @@ export class Exercise {
 	toMarkdown() {
 		let result = `## 🚀 **${this.name.toUpperCase()}**\n`;
 
+		if (this.variation){
+			result += `#### ${this.variation}\n`;
+
+		}
+
 		if (this.sets > 0) {
 			result += `> **Sets**: ${this.sets}\n`;
 		}

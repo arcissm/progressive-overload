@@ -5,7 +5,7 @@ import {Workout} from "../../models/Workout";
 import { DBService } from "./DBService";
 import { getRandomInt, getTodayDateUTC, isSameDate } from "utils/AlgorithmUtils";
 import * as path from "path";
-import { YOGA_CHANCE, YOGA_WORKOUT } from "utils/Constants";
+import { PRGRESSIVE_OVERLOAD_REPS, YOGA_CHANCE, YOGA_WORKOUT } from "utils/Constants";
 import { SPECIAL } from "utils/ExerciseConstants";
 
 //In future use to create workout stats
@@ -214,7 +214,7 @@ export class WorkoutService {
 		// fun stuff that shouldn't be saved
 		this.makeExtraSetsFun(exercises)
 
-		// const workoutExercises = this.tasteTestNextVariation(exercises)
+		this.tasteTestNextVariation(exercises)
 		// return 
 		
 		return exercises;
@@ -343,10 +343,32 @@ export class WorkoutService {
         return minSets;
     }
 
-	private tasteTestNextVariation(){
-
+	private tasteTestNextVariation(exercises: Exercise[]) {
+		const variedExercises = exercises.filter(exercise => exercise.variation);
+	
+		variedExercises.forEach(exercise => {
+			
+			if(exercise.sets > 2){
+				const nextVariationExercise = exercise.clone();
+				let sharedSets = 1;
+				if(exercise.sets > 4){
+					sharedSets = 2;
+					nextVariationExercise.note = ""
+				}
+				exercise.sets = exercise.sets - sharedSets
+				nextVariationExercise.sets = sharedSets
+				
+				nextVariationExercise.reps = PRGRESSIVE_OVERLOAD_REPS[0]
+				nextVariationExercise.variation = this.db.getNextVariation(exercise);
+				const index = exercises.findIndex(e => e.id === exercise.id);
+				// Insert the next variation right after the original exercise
+				if (index !== -1) {
+					exercises.splice(index + 1, 0, nextVariationExercise);
+				}
+			}
+		});
 	}
-
+	
 	// TODO: Make a warm up config
 	private getWarmUForWorkout(workoutType: string): Exercise[] {
 		// 25% of the time, you do yoga as a warmup

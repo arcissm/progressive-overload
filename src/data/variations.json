@@ -181,7 +181,9 @@
       },
       {
         "name": "triangle handstand split legs",
-        "next": ["crow wiggle"]
+        "next": [
+          "crow wiggle"
+        ]
       },
       {
         "name": "crow wiggle",
@@ -371,6 +373,15 @@
       },
       {
         "name": "ass up one leg",
+        "next": []
+      }
+    ]
+  },
+  {
+    "exercise": "plank",
+    "variations": [
+      {
+        "name": "plank",
         "next": []
       }
     ]

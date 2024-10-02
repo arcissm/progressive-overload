@@ -3,12 +3,14 @@ import { useWorkoutController } from "../../../controller/WorkoutControllerProvi
 import { Tree } from "utils/data-structure/Tree"; // Make sure this path is correct
 import TreeCompoenent from "../components/Tree"; // Assuming this is your Tree component from the previous example
 import { TreeNode } from "utils/data-structure/TreeNode";
-import { faPlus } from "@fortawesome/free-solid-svg-icons";
+import { faPlus, faTrashCan } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import SingleSelect from "../components/SingleSelect";
 
 const VariationPanel: React.FC = () => {
   const controller = useWorkoutController();
   const [variations, setVariations] = useState<Map<string, Tree<string>>>();
+  const [exercises, setExercises] = useState<string[]>([]); 
   const [checkedNodes, setCheckedNodes] = useState<Map<string, string | null>>(new Map());
   const [editingVariations, setEditingVariations] = useState<Map<string, string>>(new Map());
   const [debounceTimeout, setDebounceTimeout] = useState<NodeJS.Timeout | null>(null);
@@ -17,11 +19,11 @@ const VariationPanel: React.FC = () => {
   //  load the variations when the component mounts
   useEffect(() => {
     const loadTrees = async () => {
-      const fetchedVariations = await controller.getVariations();
+      const fetchedVariations = controller.getVariations();
       const updatedCheckedNodes = new Map<string, string | null>();
 
       for (const [rootName, tree] of fetchedVariations.entries()) {
-        const checkedVariation = await controller.getVariationForExercise(rootName);
+        const checkedVariation = controller.getVariationForExercise(rootName);
 
         if (checkedVariation) {
           const checkedNode = tree.findNode(checkedVariation);
@@ -33,7 +35,11 @@ const VariationPanel: React.FC = () => {
         }
       }
 
+      const fetchedExercises = controller.getExercises()
+      const stringExercises = fetchedExercises.map(exercise => exercise.name)
+
       setVariations(fetchedVariations);
+      setExercises(stringExercises)
       setCheckedNodes(updatedCheckedNodes);
     };
 
@@ -44,6 +50,48 @@ const VariationPanel: React.FC = () => {
     const updatedVariations = controller.addTree();
     setVariations(new Map(updatedVariations));
   };
+
+  const handleDeleteVariation = (root: string) => {
+    const updatedVariations = controller.deleteTree(root);
+    setVariations(new Map(updatedVariations));
+  }
+
+
+  const handleExerciseNameChange = (selectedName: string, rootNode: TreeNode<string>) => {
+    const oldName = rootNode.data;
+    console.log(oldName)
+
+    const newEditingVariations = new Map(editingVariations);
+    newEditingVariations.set(rootNode.data, selectedName);
+    setEditingVariations(newEditingVariations);
+  
+  
+    // Clear previous debounce timeout if it exists
+    if (debounceTimeout) {
+      clearTimeout(debounceTimeout);
+    }
+  
+    // Set a new debounce timeout
+    const newTimeout = setTimeout(() => {
+      if (oldName !== selectedName) {
+        controller.setVariationForExercise(oldName, selectedName);
+        const updatedVariations = controller.updateExerciseForVariation(oldName, selectedName);
+        setVariations(new Map(updatedVariations));      
+        }
+      }, 1000);
+
+  setDebounceTimeout(newTimeout);
+  };
+
+
+  useEffect(() => {
+    // Cleanup the debounce timeout on component unmount
+    return () => {
+      if (debounceTimeout) {
+        clearTimeout(debounceTimeout);
+      }
+    };
+  }, [debounceTimeout]);
 
   const handleAddChildNode = (exerciseName: string, node: TreeNode<string>) => {
     const updatedVariations = controller.addNode(exerciseName, node);
@@ -81,41 +129,6 @@ const VariationPanel: React.FC = () => {
   };
 
 
-  const handleExerciseNameChange = (e: React.ChangeEvent<HTMLInputElement>, rootNode: TreeNode<string>) => {
-    const oldName = rootNode.data;
-    console.log(oldName)
-
-    const value = e.target.value;
-    const newEditingVariations = new Map(editingVariations);
-    newEditingVariations.set(rootNode.data, value);
-    setEditingVariations(newEditingVariations);
-  
-  
-    // Clear previous debounce timeout if it exists
-    if (debounceTimeout) {
-      clearTimeout(debounceTimeout);
-    }
-  
-    // Set a new debounce timeout
-    const newTimeout = setTimeout(() => {
-      if (oldName !== value) {
-        const updatedVariations = controller.updateExerciseForVariation(oldName, value);
-        setVariations(new Map(updatedVariations));      
-        }
-      }, 1000);
-
-  setDebounceTimeout(newTimeout);
-  };
-
-
-  useEffect(() => {
-    // Cleanup the debounce timeout on component unmount
-    return () => {
-      if (debounceTimeout) {
-        clearTimeout(debounceTimeout);
-      }
-    };
-  }, [debounceTimeout]);
 
 
   
@@ -134,16 +147,21 @@ const VariationPanel: React.FC = () => {
 
           return (
             <div className="workout-settings-variations-container" key={name}>
-              <div
-                className="workout-settings-variations-container-header"
-              >
-                <div className="workout-settings-variations-container-header-title">
-                  <input
-                    type="text"
-                    placeholder="Search exercises"
-                    value={editingValue}
-                    onChange={(e) => handleExerciseNameChange(e, tree.root)}
-                  />
+              <div>
+                <div className="workout-settings-variations-container-header">
+                  <div className="workout-settings-variations-container-header-title">
+                    <SingleSelect
+                      options={exercises || []}
+                      selectedValue={name}
+                      onSelectionChange={(selected) => handleExerciseNameChange(selected, tree.root)}
+                      />
+                  </div>
+                 
+                    <button 
+                      className="workout-settings-variations-container-header-title-trash workout-settings-table-button"
+                      onClick={() => handleDeleteVariation(tree.root.data)}>
+                      <FontAwesomeIcon icon={faTrashCan} />
+                    </button>
                 </div>
 
                 <div className="first-edge-container">

@@ -62,7 +62,7 @@ function MultiSelectInput({ options, selectedValues = [], onSelectionChange }: M
           </div>
         ))}
         </div>
-        <div>
+        <div className="custom-select-input-container">
           <input
             type="text"
             value={inputValue}

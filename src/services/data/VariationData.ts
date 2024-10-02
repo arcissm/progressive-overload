@@ -1,5 +1,5 @@
 import * as fs from 'fs';
-import { VARIATION_DATA_PATH } from "utils/Constants";
+import { NEW_VARIAITON, VARIATION_DATA_PATH } from "utils/Constants";
 import { Tree } from 'utils/data-structure/Tree';
 import { TreeNode } from 'utils/data-structure/TreeNode';
 
@@ -75,12 +75,19 @@ printTrees() {
     }
 
     addTree(){
-        const root = "New Variations"
+        const root = NEW_VARIAITON
 		const tree = new Tree(root)
         this.variations.set(root, tree)
         return this.variations
 	}
 
+    deleteTree(root: string) {
+        if (this.variations.has(root)) {
+            this.variations.delete(root);
+        }
+        return this.variations;
+    }
+    
 
     // Function to save the Map data structure back to the JSON file
 	saveVariations() {

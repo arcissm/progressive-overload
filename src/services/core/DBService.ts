@@ -8,6 +8,7 @@ import { MuscleData } from "services/data/MuscleData";
 import { RelationalData } from "services/data/RelationalData";
 import { VariationData } from "services/data/VariationData";
 import { WorkoutData } from "services/data/WorkoutData";
+import { NEW_VARIAITON } from "utils/Constants";
 import { TreeNode } from "utils/data-structure/TreeNode";
 
 
@@ -80,6 +81,33 @@ export class DBService {
 	updateExerciseForVariation(oldExerciseName: string, newExerciseName: string){
 		this.variationData.updateVariationData(oldExerciseName, newExerciseName)
 		this.variationData.saveVariations()
+
+		//update variation name in exercise
+		let id = oldExerciseName.toLowerCase().replace(/[^a-z0-9]+/g, '-');
+		const oldExercise = this.exerciseData.getExerciseById(id)
+		id = newExerciseName.toLowerCase().replace(/[^a-z0-9]+/g, '-');
+		const newExercise = this.exerciseData.getExerciseById(id)
+		
+		if(oldExercise && newExercise){
+			if(oldExercise.name === NEW_VARIAITON){ //base case
+				newExercise.variation = newExercise.name
+			}
+			else{
+				const oldVariation = oldExercise.variation
+
+				if(oldVariation === oldExercise.name){ //variation and exercise name are the same (we dont have a variation checked yet but the tree exists)
+					newExercise.variation = newExercise.name
+				}else if(oldVariation !== oldExercise.name){ //we have a cariation checked in the tree
+					newExercise.variation = oldVariation
+				}else{
+					console.error("Error: Exercise " + oldExercise.name + " is missing a variation")
+				}
+
+				oldExercise.variation = ""
+			}
+		}
+
+		this.saveExercises()
 		return this.variationData.variations;
 	}
 
@@ -104,6 +132,18 @@ export class DBService {
 	addTree(){
 		const variations = this.variationData.addTree();
 		this.variationData.saveVariations()
+		return variations;
+	}
+
+	deleteTree(root: string){
+		const variations = this.variationData.deleteTree(root);
+		this.variationData.saveVariations()
+
+		//remove variation from exercise of root name
+		const id = root.toLowerCase().replace(/[^a-z0-9]+/g, '-');
+		const exercise = this.exerciseData.getExerciseById(id)
+		if(exercise) exercise.variation = ""
+		this.saveExercises()
 		return variations;
 	}
 
