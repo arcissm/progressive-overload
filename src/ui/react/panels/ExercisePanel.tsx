@@ -6,6 +6,9 @@ import { faAngleDown, faAngleUp, faFloppyDisk, faPenToSquare, faPlus, faTrashCan
 import MultiSelectInput from "../components/MultiSelect";
 import { REPS } from "utils/Constants";
 import { ExerciseConfig } from "models/configs/ExerciseConfig";
+import PanelLayout from "../components/PanelLayout";
+import Search from "../components/Search";
+import Collapse from "../components/Collapse";
 
 
 const ExercisePanel: React.FC = () => {
@@ -40,6 +43,11 @@ const ExercisePanel: React.FC = () => {
     );
     setFilteredConfgis(updatedFilteredExercises);
   }, [searchQuery, exerciseConfigs]);
+
+  const handleSearch = (query: string) => {
+    setSearchQuery(query);
+  };
+
 
   // Collapse
   const toggleCollapse = (exerciseId: string) => {
@@ -159,33 +167,33 @@ const ExercisePanel: React.FC = () => {
   
 
   return (
-    <div className="workout-settings-panel" onClick={() => cancelEdit()}>
-      <div className="workout-settings-information">
-        <h1>Exercise Config</h1>
-        <p>Add, Remove or Edit exercises</p>
-        <p>Exercises are ordered by their muscle groups</p>
-      </div>
-
-      <div className="workout-settings-search">
-        <input
-          type="text"
-          placeholder="Search exercises"
-          value={searchQuery}
-          onChange={(e) => setSearchQuery(e.target.value)}
-        />
-      </div>
+    <PanelLayout
+      title="Exercise Config"
+      description="Add, Remove or Edit exercises. Exercises are ordered by their muscle groups."
+      footerAction={handleAddExercise}
+    >
+      <Search
+        placeholder="Search exercises"
+        onSearch={handleSearch}
+        debounceTime={500}
+      />
 
       <div className="workout-settings-exercise-list" ref={exerciseListRef} onClick={(e) => e.stopPropagation()}>
       {filteredConfigs.map((config) => (
           <div key={config.exercise.id}>
-            <div className="workout-settings-exercise-header" onClick={() => toggleCollapse(config.exercise.id)}>
-              <div className="workout-settings-exercise-header-name">{config.exercise.name}</div>
-              <FontAwesomeIcon 
-                className="workout-settings-exercise-header-arrow"
-                icon={expandedExerciseId === config.exercise.id ? faAngleUp : faAngleDown} 
-                size="2x"
-              />
-            </div>
+
+            <Collapse 
+            header={
+              <div className="workout-settings-exercise-header" onClick={() => toggleCollapse(config.exercise.id)}>
+                <div className="workout-settings-exercise-header-name">{config.exercise.name}</div>
+                <FontAwesomeIcon 
+                  className="workout-settings-exercise-header-arrow"
+                  icon={expandedExerciseId === config.exercise.id ? faAngleUp : faAngleDown} 
+                  size="2x"
+                />
+              </div>
+            }>
+
 
             {expandedExerciseId === config.exercise.id && (
               <div className="workout-settings-exercise-container">
@@ -286,16 +294,11 @@ const ExercisePanel: React.FC = () => {
                 </div>
               </div>
             )}
+            </Collapse>
           </div>
         ))}
       </div>
-
-      <div className="workout-settings-table-footer">
-        <button className="workout-settings-table-button" onClick={handleAddExercise}>
-          <FontAwesomeIcon icon={faPlus} size="2x" />
-        </button>
-      </div>
-    </div>
+  </PanelLayout>
   );
 };
 
