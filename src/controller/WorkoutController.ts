@@ -2,7 +2,7 @@ import { ExerciseConfig } from "models/configs/ExerciseConfig";
 import { Exercise } from "models/Exercise";
 import { Muscle } from "models/Muscle";
 import { Workout } from "models/Workout";
-import { App, Notice, TFile, WorkspaceLeaf } from "obsidian";
+import { App, Notice, TFile } from "obsidian";
 import { BreakService } from "services/break/BreakService";
 import { DBService } from "services/core/DBService";
 import { WorkoutService } from "services/core/WorkoutService";
@@ -43,6 +43,8 @@ export class WorkoutController {
         }else{
             this.noteService.createWorkoutNote(workoutType);
         }
+
+		this.updateCalendarView()
         // await this.updateCalendarView(); // Update the calendar view
         // await this.updateChecklistView(); // Update the checklist view if necessary
         // await this.updateStatsView(); // Update the stats view if necessary
@@ -50,10 +52,20 @@ export class WorkoutController {
 
     async removeWorkout(filename: string) {
 		await this.noteService.deleteNote(filename);
+		this.updateCalendarView()
+
 		// await this.updateCalendarView(); // Update the calendar view
 		// await this.updateChecklistView(); // Update the checklist view if necessary
 		// await this.updateStatsView(); // Update the stats view if necessary
     }
+
+	getWorkouts(){
+		return this.db.getWorkouts()
+	}
+
+	getWorkoutsByDate(date: Date){
+		return this.db.getWorkoutsByDate(date)
+	}
 
     isOnBreak() {
         return this.breakService.isOnBreak();
@@ -62,6 +74,8 @@ export class WorkoutController {
 	private async workoutIsSuccessful(workout: Workout){
 
 		this.workoutService.succeedWorkout(workout);
+		this.updateCalendarView()
+
 		// await this.updateCalendarView(); // Update the calendar view
 		// await this.updateChecklistView(); // Optionally update other views
 		// await this.updateStatsView();    // Optionally update stats
@@ -72,7 +86,7 @@ export class WorkoutController {
 	private async workoutIsCompleted(workout: Workout){
 
 		this.workoutService.completeWorkout(workout);
-		// await this.updateCalendarView(); // Update the calendar view
+		this.updateCalendarView(); // Update the calendar view
 		// await this.updateChecklistView(); // Optionally update other views
 		// await this.updateStatsView();    // Optionally update stats
 		
@@ -80,6 +94,19 @@ export class WorkoutController {
 
 
 	// File
+	async openNote(date: Date) {
+		const formattedDate = date.toISOString().split('T')[0]; // Example: '2024-09-03'
+		const files = this.app.vault.getMarkdownFiles();
+		const matchingFile = files.find(file => file.basename.startsWith(`${formattedDate} `));
+	
+		if (matchingFile) {
+			await this.app.workspace.openLinkText(matchingFile.path, matchingFile.path);
+		} else {
+			new Notice("No file found for this date.");
+		}
+	}
+
+	
 	async handleFileChange(file: TFile) {
 		const content = await this.app.vault.read(file);
 	
@@ -246,6 +273,18 @@ export class WorkoutController {
 	}
  
 	
+	private getActiveWorkoutView(): WorkoutView | null {
+		const leaves = this.app.workspace.getLeavesOfType(WORKOUT_VIEW);
+		return leaves.length > 0 ? (leaves[0].view as WorkoutView) : null;
+	}
+	
+	private async updateCalendarView() {
+		const view = this.getActiveWorkoutView();
+		if (view) {
+		view.updateCalendar(); // Calls React's updateCalendar to force re-render
+		}
+	}
+	  
 	/*
 
 	async handleWorkoutNoteChange(file: TFile) {
@@ -256,9 +295,6 @@ export class WorkoutController {
     }
 
 
-	getWorkoutByDate(date:string){
-        return this.db.getWorkoutsByDate(date);
-    }
 
 	// Handle success checkboxes
 
@@ -283,30 +319,7 @@ export class WorkoutController {
 		}
 	}
 
-	private getActiveWorkoutView(): WorkoutView | null {
-		const leaves = this.app.workspace.getLeavesOfType(WORKOUT_VIEW);
-		return leaves.length > 0 ? (leaves[0].view as WorkoutView) : null;
-	}
-    
-	private async activateView() {
-		const { workspace } = this.app;
-
-		let leaf: WorkspaceLeaf | null = null;
-		const leaves = workspace.getLeavesOfType(WORKOUT_VIEW);
-
-		if (leaves.length > 0) {
-			// A leaf with our view already exists, use that
-			leaf = leaves[0];
-		} else {
-			// Our view could not be found in the workspace, create a new leaf
-			// in the right sidebar for it
-			leaf = workspace.getRightLeaf(false);
-			await leaf.setViewState({ type: WORKOUT_VIEW, active: true });
-		}
-
-		// "Reveal" the leaf in case it is in a collapsed sidebar
-		workspace.revealLeaf(leaf);
-	}
+	
 
     */
 }

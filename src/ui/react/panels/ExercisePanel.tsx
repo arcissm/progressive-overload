@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import { useWorkoutController } from "controller/WorkoutControllerProvider";
+import { useWorkoutController } from "controller/ConfigControllerProvider";
 import { Exercise } from "models/Exercise";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faAngleDown, faAngleUp, faFloppyDisk, faPenToSquare, faPlus, faTrashCan } from "@fortawesome/free-solid-svg-icons";

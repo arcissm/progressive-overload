@@ -165,6 +165,14 @@ export class DBService {
 		this.workoutData.addWorkout(workout)
 	}
 
+	getWorkouts(){
+		return this.workoutData.getAllWorkouts()
+	}
+
+	getWorkoutsByDate(date: Date){
+		return this.workoutData.getWorkoutsByDate(date)
+	}
+	
 	getLastTwoWorkoutsWithMuscle(muscleName: string): Workout[] {
 		const workoutTypes = this.relationalData.getWorkoutsForMuscle(muscleName);
 		const workouts: Workout[] = [];

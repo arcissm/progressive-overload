@@ -5,7 +5,7 @@ import React from "react";
 import { WorkoutController } from "controller/WorkoutController";
 import { createRoot } from "react-dom/client";
 import { Tabs } from "ui/react/components/Tabs";
-import { WorkoutControllerProvider } from "controller/WorkoutControllerProvider";
+import { ConfigControllerProvider } from "controller/ConfigControllerProvider";
 
 export const CONFIG_WORKOUT_VIEW = "config-workouts-view";
 
@@ -34,9 +34,9 @@ export class ConfigWorkoutsView extends ItemView {
 
   async onOpen(): Promise<void> {
     this.reactComponent = (
-      <WorkoutControllerProvider controller={this.controller}>
+      <ConfigControllerProvider controller={this.controller}>
         <Tabs />
-      </WorkoutControllerProvider>
+      </ConfigControllerProvider>
     );
   
     // Use createRoot instead of ReactDOM.render

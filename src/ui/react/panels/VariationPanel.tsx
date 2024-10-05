@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useWorkoutController } from "../../../controller/WorkoutControllerProvider";
+import { useWorkoutController } from "../../../controller/ConfigControllerProvider";
 import { Tree } from "utils/data-structure/Tree"; // Make sure this path is correct
 import TreeCompoenent from "../components/Tree"; // Assuming this is your Tree component from the previous example
 import { TreeNode } from "utils/data-structure/TreeNode";

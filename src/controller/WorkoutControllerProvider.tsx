@@ -1,14 +1,17 @@
-import React, { createContext, useContext } from "react";
+import React, { createContext, useContext, useState } from "react";
 import { WorkoutController } from "controller/WorkoutController";
 
-// Create the context
-const WorkoutControllerContext = createContext<WorkoutController | undefined>(undefined);
+// Create the context with an additional function `updateCalendar`
+const WorkoutControllerContext = createContext<{
+  controller: WorkoutController;
+  updateCalendar: () => void;
+} | undefined>(undefined);
 
 // Create a custom hook to use the WorkoutControllerContext more easily
 export const useWorkoutController = () => {
   const context = useContext(WorkoutControllerContext);
   if (!context) {
-    throw new Error("use WorkoutController must be used within a WorkoutControllerProvider");
+    throw new Error("useWorkoutController must be used within a WorkoutControllerProvider");
   }
   return context;
 };
@@ -20,8 +23,15 @@ interface WorkoutControllerProviderProps {
 }
 
 export const WorkoutControllerProvider: React.FC<WorkoutControllerProviderProps> = ({ controller, children }) => {
+  const [calendarKey, setCalendarKey] = useState(0);
+
+  // Function to trigger re-render of calendar by incrementing the key
+  const updateCalendar = () => {
+    setCalendarKey((prevKey) => prevKey + 1); // Increment the key to force re-render
+  };
+
   return (
-    <WorkoutControllerContext.Provider value={controller}>
+    <WorkoutControllerContext.Provider value={{ controller, updateCalendar }}>
       {children}
     </WorkoutControllerContext.Provider>
   );

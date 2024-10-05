@@ -29,7 +29,15 @@ export class WorkoutData{
 		return allWorkouts.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
 	}
 
-
+	getWorkoutsByDate(date: Date): Workout[] {
+		let result: Workout[] = [];
+		for (const workoutList of this.workouts.values()) {
+			const filteredWorkouts = workoutList.filter(workout => isSameDate(workout.date, date));
+			result = result.concat(filteredWorkouts);
+		}
+		return result;
+	}
+	
 	getCompletedWorkouts(){
 		return this.getAllWorkouts().filter(workout => workout.isCompleted);
 	}
