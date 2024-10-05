@@ -382,6 +382,12 @@
     "variations": [
       {
         "name": "plank",
+        "next": [
+          "New Variation"
+        ]
+      },
+      {
+        "name": "New Variation",
         "next": []
       }
     ]

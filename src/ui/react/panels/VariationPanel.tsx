@@ -149,9 +149,7 @@ const VariationPanel: React.FC = () => {
 
           return (
             <div className="workout-settings-variations-container" key={name}>
-              <Collapse 
-              header={
-                <div>
+
                   <div className="workout-settings-variations-container-header">
                     <div className="workout-settings-variations-container-header-title">
                       <SingleSelect
@@ -160,21 +158,25 @@ const VariationPanel: React.FC = () => {
                         onSelectionChange={(selected) => handleExerciseNameChange(selected, tree.root)}
                         />
                     </div>
-                  
                       <button 
                         className="workout-settings-variations-container-header-title-trash workout-settings-table-button"
                         onClick={() => handleDeleteVariation(tree.root.data)}>
                         <FontAwesomeIcon icon={faTrashCan} />
                       </button>
                   </div>
-
                   <div className="first-edge-container">
-                      <button onClick={() => handleAddChildNode(tree.root.data, tree.root)}>
-                        <FontAwesomeIcon icon={faPlus} size="2x" />
-                      </button>
-                    <div className="edge"></div>
-                  </div>
+                    <button onClick={() => handleAddChildNode(tree.root.data, tree.root)}>
+                      <FontAwesomeIcon icon={faPlus} size="2x" />
+                    </button>
                 </div>
+
+              <Collapse 
+              header={
+
+                <div className="first-edge-container">
+                  <div className="edge"></div>
+                </div>
+
               }>
                 <TreeCompoenent
                   node={tree.root}
