@@ -4,6 +4,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus, faTrashCan } from "@fortawesome/free-solid-svg-icons";
 import MultiSelectInput from "../components/MultiSelect";
 import { Notice } from "obsidian";
+import PanelLayout from "../components/PanelLayout";
 
 const WorkoutPanel: React.FC = () => {
   const controller = useWorkoutController();
@@ -90,13 +91,11 @@ const WorkoutPanel: React.FC = () => {
 
 
   return (
-    <div className="workout-settings-panel">
-      <div className="workout-settings-information">
-        <h1>Workout Types Config</h1>
-        <p>Add, Remove or Edit workout Type</p>
-        <p>Every workout type includes one or more muscles that will be worked on</p>
-      </div>
-
+    <PanelLayout
+      title="Workout Types Config"
+      description="Add, Remove or Edit workout types. Every workout type includes one or more muscles that will be worked on."
+      footerAction={handleAddWorkoutType}
+    >
       <div className="workout-settings-table-container">
         <table className="workout-settings-table">
           <thead>
@@ -126,7 +125,8 @@ const WorkoutPanel: React.FC = () => {
                 <td className="workout-settings-table-cell">
                   <button
                     className="workout-settings-table-button"
-                    onClick={() => handleDeleteWorkoutType(type)}>
+                    onClick={() => handleDeleteWorkoutType(type)}
+                  >
                     <FontAwesomeIcon icon={faTrashCan} />
                   </button>
                 </td>
@@ -135,15 +135,7 @@ const WorkoutPanel: React.FC = () => {
           </tbody>
         </table>
       </div>
-
-      <div className="workout-settings-table-footer">
-        <button
-          className="workout-settings-table-button"
-          onClick={handleAddWorkoutType}>
-          <FontAwesomeIcon icon={faPlus} size="2x" />
-        </button>
-      </div>
-    </div>
+    </PanelLayout>
   );
 };
 

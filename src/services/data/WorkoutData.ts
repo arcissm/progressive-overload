@@ -70,10 +70,9 @@ export class WorkoutData{
 
 	deleteWorkout(workoutType: string, date: Date, index: number) {
 		const workoutsOfType = this.workouts.get(workoutType);
-	
+
 		if (workoutsOfType) {
 			const workoutOnSameDay = workoutsOfType.filter(workout => isSameDate(workout.date, date));
-	
 			if (index >= 0 && index < workoutOnSameDay.length) {
 				const workoutToDelete = workoutOnSameDay[index];
 				const workoutIndex = workoutsOfType.findIndex(workout =>
@@ -156,15 +155,10 @@ export class WorkoutData{
 					rawExercise.isUnlocked
 				);
 			});
-	
-			// for some reason the timezones fuck this up, so just add one day and it fixes itself
-			// dont ask me why
-			const workoutDate = new Date(rawWorkout.date);
-			workoutDate.setDate(workoutDate.getDate() + 1);
 
 			return new Workout(
 				rawWorkout.workoutType,
-				workoutDate,
+				new Date(rawWorkout.date),
 				rawWorkout.note,
 				rawWorkout.isCompleted,
 				rawWorkout.isSuccess,
@@ -173,7 +167,6 @@ export class WorkoutData{
 			);
 		});
 	
-		console.log(workouts)
 		// Update the cache with the loaded workouts
 		this.updateCache(workouts, workoutTypes);
 	}

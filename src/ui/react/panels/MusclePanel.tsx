@@ -5,6 +5,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus, faTrashCan,  } from '@fortawesome/free-solid-svg-icons'; 
 import { Notice } from "obsidian";
 import MultiSelectInput from "../components/MultiSelect";
+import PanelLayout from "../components/PanelLayout";
 
 
 // Define a new type for debouncing multiple muscles
@@ -140,14 +141,11 @@ const MusclePanel: React.FC = () => {
     
 
   return (
-    <div className="workout-settings-panel">
-      <div className="workout-settings-information">
-        <h1>Muscle Config</h1>
-        <p>Add, Remove or Edit muscles</p>
-        <p>Every workout will have x number of sets between (Min Sets, Max Sets)</p>
-      </div>
-
-      {/* Div-based structure */}
+    <PanelLayout
+      title="Muscle Config"
+      description="Add, Remove or Edit muscles. Every workout will have a number of sets between Min Sets and Max Sets."
+      footerAction={handleAddMuscle}
+    >
       <div className="workout-settings-muscle-container">
         <div className="workout-settings-muscle-header">
           <div className="workout-settings-muscle-row">
@@ -159,7 +157,7 @@ const MusclePanel: React.FC = () => {
         </div>
 
         {muscles.map((muscle, index) => (
-          <div  key={index} className="workout-settings-muscle-data">
+          <div key={index} className="workout-settings-muscle-data">
             <div className="workout-settings-muscle-row">
               <div className="workout-settings-muscle-cell">
                 <input
@@ -183,9 +181,10 @@ const MusclePanel: React.FC = () => {
                 />
               </div>
               <div className="workout-settings-muscle-cell trash-cell">
-                <button 
+                <button
                   className="workout-settings-table-button"
-                  onClick={() => handleDeleteMuscle(muscle, index)}>
+                  onClick={() => handleDeleteMuscle(muscle, index)}
+                >
                   <FontAwesomeIcon icon={faTrashCan} />
                 </button>
               </div>
@@ -199,19 +198,12 @@ const MusclePanel: React.FC = () => {
                   onSelectionChange={(selected) => handleInputChange(index, 'coreExercises', selected)}
                 />
               </div>
-            </div >
-            <hr/>
+            </div>
+            <hr />
           </div>
-
         ))}
       </div>
-
-      <div className="workout-settings-table-footer">
-          <button className="workout-settings-table-button" onClick={handleAddMuscle}>
-            <FontAwesomeIcon icon={faPlus} size="2x" />
-          </button>
-        </div>
-    </div>
+    </PanelLayout>
   );
 };
 

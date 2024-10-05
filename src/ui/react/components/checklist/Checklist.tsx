@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useWorkoutController } from 'controller/WorkoutControllerProvider';
 
-const ChecklistComponent: React.FC = () => {
+const Checklist: React.FC = () => {
   const controller = useWorkoutController();
 
   const initialItems = [
@@ -38,4 +38,4 @@ const ChecklistComponent: React.FC = () => {
   );
 };
 
-export default ChecklistComponent;
+export default Checklist;

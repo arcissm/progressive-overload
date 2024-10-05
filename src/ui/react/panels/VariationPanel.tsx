@@ -6,6 +6,8 @@ import { TreeNode } from "utils/data-structure/TreeNode";
 import { faPlus, faTrashCan } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import SingleSelect from "../components/SingleSelect";
+import PanelLayout from "../components/PanelLayout";
+import Collapse from "../components/Collapse";
 
 const VariationPanel: React.FC = () => {
   const controller = useWorkoutController();
@@ -135,11 +137,11 @@ const VariationPanel: React.FC = () => {
 
 
   return (
-    <div className="workout-settings-panel">
-      <div className="workout-settings-information">
-        <h1>Exercise Variations</h1>
-        <p>Add, Remove or Edit workout Type</p>
-      </div>
+    <PanelLayout
+      title="Exercise Variations"
+      description="Add, Remove or Edit workout types"
+      footerAction={handleAddVariation}
+    >
 
       {variations ? (
         Array.from(variations.entries()).map(([name, tree]) => {
@@ -147,52 +149,51 @@ const VariationPanel: React.FC = () => {
 
           return (
             <div className="workout-settings-variations-container" key={name}>
-              <div>
-                <div className="workout-settings-variations-container-header">
-                  <div className="workout-settings-variations-container-header-title">
-                    <SingleSelect
-                      options={exercises || []}
-                      selectedValue={name}
-                      onSelectionChange={(selected) => handleExerciseNameChange(selected, tree.root)}
-                      />
-                  </div>
-                 
-                    <button 
-                      className="workout-settings-variations-container-header-title-trash workout-settings-table-button"
-                      onClick={() => handleDeleteVariation(tree.root.data)}>
-                      <FontAwesomeIcon icon={faTrashCan} />
-                    </button>
-                </div>
 
-                <div className="first-edge-container">
+                  <div className="workout-settings-variations-container-header">
+                    <div className="workout-settings-variations-container-header-title">
+                      <SingleSelect
+                        options={exercises || []}
+                        selectedValue={name}
+                        onSelectionChange={(selected) => handleExerciseNameChange(selected, tree.root)}
+                        />
+                    </div>
+                      <button 
+                        className="workout-settings-variations-container-header-title-trash workout-settings-table-button"
+                        onClick={() => handleDeleteVariation(tree.root.data)}>
+                        <FontAwesomeIcon icon={faTrashCan} />
+                      </button>
+                  </div>
+                  <div className="first-edge-container">
                     <button onClick={() => handleAddChildNode(tree.root.data, tree.root)}>
                       <FontAwesomeIcon icon={faPlus} size="2x" />
                     </button>
+                </div>
+
+              <Collapse 
+              header={
+
+                <div className="first-edge-container">
                   <div className="edge"></div>
                 </div>
-              </div>
 
-              <TreeCompoenent
-                node={tree.root}
-                onAddChildNode={(node) => handleAddChildNode(tree.root.data, node)}
-                onRemoveNode={(node) => handleRemoveNode(tree.root.data, node)}
-                onChangeNode={(newValue, oldValue) => handleChangeNode(tree.root.data, newValue, oldValue)}
-                onCheckboxChange={(node) => handleCheckboxChange(tree.root.data, node)}
-                checkedNodeId={checkedNodes.get(name) || null}
-              />
+              }>
+                <TreeCompoenent
+                  node={tree.root}
+                  onAddChildNode={(node) => handleAddChildNode(tree.root.data, node)}
+                  onRemoveNode={(node) => handleRemoveNode(tree.root.data, node)}
+                  onChangeNode={(newValue, oldValue) => handleChangeNode(tree.root.data, newValue, oldValue)}
+                  onCheckboxChange={(node) => handleCheckboxChange(tree.root.data, node)}
+                  checkedNodeId={checkedNodes.get(name) || null}
+                />
+              </Collapse>
             </div>
           );
         })
       ) : (
         <p>Loading variations...</p>
       )}
-
-      <div className="workout-settings-table-footer">
-        <button className="workout-settings-table-button" onClick={handleAddVariation}>
-          <FontAwesomeIcon icon={faPlus} size="2x" />
-        </button>
-      </div>
-    </div>
+  </PanelLayout>
   );
 };
 
