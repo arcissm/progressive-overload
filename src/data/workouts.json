@@ -1,7 +1,7 @@
 [
   {
     "workoutType": "legs",
-    "date": "2024-10-05T00:00:00.000Z",
+    "date": "2024-10-06T00:00:00.000Z",
     "isCompleted": false,
     "isSuccess": false,
     "note": "![Motivation](D:\\plugin\\gym\\.obsidian\\plugins\\obsidian-but-better\\assets\\images\\motivation\\bad_15.jpg)\n\n<div class=\"motivationalSpeech\">\nDo you want to look like that forever?</div>\n",
@@ -47,8 +47,8 @@
         "time": 30,
         "note": "",
         "variation": "",
-        "isSuccess": false,
-        "isCompleted": true,
+        "isSuccess": true,
+        "isCompleted": false,
         "isUnlocked": true,
         "weightIncrease": 0,
         "boosted": null
@@ -62,8 +62,8 @@
         "time": 30,
         "note": "",
         "variation": "",
-        "isSuccess": false,
-        "isCompleted": true,
+        "isSuccess": true,
+        "isCompleted": false,
         "isUnlocked": true,
         "weightIncrease": 10,
         "boosted": null
@@ -102,7 +102,7 @@
   },
   {
     "workoutType": "back",
-    "date": "2024-10-04T00:00:00.000Z",
+    "date": "2024-10-05T00:00:00.000Z",
     "isCompleted": false,
     "isSuccess": false,
     "note": "![Motivation](D:\\plugin\\gym\\.obsidian\\plugins\\obsidian-but-better\\assets\\images\\motivation\\bad_21.jpg)\n\n<div class=\"motivationalSpeech\">\nDo you want to look like that forever?</div>\n",
@@ -186,8 +186,63 @@
     ]
   },
   {
+    "workoutType": "chest",
+    "date": "2024-10-05T00:00:00.000Z",
+    "isCompleted": false,
+    "isSuccess": false,
+    "note": "![Motivation](D:\\plugin\\gym\\.obsidian\\plugins\\obsidian-but-better\\assets\\images\\motivation\\bad_30.JPG)\n\n<div class=\"motivationalSpeech\">\nDo you want to look like that forever?</div>\n",
+    "warmUps": [],
+    "exercises": [
+      {
+        "name": "dips",
+        "id": "dips",
+        "weight": 0,
+        "sets": 4,
+        "reps": "5",
+        "time": 30,
+        "note": "",
+        "variation": "",
+        "isSuccess": false,
+        "isCompleted": false,
+        "isUnlocked": true,
+        "weightIncrease": 5,
+        "boosted": null
+      },
+      {
+        "name": "handstand",
+        "id": "handstand",
+        "weight": 0,
+        "sets": 3,
+        "reps": "5",
+        "time": 30,
+        "note": "** 1-4 sets**: Normal reps  \n> > **5-5 sets**: Pause Rep\n\n",
+        "variation": "push up to feet on wall",
+        "isSuccess": false,
+        "isCompleted": false,
+        "isUnlocked": true,
+        "weightIncrease": 0,
+        "boosted": null
+      },
+      {
+        "name": "handstand",
+        "id": "handstand",
+        "weight": 0,
+        "sets": 2,
+        "reps": "5",
+        "time": 30,
+        "note": "",
+        "variation": "walk on wall",
+        "isSuccess": false,
+        "isCompleted": false,
+        "isUnlocked": true,
+        "weightIncrease": 0,
+        "boosted": null
+      }
+    ]
+  },
+  {
     "workoutType": "legs",
-    "date": "2024-10-03T00:00:00.000Z",
+    "date": "2024-10-04T00:00:00.000Z",
     "isCompleted": false,
     "isSuccess": false,
     "note": "![Motivation](D:\\plugin\\gym\\.obsidian\\plugins\\obsidian-but-better\\assets\\images\\motivation\\good_5.png)\n\n<div class=\"motivationalSpeech\">\nYou can look like this too.</div>\n",
@@ -217,8 +272,8 @@
         "time": 30,
         "note": "",
         "variation": "",
-        "isSuccess": true,
-        "isCompleted": false,
+        "isSuccess": false,
+        "isCompleted": true,
         "isUnlocked": true,
         "weightIncrease": 0,
         "boosted": null
@@ -247,8 +302,8 @@
         "time": 30,
         "note": "** 1-4 sets**: Normal reps  \n> > **5-6 sets**: Superset with exercise of choice\n\n",
         "variation": "",
-        "isSuccess": true,
-        "isCompleted": false,
+        "isSuccess": false,
+        "isCompleted": true,
         "isUnlocked": true,
         "weightIncrease": 10,
         "boosted": null
@@ -287,7 +342,7 @@
   },
   {
     "workoutType": "back",
-    "date": "2024-10-03T00:00:00.000Z",
+    "date": "2024-10-04T00:00:00.000Z",
     "isCompleted": false,
     "isSuccess": false,
     "note": "![Motivation](D:\\plugin\\gym\\.obsidian\\plugins\\obsidian-but-better\\assets\\images\\motivation\\bad_34.JPG)\n\n<div class=\"motivationalSpeech\">\nDo you want to look like that forever?</div>\n",
@@ -372,7 +427,7 @@
   },
   {
     "workoutType": "arms",
-    "date": "2024-10-03T00:00:00.000Z",
+    "date": "2024-10-04T00:00:00.000Z",
     "isCompleted": false,
     "isSuccess": false,
     "note": "![Motivation](D:\\plugin\\gym\\.obsidian\\plugins\\obsidian-but-better\\assets\\images\\motivation\\bad_1.jpg)\n\n<div class=\"motivationalSpeech\">\nDo you want to look like that forever?</div>\n",
