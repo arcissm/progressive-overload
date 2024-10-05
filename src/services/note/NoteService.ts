@@ -1,6 +1,6 @@
 import {App, Notice} from 'obsidian';
 import {WorkoutService} from "../core/WorkoutService";
-import {getTitleInfo, getTodayDateUTC} from "../../utils/AlgorithmUtils";
+import {getTitleInfo} from "../../utils/AlgorithmUtils";
 import {CheckBox} from "../../models/Checkbox";
 import { Workout } from 'models/Workout';
 
@@ -52,13 +52,18 @@ export class NoteService {
 
 
 	
-	async deleteNote(filename: string){
-		const {workoutType, date, index} = getTitleInfo(filename)
-		this.renameNotes(workoutType, date, index)
-		this.workoutService.deleteWorkout(workoutType, new Date(date), index);
+	async deleteNote(filename: string) {
+		const { workoutType, date, index } = getTitleInfo(filename);
+		
+		const dateParts = date.split('-').map(Number);
+		const year = dateParts[0];
+		const month = dateParts[1] - 1; // Months are zero-based in JavaScript Date
+		const day = dateParts[2];
+	
+		this.renameNotes(workoutType, date, index);
+		this.workoutService.deleteWorkout(workoutType, new Date(year, month, day), index);
 	}
-
-
+	
 
 	async renameNotes(deletedWorkoutType:string, deletedDate:string, deletedIndex:number){
 
@@ -97,7 +102,7 @@ export class NoteService {
 	
 
 	private async getNotePath(): Promise<string> {
-		const todayDateUTC = getTodayDateUTC();
+		const todayDateUTC = new Date();
 		const todayDateString = todayDateUTC.toISOString().split('T')[0];
 		const year = todayDateString.substring(0, 4);
 		const yearDir = this.notesDir + "/" + year + "/";

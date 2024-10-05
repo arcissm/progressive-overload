@@ -1,12 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { getTodayDateUTC } from 'utils/AlgorithmUtils';
 import CalendarDay from './CalendarDay';
 import CalendarNav from './CalendarNav';
 import WeekDayHeader from './WeekDayHeader';
 import MonthGrid from './MonthGrid';
 
 const Calendar: React.FC = () => {
-  const [currentMonth, setCurrentMonth] = useState(getTodayDateUTC());
+  const [currentMonth, setCurrentMonth] = useState(new Date());
 
   // Navigation handlers
   const goToPrevMonth = () => {

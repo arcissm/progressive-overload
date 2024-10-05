@@ -2,7 +2,7 @@ import {Exercise} from "../../models/Exercise";
 import {Muscle} from "../../models/Muscle";
 import {Workout} from "../../models/Workout";
 import { DBService } from "./DBService";
-import { getRandomInt, getTodayDateUTC, isSameDate } from "utils/AlgorithmUtils";
+import { getRandomInt, isSameDate } from "utils/AlgorithmUtils";
 import * as path from "path";
 import { PRGRESSIVE_OVERLOAD_REPS, YOGA_CHANCE, YOGA_WORKOUT } from "utils/Constants";
 import { SPECIAL } from "utils/ExerciseConstants";
@@ -29,14 +29,12 @@ export class WorkoutService {
 
 		const workout = new Workout(
 			workoutType,
-			getTodayDateUTC(),
+			new Date(),
 			this.getMotivationalNote(),
 			false,
 			false,
 			this.getWarmUForWorkout(workoutType),
 			workoutExercises) 
-
-		// ADD back jsut chill for now
 
 		this.db.addWorkout(workout)
 		return workout
@@ -263,7 +261,6 @@ export class WorkoutService {
 			);
 	
 			const coreSets = coreExercises.reduce((sum, exercise) => {
-				console.log(typeof exercise.sets)
 				return sum + exercise.sets;
 			}, 0);
 	

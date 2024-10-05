@@ -55,7 +55,6 @@ export class WorkoutController {
 	
 	// WORKOUT TYPE
     getNormalWorkoutTypes(){
-		console.log(this.db.getNormalWorkoutTypes())
         return this.db.getNormalWorkoutTypes();
     }
 

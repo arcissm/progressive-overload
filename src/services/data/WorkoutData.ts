@@ -70,10 +70,9 @@ export class WorkoutData{
 
 	deleteWorkout(workoutType: string, date: Date, index: number) {
 		const workoutsOfType = this.workouts.get(workoutType);
-	
+
 		if (workoutsOfType) {
 			const workoutOnSameDay = workoutsOfType.filter(workout => isSameDate(workout.date, date));
-	
 			if (index >= 0 && index < workoutOnSameDay.length) {
 				const workoutToDelete = workoutOnSameDay[index];
 				const workoutIndex = workoutsOfType.findIndex(workout =>
@@ -168,7 +167,6 @@ export class WorkoutData{
 			);
 		});
 	
-		console.log(workouts)
 		// Update the cache with the loaded workouts
 		this.updateCache(workouts, workoutTypes);
 	}
