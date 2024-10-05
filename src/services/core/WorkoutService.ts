@@ -1,4 +1,3 @@
-import {ExerciseData} from "../data/ExerciseData";
 import {Exercise} from "../../models/Exercise";
 import {Muscle} from "../../models/Muscle";
 import {Workout} from "../../models/Workout";
@@ -270,15 +269,7 @@ export class WorkoutService {
 	
 			let totalSets = getRandomInt(muscle.minSets, muscle.maxSets) - coreSets;
 	
-			// muscle set range
-			console.log(muscle.name);
-			console.log("[ " + muscle.minSets + ", " + muscle.maxSets + " ]");
-			console.log(coreSets);
-			console.log(totalSets);
-	
 			const pickedExercises = this.pickExercises(totalSets, coreExercises, chooseFromExercises);
-			console.log(pickedExercises);
-	
 			pickedExercises.forEach(pickedExercise => {
 				const existingExercise = exercises.get(pickedExercise.id);
 				if(existingExercise){

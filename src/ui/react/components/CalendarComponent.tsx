@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { useWorkoutController } from 'controller/WorkoutControllerProvider';
 import { Workout } from 'models/Workout';
+import { getTodayDateUTC, isSameDate } from 'utils/AlgorithmUtils';
 
 const CalendarComponent: React.FC = () => {
   const { controller } = useWorkoutController();
-  const [currentMonth, setCurrentMonth] = useState(new Date()); // Use native Date object
+  const [currentMonth, setCurrentMonth] = useState(getTodayDateUTC());
   const [workouts, setWorkouts] = useState<Workout[]>([]);
 
   // Load workout data
@@ -43,12 +44,11 @@ const CalendarComponent: React.FC = () => {
   // Helper to render day cells
   const renderDay = (dayText: string, currentDate: Date, isGreyedOut: boolean, isOutsideMonth: boolean) => {
     const workouts = controller.getWorkoutsByDate(currentDate);
-
     return (
       <div
         key={currentDate.toISOString()}
         className={`calendar-day ${isGreyedOut ? 'greyed-out' : ''} ${
-          currentDate.toDateString() === new Date().toDateString() ? 'current-day' : ''
+          isSameDate(currentDate, getTodayDateUTC()) ? 'current-day' : ''
         }`}
         onClick={() => controller.openNote(currentDate)}
       >

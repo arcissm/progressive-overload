@@ -1,10 +1,9 @@
 import {Workout} from "../../models/Workout";
 import * as fs from 'fs';
 import * as path from 'path'
-import {BREAK, IMAGES_DIR, WORKOUT_DATA_PATH} from "../../utils/Constants";
-import {isSameDate} from "../../utils/AlgorithmUtils";
+import { IMAGES_DIR, WORKOUT_DATA_PATH} from "../../utils/Constants";
+import { isSameDate} from "../../utils/AlgorithmUtils";
 import { Exercise } from "models/Exercise";
-import { isDataView } from "util/types";
 
 export class WorkoutData{
 	private dataPath: string;
@@ -101,7 +100,6 @@ export class WorkoutData{
 	addWorkout(workout: Workout) {
 		if (this.workouts.has(workout.workoutType)) {
 			const workoutArray = this.workouts.get(workout.workoutType);
-			console.log(workoutArray)
 			if (workoutArray) {
 				workoutArray.push(workout);
 			}
@@ -159,9 +157,14 @@ export class WorkoutData{
 				);
 			});
 	
+			// for some reason the timezones fuck this up, so just add one day and it fixes itself
+			// dont ask me why
+			const workoutDate = new Date(rawWorkout.date);
+			workoutDate.setDate(workoutDate.getDate() + 1);
+
 			return new Workout(
 				rawWorkout.workoutType,
-				new Date(rawWorkout.date),
+				workoutDate,
 				rawWorkout.note,
 				rawWorkout.isCompleted,
 				rawWorkout.isSuccess,
@@ -170,6 +173,7 @@ export class WorkoutData{
 			);
 		});
 	
+		console.log(workouts)
 		// Update the cache with the loaded workouts
 		this.updateCache(workouts, workoutTypes);
 	}
@@ -193,128 +197,4 @@ export class WorkoutData{
 			}
 		});
 	}
-
-	/*
-	getWorkout(workoutType:string, date:string){
-		const workoutsOfType = this.workouts.get(workoutType)
-			if(workoutsOfType != undefined){
-				return workoutsOfType.find(workout => workout.date === date)
-			}
-			return undefined
-	}
-
-	getWorkoutsByDate(date: string): Workout[] {
-		let result: Workout[] = [];
-		for (const [workoutType, workoutList] of this.workouts) {
-			const filteredWorkouts = workoutList.filter(workout => isSameDate(workout.date,date));
-			result = result.concat(filteredWorkouts);
-		}
-		return result;
-	}
-
-	getCompletedWorkoutsLastWeeks(numberWeeks:number): number {
-		const twoWeeksAgo = new Date();
-		twoWeeksAgo.setDate(twoWeeksAgo.getDate() - (numberWeeks * 7));
-
-		let completedWorkoutsCount = 0;
-
-		this.workouts.forEach((workoutArray) => {
-			workoutArray.forEach((workout) => {
-				const workoutDate = new Date(workout.date);
-
-				if (workoutDate >= twoWeeksAgo) {
-					completedWorkoutsCount++;
-				}
-			});
-		});
-
-		return completedWorkoutsCount;
-	}
-
-	getDaysSinceLastWorkout(): number {
-		let mostRecentDate: Date = new Date("1999-01-01T00:00:00Z");
-
-		const todayDateUTC = getTodayDateUTC();
-
-		// Iterate over each array of workouts in the Map
-		for (const workoutArray of this.workouts.values()) {
-			// Find the most recent workout in the current array
-			for (const workout of workoutArray) {
-				// Parse the workout date assuming it is in 'YYYY-MM-DD' format
-				const workoutDateUTC = new Date(`${workout.date}T00:00:00Z`);
-
-				// Update mostRecentDate if the workoutDate is more recent
-				if (workoutDateUTC > mostRecentDate && workoutDateUTC <= todayDateUTC) {
-					mostRecentDate = workoutDateUTC;
-				}
-			}
-		}
-
-		// Calculate the difference in days
-		const diffTime = Math.abs(todayDateUTC.getTime() - mostRecentDate.getTime());
-		const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-
-		return diffDays;
-	}
-
-
-
-
-	*/
-
-	/*
-
-
-
-	private convertDataToWorkout(dataPath: string) {
-		const rawData = fs.readFileSync(dataPath, 'utf8');
-		const parsedData = JSON.parse(rawData);
-
-		// Assuming parsedData is an array of workouts
-		const workouts: Workout[] = parsedData.map((rawWorkout: any) => {
-			const warmUps = rawWorkout.exercises.map((rawWarmUp: any) => {
-				return new Exercise(
-					rawWarmUp.name,
-					rawWarmUp.weight,
-					rawWarmUp.sets,
-					rawWarmUp.reps,
-					rawWarmUp.time,
-					rawWarmUp.note,
-					rawWarmUp.isCore,
-					rawWarmUp.isSuccess,
-					rawWarmUp.isUnlocked,
-					rawWarmUp.weightIncrease
-				);
-			});
-			const exercises = rawWorkout.exercises.map((rawExercise: any) => {
-				return new Exercise(
-					rawExercise.name,
-					rawExercise.weight,
-					rawExercise.sets,
-					rawExercise.reps,
-					rawExercise.time,
-					rawExercise.note,
-					rawExercise.isCore,
-					rawExercise.isSuccess,
-					rawExercise.isUnlocked,
-					rawExercise.weightIncrease
-				);
-			});
-
-			return new Workout(
-				rawWorkout.workoutType,
-				rawWorkout.date,
-				warmUps,
-				exercises,
-				rawWorkout.note,
-				rawWorkout.completed,
-				rawWorkout.successStreak
-			);
-		});
-
-		// Update the cache with the loaded workouts
-		this.updateCache(workouts);
-	}
-
-	*/
 }
