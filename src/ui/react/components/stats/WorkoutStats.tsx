@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { useWorkoutController } from 'controller/WorkoutControllerProvider';
 
-const StatsComponent: React.FC = () => {
+const WorkoutStats: React.FC = () => {
   const controller = useWorkoutController();
 
   useEffect(() => {
@@ -27,4 +27,4 @@ const StatsComponent: React.FC = () => {
   );
 };
 
-export default StatsComponent;
+export default WorkoutStats;

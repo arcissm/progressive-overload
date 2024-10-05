@@ -156,15 +156,10 @@ export class WorkoutData{
 					rawExercise.isUnlocked
 				);
 			});
-	
-			// for some reason the timezones fuck this up, so just add one day and it fixes itself
-			// dont ask me why
-			const workoutDate = new Date(rawWorkout.date);
-			workoutDate.setDate(workoutDate.getDate() + 1);
 
 			return new Workout(
 				rawWorkout.workoutType,
-				workoutDate,
+				new Date(rawWorkout.date),
 				rawWorkout.note,
 				rawWorkout.isCompleted,
 				rawWorkout.isSuccess,

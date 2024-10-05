@@ -1,10 +1,10 @@
 import { ItemView, WorkspaceLeaf } from "obsidian";
 import { createRoot } from "react-dom/client";
 import { WorkoutControllerProvider } from "controller/WorkoutControllerProvider";
-import ChecklistComponent from "ui/react/components/ChecklistComponent";
-import StatsComponent from "ui/react/components/StatsComponent";
 import { WorkoutController } from "controller/WorkoutController";
 import Calendar from "ui/react/components/calendar/Calendar";
+import Checklist from "ui/react/components/checklist/Checklist";
+import WorkoutStats from "ui/react/components/stats/WorkoutStats";
 
 export const WORKOUT_VIEW = "workout-view";
 
@@ -34,8 +34,8 @@ export class WorkoutView extends ItemView {
             <WorkoutControllerProvider controller={this.controller}>
                 <div>
                     <Calendar />
-                    <ChecklistComponent />
-                    <StatsComponent />
+                    <Checklist />
+                    <WorkoutStats />
                 </div>
             </WorkoutControllerProvider>
         );
