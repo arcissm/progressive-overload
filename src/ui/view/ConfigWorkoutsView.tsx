@@ -2,19 +2,19 @@ import { ItemView, WorkspaceLeaf } from "obsidian";
 import React from "react";
 
 
-import { WorkoutController } from "controller/WorkoutController";
 import { createRoot } from "react-dom/client";
 import { Tabs } from "ui/react/components/Tabs";
-import { WorkoutControllerProvider } from "controller/WorkoutControllerProvider";
+import { ConfigControllerProvider } from "controller/ConfigControllerProvider";
+import { ConfigController } from "controller/ConfigController";
 
 export const CONFIG_WORKOUT_VIEW = "config-workouts-view";
 
 export class ConfigWorkoutsView extends ItemView {
   private reactComponent: React.ReactElement;
 
-  private controller: WorkoutController; // Replace with the correct type for the controller class
+  private controller: ConfigController; // Replace with the correct type for the controller class
 
-  constructor(leaf: WorkspaceLeaf, controller: WorkoutController) {
+  constructor(leaf: WorkspaceLeaf, controller: ConfigController) {
     super(leaf);
     this.controller = controller;
   }
@@ -29,14 +29,14 @@ export class ConfigWorkoutsView extends ItemView {
   }
 
   getIcon(): string {
-    return "swords";
+    return "shield";
   }
 
   async onOpen(): Promise<void> {
     this.reactComponent = (
-      <WorkoutControllerProvider controller={this.controller}>
+      <ConfigControllerProvider controller={this.controller}>
         <Tabs />
-      </WorkoutControllerProvider>
+      </ConfigControllerProvider>
     );
   
     // Use createRoot instead of ReactDOM.render

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useWorkoutController } from "../../../controller/WorkoutControllerProvider";
+import { useWorkoutController } from "../../../controller/ConfigControllerProvider";
 import { Muscle } from "models/Muscle"; 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus, faTrashCan,  } from '@fortawesome/free-solid-svg-icons'; 

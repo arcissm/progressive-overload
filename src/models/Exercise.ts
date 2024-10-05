@@ -1,6 +1,5 @@
 import { PRGRESSIVE_OVERLOAD_REPS } from "utils/Constants";
-import {getRandomInt} from "../utils/AlgorithmUtils";
-import { SPECIAL, TIME_PER_REP, UNLUCKY} from "../utils/ExerciseConstants";
+import { TIME_PER_REP, UNLUCKY} from "../utils/ExerciseConstants";
 
 export class Exercise {
 	name: string;

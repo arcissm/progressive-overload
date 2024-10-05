@@ -1,4 +1,4 @@
-import {BREAK, MINIMUM_WORKOUT_DAYS_2_WEEKS} from "../../utils/Constants";
+import { MINIMUM_WORKOUT_DAYS_2_WEEKS} from "../../utils/Constants";
 import { DBService } from "services/core/DBService";
 
 
@@ -15,17 +15,11 @@ export class BreakService{
 	}
 
 	isOnBreak(){
-		console.log("IS ON BREAK ???")
 		let isBreak = false;
 		const totalWorkouts = this.db.countCompletedWorkouts();
 
-		console.log("Total workouts " + totalWorkouts)
-		console.log("MINIMUM_WORKOUT_DAYS_2_WEEKS " + MINIMUM_WORKOUT_DAYS_2_WEEKS)
-
 		if(totalWorkouts >= MINIMUM_WORKOUT_DAYS_2_WEEKS){
 			const wokoutsIn2Weeks = this.db.countCompletedWorkoutsInPeriod(2);
-
-			console.log("wokoutsIn2Weeks " + wokoutsIn2Weeks)
 
 			if(wokoutsIn2Weeks < MINIMUM_WORKOUT_DAYS_2_WEEKS){
 				isBreak = true;

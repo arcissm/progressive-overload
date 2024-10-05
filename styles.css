@@ -119,6 +119,12 @@ input[type=checkbox]:checked:after{
 	border: none;
 }
 
+.calendar-day__container-circles-dot.completed-cardio {
+	background-color: teal; /* Customize the color of the dot */
+	border: none;
+}
+
+
 .calendar-day__container-circles-dot.started {
 	border: 1px solid #AD83FF; /* Customize the outline color */
 	background-color: transparent;
@@ -130,6 +136,10 @@ input[type=checkbox]:checked:after{
 	opacity: 0.4;
 }
 
+.calendar-day__container-circles-dot.completed-cardio-outside-month {
+	background-color: teal; /* Customize the color of the dot */
+	opacity: 0.4;
+}
 /* Dot for started workouts on days outside the current month */
 .calendar-day__container-circles-dot.started-outside-month {
 	border: 1px solid #8D6F0B; /* Customize the outline color */
