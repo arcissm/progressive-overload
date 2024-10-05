@@ -1,10 +1,10 @@
-import React, { createContext, useContext, useState } from "react";
+import React, { createContext, useContext, useState, useEffect } from "react";
 import { WorkoutController } from "controller/WorkoutController";
 
-// Create the context with an additional function `updateCalendar`
+// Create the context with the workout data and controller
 const WorkoutControllerContext = createContext<{
   controller: WorkoutController;
-  updateCalendar: () => void;
+  workouts: any[];
 } | undefined>(undefined);
 
 // Create a custom hook to use the WorkoutControllerContext more easily
@@ -23,15 +23,27 @@ interface WorkoutControllerProviderProps {
 }
 
 export const WorkoutControllerProvider: React.FC<WorkoutControllerProviderProps> = ({ controller, children }) => {
-  const [calendarKey, setCalendarKey] = useState(0);
+  const [workouts, setWorkouts] = useState<any[]>([]);
 
-  // Function to trigger re-render of calendar by incrementing the key
-  const updateCalendar = () => {
-    setCalendarKey((prevKey) => prevKey + 1); // Increment the key to force re-render
-  };
+  // Subscribe to workout updates from the controller
+  useEffect(() => {
+    const updateWorkouts = () => {
+      setWorkouts([...controller.getWorkouts()]); // Ensure we copy the array to trigger a re-render
+    };
+
+    // Subscribe to the controller's updates
+    controller.subscribe(updateWorkouts);
+
+    // Fetch initial workouts
+    updateWorkouts();
+
+    // Clean up subscription on unmount
+    return () => controller.unsubscribe(updateWorkouts);
+  }, [controller]);
+
 
   return (
-    <WorkoutControllerContext.Provider value={{ controller, updateCalendar }}>
+    <WorkoutControllerContext.Provider value={{ controller, workouts }}>
       {children}
     </WorkoutControllerContext.Provider>
   );

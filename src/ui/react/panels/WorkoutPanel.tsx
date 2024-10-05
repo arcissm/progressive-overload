@@ -49,7 +49,7 @@ const WorkoutPanel: React.FC = () => {
   const handleDeleteWorkoutType = (type: string) => {
     const updatedArray = workoutTypeMuscleArray.filter(([t]) => t !== type);
     setWorkoutTypeMuscleArray(updatedArray);
-    controller.removeWorkout(type);
+    controller.removeWorkoutType(type);
   };
 
 

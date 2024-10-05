@@ -5,10 +5,13 @@ import { WorkoutDropdownModal } from "./ui/ribbon/WorkoutDropdownModal";
 import { WorkoutController } from "controller/WorkoutController";
 import { CONFIG_WORKOUT_VIEW, ConfigWorkoutsView } from "ui/view/ConfigWorkoutsView";
 import {  WorkoutView, WORKOUT_VIEW } from "ui/view/WorkoutView";
+import { ConfigController } from "controller/ConfigController";
 
 export default class WorkoutPlugin extends Plugin {
 	private settings: PluginSettings;
-	private controller: WorkoutController;
+	private workoutController: WorkoutController;
+	private configController: ConfigController;
+
 	private configView: ConfigWorkoutsView;
 	private statsView: WorkoutView;
 
@@ -17,7 +20,8 @@ export default class WorkoutPlugin extends Plugin {
 
 	async onload() {
 		await this.loadSettings();
-		this.controller = new WorkoutController(this.app, this.settings);
+		this.workoutController = new WorkoutController(this.app, this.settings);
+		this.configController = new ConfigController(this.app, this.settings);
 
 		// Add the settings tab to Obsidian's settings
 		this.addSettingTab(new SettingsTab(this.app, this));
@@ -25,24 +29,24 @@ export default class WorkoutPlugin extends Plugin {
 		// Note Deleted Event
 		this.registerEvent(this.app.vault.on('delete', async (file) => {
 			if (file instanceof TFile) {
-				this.controller.removeWorkout(file.name);
+				this.workoutController.removeWorkout(file.name);
 			}
 		}));
 
 		this.addRibbonIcon('dumbbell', 'New Workout', () => {
-			new WorkoutDropdownModal(this.app, this.controller).open();
+			new WorkoutDropdownModal(this.app, this.workoutController).open();
 		});
 
 		// Register Config Workouts View
 		this.registerView(
 			CONFIG_WORKOUT_VIEW,
-			(leaf: WorkspaceLeaf) => (this.configView = new ConfigWorkoutsView(leaf, this.controller))
+			(leaf: WorkspaceLeaf) => (this.configView = new ConfigWorkoutsView(leaf, this.configController))
 		);
 
 		// Register the ExempleView (aaaaaa view)
 		this.registerView(
 			WORKOUT_VIEW,
-			(leaf: WorkspaceLeaf) => (this.statsView = new WorkoutView(leaf, this.controller))
+			(leaf: WorkspaceLeaf) => (this.statsView = new WorkoutView(leaf, this.workoutController))
 		);
 
 		// Ensure layout is ready and check for existing leaves
@@ -56,7 +60,7 @@ export default class WorkoutPlugin extends Plugin {
 				console.log(file.name);
 				// TODO: CHANGE TO ONLY FILE OF TODAY
 				// but after cuz it would be a bitch to debug
-				this.controller.handleFileChange(file);
+				this.workoutController.handleFileChange(file);
 			}
 		}));
 	}

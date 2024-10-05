@@ -3,7 +3,7 @@ import { useWorkoutController } from 'controller/WorkoutControllerProvider';
 import { Workout } from 'models/Workout';
 
 const CalendarComponent: React.FC = () => {
-  const { controller, updateCalendar } = useWorkoutController();
+  const { controller } = useWorkoutController();
   const [currentMonth, setCurrentMonth] = useState(new Date()); // Use native Date object
   const [workouts, setWorkouts] = useState<Workout[]>([]);
 
@@ -14,7 +14,7 @@ const CalendarComponent: React.FC = () => {
       setWorkouts(fetchedWorkouts);
     };
     loadWorkoutData();
-  }, [controller, updateCalendar]); // Adding updateCalendar to the dependency array so that it re-renders when triggered
+  }, [controller]); // Adding updateCalendar to the dependency array so that it re-renders when triggered
 
   const getWorkoutClass = (workout: Workout, isOutsideMonth: boolean) => {
     if (workout.workoutType === "cardio") {
