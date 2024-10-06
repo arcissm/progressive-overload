@@ -1,4 +1,4 @@
-import {App, Notice} from 'obsidian';
+import {App, Notice, TFile, TFolder} from 'obsidian';
 import {WorkoutService} from "../core/WorkoutService";
 import {getTitleInfo} from "../../utils/AlgorithmUtils";
 import {CheckBox} from "../../models/Checkbox";
@@ -8,11 +8,15 @@ export class NoteService {
 	private app: App;
 	private workoutService: WorkoutService;
 	private notesDir: string;
+	private imagesDir: string;
 
-	constructor(app: App, workoutService: WorkoutService, notesDir:string) {
+	constructor(app: App, workoutService: WorkoutService, notesDir:string, imagesDir:string) {
 		this.app = app;
 		this.notesDir = notesDir;
+		this.imagesDir = imagesDir;
 		this.workoutService = workoutService;
+
+		this.ensureDirectoryExists(this.imagesDir)
 	}
 
 	async createWorkoutNote(workoutType:string){
@@ -21,6 +25,7 @@ export class NoteService {
 			new Notice("Error: Workout could not be created")
 			return
 		}
+		this.addMotivation(workout)
 		this.createNote(workout);
 	}
 
@@ -50,6 +55,73 @@ export class NoteService {
 		}
 	}
 
+	async addMotivation(workout: Workout){
+		const note = await this.createMotivationalNote()
+		console.log(note)
+		workout.note = note
+	}
+
+	async createMotivationalNote(): Promise<string> {
+		const imagePath = await this.getMotivationalImage();
+	
+		if (!imagePath) {
+			console.error("No motivational image found.");
+			return "";
+		}
+	
+		// Extract the image file name from the path (since Obsidian uses just the file name)
+		const fileName = imagePath.split("/").pop() || "";
+	
+		let message = "";
+	
+		if (fileName.startsWith("bad_")) {
+			message = "<div class=\"motivationalSpeech\">\n" +
+				"Do you want to look like that forever?" +
+				"</div>";
+		} else if (fileName.startsWith("good_")) {
+			message = "<div class=\"motivationalSpeech\">\n" +
+				"You can look like this too." +
+				"</div>";
+		}
+	
+		// Use Obsidian's internal file embedding syntax
+		return `![[${fileName}]]\n\n${message}\n`;
+	}
+	
+	
+
+	async getMotivationalImage(): Promise<string> {
+		try {
+			// Get the folder from the vault
+			const imageFolder = this.app.vault.getAbstractFileByPath(this.imagesDir);
+	
+			// Check if the directory exists and is a folder
+			if (imageFolder && imageFolder instanceof TFolder) {
+				// Get all the files in the folder
+				const files = imageFolder.children.filter(file => file instanceof TFile && /\.(jpg|jpeg|png|gif)$/i.test(file.name));
+	
+				// If there are no images, return an empty string
+				if (files.length === 0) {
+					console.warn("No images found in the directory.");
+					return "";
+				}
+	
+				// Select a random image
+				const randomImage = files[Math.floor(Math.random() * files.length)] as TFile;
+	
+				// Return the relative path to the image
+				return randomImage.path;  // This is the relative path within the vault
+			} else {
+				console.error("Image directory does not exist or is not a folder.");
+				return "";
+			}
+		} catch (err) {
+			console.error("Error reading the image folder:", err);
+			return "";
+		}
+	}
+	
+	
 
 	
 	async deleteNote(filename: string) {
@@ -96,10 +168,6 @@ export class NoteService {
 			await this.app.vault.rename(file, directoryPath + "/" + newFileName);
 		})
 	}
-
-
-
-	
 
 	private async getNotePath(): Promise<string> {
 		const todayDateUTC = new Date();
@@ -156,55 +224,4 @@ export class NoteService {
 	isAllChecked(checkboxes: CheckBox[]): boolean {
 		return checkboxes.every(checkbox => checkbox.checked);
 	}
-
-
-	/*
-
-	async createNote(workoutType:string){
-
-		let workout;
-		if(workoutType === "break"){
-			const index = getRandomInt(0, POST_BREAK_WORKOUTS.length - 1)
-			workout = POST_BREAK_WORKOUTS[index]
-		// }else if(workoutType === "cardio") {
-		// 	workout = this.workoutService.createCardioWorkout(workoutType)
-		// }else{
-		// 	workout = this.workoutService.createNewWorkout(workoutType)
-		// }
-
-		}else{
-			new Notice("Good Job")
-		}
-
-
-
-		// Adds capital Letter
-		const fancyWorkoutType = workoutType.charAt(0).toUpperCase() + workoutType.slice(1).toLowerCase();
-
-		// Define the full path of the note
-		const fullPath = await this.getNotePath() + " " + fancyWorkoutType + ".md";
-
-		// Check if file already exists
-		const existingFile = this.app.vault.getAbstractFileByPath(fullPath);
-		if (existingFile) {
-			// console.log("Note already exists");
-			return 303;
-		}
-
-		try {
-			// Create the note
-			const file = await this.app.vault.create(fullPath, workout.toMarkdown());
-			// console.log("Note created:", file.path);
-			return 200
-		} catch (error) {
-			console.error(`Failed to create note at path: ${fullPath}`, error);
-			return 404;
-		}
-			
-	}
-
-
-
-	*/
-
 }

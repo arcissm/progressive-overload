@@ -1,18 +1,15 @@
 import {Workout} from "../../models/Workout";
 import * as fs from 'fs';
-import * as path from 'path'
-import { IMAGES_DIR, WORKOUT_DATA_PATH} from "../../utils/Constants";
+import { WORKOUT_DATA_PATH} from "../../utils/Constants";
 import { isSameDate} from "../../utils/AlgorithmUtils";
 import { Exercise } from "models/Exercise";
 
 export class WorkoutData{
 	private dataPath: string;
-	private imageDirPath: string;
 	private workouts: Map<string, Workout[]> = new Map();
 
 	constructor(dirPath:string, workoutTypes: string[]) {
 		this.dataPath = dirPath + WORKOUT_DATA_PATH;
-		this.imageDirPath = dirPath + IMAGES_DIR;
 		// init workouts
 		this.convertDataToWorkout(this.dataPath, workoutTypes);
 	}
@@ -52,19 +49,7 @@ export class WorkoutData{
 	}
 
 	
-	getMotivationalImage(){
 
-		let files;
-		try {
-			files = fs.readdirSync(this.imageDirPath);
-		} catch (err) {
-			console.error("Error reading the image folder:", err);
-			return "";
-		}
-
-		const randomImage = files[Math.floor(Math.random() * files.length)];
-		return path.join(this.imageDirPath, randomImage)
-	}
 
 	
 
