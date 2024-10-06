@@ -1,6 +1,6 @@
 import {App, Notice, TFile, TFolder} from 'obsidian';
 import {WorkoutService} from "../core/WorkoutService";
-import {getTitleInfo} from "../../utils/AlgorithmUtils";
+import {getTitleInfo, newDate} from "../../utils/AlgorithmUtils";
 import {CheckBox} from "../../models/Checkbox";
 import { Workout } from 'models/Workout';
 
@@ -126,14 +126,8 @@ export class NoteService {
 	
 	async deleteNote(filename: string) {
 		const { workoutType, date, index } = getTitleInfo(filename);
-		
-		const dateParts = date.split('-').map(Number);
-		const year = dateParts[0];
-		const month = dateParts[1] - 1; // Months are zero-based in JavaScript Date
-		const day = dateParts[2];
-	
 		this.renameNotes(workoutType, date, index);
-		this.workoutService.deleteWorkout(workoutType, new Date(year, month, day), index);
+		this.workoutService.deleteWorkout(workoutType, newDate(date), index);
 	}
 	
 

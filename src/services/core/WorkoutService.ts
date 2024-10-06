@@ -43,11 +43,11 @@ export class WorkoutService {
 
 	getWorkoutFromNote(workoutType: string, date: Date, index: number) {
 		const workoutsOfType = this.db.getWorkoutsOfType(workoutType);
-	
+
 		if (workoutsOfType) {
 			// Filter workouts by date
 			const filteredWorkouts = workoutsOfType.filter(workout => isSameDate(workout.date, date));
-	
+
 			// Check if the index is within the bounds of the filtered workouts array
 			if (index >= 0 && index < filteredWorkouts.length) {
 				// filteredWorkouts[index] is a reference to the same workout object in workoutsOfType
