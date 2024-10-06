@@ -7,9 +7,6 @@ export const BREAK_DATA_PATH = "/.obsidian/plugins/obsidian-but-better/src/data/
 export const BREAK_TRACKER_DATA_PATH = "/.obsidian/plugins/obsidian-but-better/src/data/break-tracker.json";
 export const VARIATION_DATA_PATH = "/.obsidian/plugins/obsidian-but-better/src/data/variations.json";
 
-// TO DO: FIX THIS SHIT
-export const IMAGES_DIR = "/.obsidian/plugins/obsidian-but-better/assets/images/motivation";
-
 export const MINIMUM_SUCCESS_TO_UNLOCK_NEW_EXERCISE = 3;
 export const MAXIMUM_ALLOWED_MUSCLE_FAILURES = 4;
 export const MINIMUM_MUSCLE_SUCCESS_STREAK = 2;

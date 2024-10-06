@@ -30,7 +30,7 @@ export class WorkoutService {
 		const workout = new Workout(
 			workoutType,
 			new Date(),
-			this.getMotivationalNote(),
+			"",
 			false,
 			false,
 			this.getWarmUForWorkout(workoutType),
@@ -367,22 +367,5 @@ export class WorkoutService {
 		}
 
 		return [];
-	}
-
-		
-	private getMotivationalNote() {
-		const imagePath = this.db.getMotivationalImage();
-		const fileName = path.basename(imagePath);
-		let message = "";
-		if (fileName.startsWith("bad_")) {
-			message = "<div class=\"motivationalSpeech\">\n" +
-				"Do you want to look like that forever?" +
-				"</div>"
-		} else if (fileName.startsWith("good_")) {
-			message = "<div class=\"motivationalSpeech\">\n" +
-				"You can look like this too." +
-				"</div>"
-		}
-		return `![Motivation](${imagePath})\n\n${message}\n`;
 	}
 }

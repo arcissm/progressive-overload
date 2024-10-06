@@ -145,14 +145,11 @@ export class DBService {
 		if(exercise) exercise.variation = ""
 		this.saveExercises()
 		return variations;
-	}
-
-
+	}	
+	
+	
+	
 	// WORKOUT
-	getMotivationalImage(){
-		return this.workoutData.getMotivationalImage();
-	}
-
 	updateWorkouts(){
 		this.workoutData.saveWorkouts();
 	}

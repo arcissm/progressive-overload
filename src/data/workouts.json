@@ -1,1 +1,112 @@
-[]
+[
+  {
+    "workoutType": "arms",
+    "date": "2024-10-06T21:05:25.106Z",
+    "isCompleted": false,
+    "isSuccess": false,
+    "note": "",
+    "warmUps": [],
+    "exercises": [
+      {
+        "name": "curls",
+        "id": "curls",
+        "weight": 1044444,
+        "sets": 244444,
+        "reps": "6-8",
+        "time": 3044444444,
+        "note": "** 1-4 sets**: Normal reps  \n> > **5-244444 sets**: Dropset\n\n",
+        "variation": "",
+        "isSuccess": false,
+        "isCompleted": false,
+        "isUnlocked": true,
+        "weightIncrease": 10,
+        "boosted": null
+      },
+      {
+        "name": "triceps over head",
+        "id": "triceps-over-head",
+        "weight": 20,
+        "sets": 1,
+        "reps": "5",
+        "time": 30,
+        "note": "",
+        "variation": "",
+        "isSuccess": false,
+        "isCompleted": false,
+        "isUnlocked": false,
+        "weightIncrease": 10,
+        "boosted": null
+      },
+      {
+        "name": "dips",
+        "id": "dips",
+        "weight": 0,
+        "sets": 2,
+        "reps": "5",
+        "time": 30,
+        "note": "",
+        "variation": "",
+        "isSuccess": false,
+        "isCompleted": false,
+        "isUnlocked": true,
+        "weightIncrease": 5,
+        "boosted": null
+      }
+    ]
+  },
+  {
+    "workoutType": "chest",
+    "date": "2024-10-06T20:59:29.790Z",
+    "isCompleted": false,
+    "isSuccess": false,
+    "note": "![Motivation](./Motivation%20Pics/bad_28.jpg)\n\n<div class=\"motivationalSpeech\">\nYou can look like this too.</div>\n",
+    "warmUps": [],
+    "exercises": [
+      {
+        "name": "dips",
+        "id": "dips",
+        "weight": 0,
+        "sets": 2,
+        "reps": "5",
+        "time": 30,
+        "note": "",
+        "variation": "",
+        "isSuccess": false,
+        "isCompleted": false,
+        "isUnlocked": true,
+        "weightIncrease": 5,
+        "boosted": null
+      },
+      {
+        "name": "handstand",
+        "id": "handstand",
+        "weight": 0,
+        "sets": 5,
+        "reps": "5",
+        "time": 30,
+        "note": "** 1-4 sets**: Normal reps  \n> > **5-7 sets**: Drop Weight by 0\n\n",
+        "variation": "push up to feet on wall",
+        "isSuccess": false,
+        "isCompleted": false,
+        "isUnlocked": true,
+        "weightIncrease": 0,
+        "boosted": null
+      },
+      {
+        "name": "handstand",
+        "id": "handstand",
+        "weight": 0,
+        "sets": 2,
+        "reps": "5",
+        "time": 30,
+        "note": "",
+        "variation": "walk on wall",
+        "isSuccess": false,
+        "isCompleted": false,
+        "isUnlocked": true,
+        "weightIncrease": 0,
+        "boosted": null
+      }
+    ]
+  }
+]

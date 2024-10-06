@@ -57,7 +57,6 @@ export default class WorkoutPlugin extends Plugin {
 			const filenamePattern = /^\d{4}-\d{2}-\d{2} .+\.md$/;
 			const gymDirectory = file.path.split('/')[0];
 			if (file instanceof TFile && file.extension === 'md' && filenamePattern.test(file.name) && gymDirectory === this.settings.notesDir) {
-				console.log(file.name);
 				// TODO: CHANGE TO ONLY FILE OF TODAY
 				// but after cuz it would be a bitch to debug
 				this.workoutController.handleFileChange(file);
@@ -70,17 +69,27 @@ export default class WorkoutPlugin extends Plugin {
 		this.app.workspace.detachLeavesOfType(CONFIG_WORKOUT_VIEW); // Clean up ConfigWorkoutsView
 	}
 
+	// Load settings with the new imagesDir property
 	async loadSettings() {
+		// Load saved settings and merge with default settings
 		this.settings = Object.assign({}, DEFAULT_SETTINGS, await this.loadData());
+
+		// Ensure that if the new imagesDir isn't set, it defaults to "Motivation Pics"
+		if (!this.settings.imagesDir) {
+			this.settings.imagesDir = DEFAULT_SETTINGS.imagesDir;
+		}
 	}
 
+	// Save settings with a check for both notesDir and imagesDir
 	async saveSettings() {
-		if (this.settings.notesDir === "") {
-			await this.saveData(DEFAULT_SETTINGS);
+		// Ensure that notesDir and imagesDir are saved properly
+		if (this.settings.notesDir === "" || this.settings.imagesDir === "") {
+			await this.saveData(DEFAULT_SETTINGS); // Reset to defaults if empty
 		} else {
 			await this.saveData(this.settings);
 		}
 	}
+
 
 	// Ensure the layout is ready and avoid spawning multiple views
 	onLayoutReady(): void {

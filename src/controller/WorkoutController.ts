@@ -29,7 +29,7 @@ export class WorkoutController {
         this.db = new DBService(dirPath);
 
         this.workoutService = new WorkoutService(this.db);
-		this.noteService = new NoteService(this.app, this.workoutService, settings.notesDir)
+		this.noteService = new NoteService(this.app, this.workoutService, settings.notesDir, settings.imagesDir)
 		this.breakService = new BreakService(this.db);
 	}
 
