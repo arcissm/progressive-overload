@@ -1,6 +1,7 @@
 import * as fs from 'fs';
 import {Muscle} from "../../models/Muscle";
 import { MUSCLE_DATA_PATH } from "utils/Constants";
+import { Exercise } from 'models/Exercise';
 
 export class MuscleData {
 	private dataPath: string
@@ -55,12 +56,31 @@ export class MuscleData {
 	
 		// Process each exercise from the parsed data
 		parsedData.forEach((rawMuscle: any) => {
+
+			const warmUps = (rawMuscle.warmUps || []).map((rawWarmUp: any) => {
+				return new Exercise(
+					rawWarmUp.name,
+					rawWarmUp.sets,
+					rawWarmUp.reps,
+					rawWarmUp.weight,
+					rawWarmUp.time,
+					rawWarmUp.weightIncrease,
+					rawWarmUp.variation,    
+					rawWarmUp.boosted,
+					rawWarmUp.note,
+					rawWarmUp.isSuccess,
+					rawWarmUp.isCompleted,
+					rawWarmUp.isUnlocked
+				);
+			});
+
 			const muscle = new Muscle(
 				rawMuscle.name, 
 				rawMuscle.minSets, 
 				rawMuscle.maxSets, 
 				rawMuscle.boosted,
-				rawMuscle.coreExercises || [] // Read coreExercises or set it to an empty array if not present
+				rawMuscle.coreExercises || [], // Read coreExercises or set it to an empty array if not present
+				warmUps || [] 
 			);
 			this.muscles.push(muscle);
 		});

@@ -33,7 +33,7 @@ export class WorkoutService {
 			"",
 			false,
 			false,
-			this.getWarmUForWorkout(workoutType),
+			this.getWarmUp(muscles),
 			workoutExercises) 
 
 		this.db.addWorkout(workout)
@@ -358,14 +358,19 @@ export class WorkoutService {
 	}
 	
 	// TODO: Make a warm up config
-	private getWarmUForWorkout(workoutType: string): Exercise[] {
+	private getWarmUp(muscles: Muscle[]): Exercise[] {
 		// 25% of the time, you do yoga as a warmup
 		if(Math.random() < YOGA_CHANCE){
 			const index = getRandomInt(0, YOGA_WORKOUT.length -1)
 			const yoga = new Exercise("yoga", 0, "", 0, 0, 0, "", 0, YOGA_WORKOUT[index], false, false, false,)
 			return [yoga];
 		}
-
-		return [];
+		else{
+			let warmUps: Exercise[] = [];
+			muscles.forEach(muscle => {
+				warmUps = warmUps.concat(muscle.warmUps); // Concatenate warm-ups from each muscle
+			});
+			return warmUps;
+		}
 	}
 }

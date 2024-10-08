@@ -417,6 +417,22 @@ input[type=checkbox]:checked:after{
 }
 
 
+/* WARM UOS SETTINGS */
+
+.workout-setings-warmup-container{
+	border-top: 2px solid var(--text-normal	); /* Adjust thickness and color as needed */
+    border-left: 2px solid var(--text-normal); /* Adjust thickness and color as needed */
+	padding-left: 1rem;
+	padding-right: 1rem;
+	padding-bottom: 1rem;
+}
+
+
+.workout-settings-warmup-button-add-container{
+	display: flex;
+	justify-content: center;
+}
+
 
 /* EXERCISES SETTINGS */
 

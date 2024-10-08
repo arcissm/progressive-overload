@@ -40,7 +40,7 @@ const MusclePanel: React.FC = () => {
   
     if (!muscleWithEmptyNameExists) {
       setMuscles((prevMuscles) => {
-        const newMuscle = new Muscle("", 0, 0, 0, [])
+        const newMuscle = new Muscle("", 0, 0, 0, [], [])
         const updatedMuscles = [...prevMuscles, newMuscle];
         controller.addMuscle(newMuscle)
         return updatedMuscles
@@ -81,7 +81,8 @@ const MusclePanel: React.FC = () => {
         field === 'minSets' ? Number(value) : updatedMuscles[index].minSets,
         field === 'maxSets' ? Number(value) : updatedMuscles[index].maxSets,
         updatedMuscles[index].boosted,
-        field === 'coreExercises' ? (value as string[]) : updatedMuscles[index].coreExercises
+        field === 'coreExercises' ? (value as string[]) : updatedMuscles[index].coreExercises,
+        updatedMuscles[index].warmUps,
       );
   
       // Handle debouncing logic (unchanged from your original function)
@@ -145,7 +146,8 @@ const MusclePanel: React.FC = () => {
       title="Muscle Config"
       description="Add, Remove or Edit muscles. Every workout will have a number of sets between Min Sets and Max Sets."
       footerAction={handleAddMuscle}
-    >
+      displayFooter={true} >
+    
       <div className="workout-settings-muscle-container">
         <div className="workout-settings-muscle-header">
           <div className="workout-settings-muscle-row">

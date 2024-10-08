@@ -95,7 +95,8 @@ const WorkoutPanel: React.FC = () => {
       title="Workout Types Config"
       description="Add, Remove or Edit workout types. Every workout type includes one or more muscles that will be worked on."
       footerAction={handleAddWorkoutType}
-    >
+      displayFooter={true} >
+        
       <div className="workout-settings-table-container">
         <table className="workout-settings-table">
           <thead>
