@@ -1,3 +1,12 @@
+export function newDate(date: string){
+	const dateParts = date.split('-').map(Number);
+	const year = dateParts[0];
+	const month = dateParts[1] - 1; // Months are zero-based in JavaScript Date
+	const day = dateParts[2];
+
+	return new Date(year, month, day)
+}
+
 export function isSameDate(date1: Date, date2:Date) {
     return (
         date1.getFullYear() === date2.getFullYear() &&  // Compare year

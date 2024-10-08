@@ -5,7 +5,7 @@ import { DBService } from "services/core/DBService";
 import { WorkoutService } from "services/core/WorkoutService";
 import { NoteService } from "services/note/NoteService";
 import { PluginSettings } from "services/settings/Settings";
-import { getTitleInfo } from "utils/AlgorithmUtils";
+import { getTitleInfo, newDate } from "utils/AlgorithmUtils";
 
 
 
@@ -120,7 +120,7 @@ export class WorkoutController {
 	async checkboxSuccessIsChecked(file: TFile) {
 		const content = await this.app.vault.read(file);
 		const {workoutType, date, index} = getTitleInfo(file.name)
-		const workout = this.workoutService.getWorkoutFromNote(workoutType,new Date(date), index)
+		const workout = this.workoutService.getWorkoutFromNote(workoutType, newDate(date), index)
 		const successCheckboxes = this.noteService.getCheckboxes("Success", content);
 		let allSuccess = true;
 
@@ -142,7 +142,7 @@ export class WorkoutController {
 	async checkboxCompletedIsChecked(file: TFile) {
 		const content = await this.app.vault.read(file);
 		const {workoutType, date, index} = getTitleInfo(file.name)
-		const workout = this.workoutService.getWorkoutFromNote(workoutType,new Date(date), index)
+		const workout = this.workoutService.getWorkoutFromNote(workoutType, newDate(date), index)
 		const completedCheckboxes = this.noteService.getCheckboxes("Completed", content);
 		let allCompleted = true;
 

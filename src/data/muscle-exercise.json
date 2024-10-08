@@ -22,96 +22,6 @@
     ]
   },
   {
-    "muscle": "rear delt",
-    "exercises": [
-      {
-        "name": "rear-delt-dumbell"
-      }
-    ]
-  },
-  {
-    "muscle": "side delt",
-    "exercises": [
-      {
-        "name": "side-laterals"
-      },
-      {
-        "name": "shoulder-twisties"
-      },
-      {
-        "name": "cartwheel"
-      },
-      {
-        "name": "thrusters"
-      }
-    ]
-  },
-  {
-    "muscle": "front delt",
-    "exercises": [
-      {
-        "name": "handstand"
-      },
-      {
-        "name": "archer-push-up"
-      },
-      {
-        "name": "over-head-press"
-      },
-      {
-        "name": "front-raises"
-      },
-      {
-        "name": "thrusters"
-      }
-    ]
-  },
-  {
-    "muscle": "tricep",
-    "exercises": [
-      {
-        "name": "dips"
-      },
-      {
-        "name": "band-triceps"
-      },
-      {
-        "name": "triceps-over-head"
-      },
-      {
-        "name": "archer-push-up"
-      }
-    ]
-  },
-  {
-    "muscle": "chest",
-    "exercises": [
-      {
-        "name": "handstand"
-      },
-      {
-        "name": "push-up"
-      },
-      {
-        "name": "diamond-push-up"
-      },
-      {
-        "name": "dips"
-      }
-    ]
-  },
-  {
-    "muscle": "hamstring",
-    "exercises": [
-      {
-        "name": "ass-up"
-      },
-      {
-        "name": "romanian-deadlift"
-      }
-    ]
-  },
-  {
     "muscle": "biceps",
     "exercises": [
       {
@@ -167,43 +77,19 @@
     ]
   },
   {
-    "muscle": "quads",
+    "muscle": "tricep",
     "exercises": [
       {
-        "name": "thrusters"
+        "name": "dips"
       },
       {
-        "name": "deadlift"
+        "name": "band-triceps"
       },
       {
-        "name": "squat"
+        "name": "triceps-over-head"
       },
       {
-        "name": "box-jumps"
-      },
-      {
-        "name": "single-leg-hops"
-      },
-      {
-        "name": "lunges"
-      },
-      {
-        "name": "jumps"
-      },
-      {
-        "name": "split-squats"
-      },
-      {
-        "name": "side-lunges"
-      },
-      {
-        "name": "alternating-dumbbell-snatch"
-      },
-      {
-        "name": "split-box-jump"
-      },
-      {
-        "name": "one-arm-deadlift"
+        "name": "archer-push-up"
       }
     ]
   },
@@ -254,6 +140,120 @@
       },
       {
         "name": "plank"
+      }
+    ]
+  },
+  {
+    "muscle": "quads",
+    "exercises": [
+      {
+        "name": "thrusters"
+      },
+      {
+        "name": "deadlift"
+      },
+      {
+        "name": "squat"
+      },
+      {
+        "name": "box-jumps"
+      },
+      {
+        "name": "single-leg-hops"
+      },
+      {
+        "name": "lunges"
+      },
+      {
+        "name": "jumps"
+      },
+      {
+        "name": "split-squats"
+      },
+      {
+        "name": "side-lunges"
+      },
+      {
+        "name": "alternating-dumbbell-snatch"
+      },
+      {
+        "name": "split-box-jump"
+      },
+      {
+        "name": "one-arm-deadlift"
+      }
+    ]
+  },
+  {
+    "muscle": "hamstring",
+    "exercises": [
+      {
+        "name": "ass-up"
+      },
+      {
+        "name": "romanian-deadlift"
+      }
+    ]
+  },
+  {
+    "muscle": "rear delt",
+    "exercises": [
+      {
+        "name": "rear-delt-dumbell"
+      }
+    ]
+  },
+  {
+    "muscle": "side delt",
+    "exercises": [
+      {
+        "name": "side-laterals"
+      },
+      {
+        "name": "shoulder-twisties"
+      },
+      {
+        "name": "cartwheel"
+      },
+      {
+        "name": "thrusters"
+      }
+    ]
+  },
+  {
+    "muscle": "chest",
+    "exercises": [
+      {
+        "name": "handstand"
+      },
+      {
+        "name": "push-up"
+      },
+      {
+        "name": "diamond-push-up"
+      },
+      {
+        "name": "dips"
+      }
+    ]
+  },
+  {
+    "muscle": "front delt",
+    "exercises": [
+      {
+        "name": "handstand"
+      },
+      {
+        "name": "archer-push-up"
+      },
+      {
+        "name": "over-head-press"
+      },
+      {
+        "name": "front-raises"
+      },
+      {
+        "name": "thrusters"
       }
     ]
   }

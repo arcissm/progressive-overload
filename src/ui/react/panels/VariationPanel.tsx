@@ -141,7 +141,8 @@ const VariationPanel: React.FC = () => {
       title="Exercise Variations"
       description="Add, Remove or Edit workout types"
       footerAction={handleAddVariation}
-    >
+      displayFooter={true} >
+    
 
       {variations ? (
         Array.from(variations.entries()).map(([name, tree]) => {

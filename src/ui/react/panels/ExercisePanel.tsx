@@ -16,9 +16,6 @@ const ExercisePanel: React.FC = () => {
   const [exerciseConfigs, setExerciseConfigs] = useState<ExerciseConfig[]>([]); 
   const [filteredConfigs, setFilteredConfgis] = useState<ExerciseConfig[]>([]);
   const [searchQuery, setSearchQuery] = useState<string>("");
-  const [expandedExerciseId, setExpandedExerciseId] = useState<string | null>(null);
-  const [isEditMode, setEditMode] = useState<boolean>(false);
-  const [editedConfig, setEditedConfig] = useState<ExerciseConfig | null>(null);
   const exerciseListRef = useRef<HTMLDivElement>(null);
 
   // Load workout data
@@ -46,30 +43,6 @@ const ExercisePanel: React.FC = () => {
   const handleSearch = (query: string) => {
     setSearchQuery(query);
   };
-
-
-  // Collapse
-  const toggleCollapse = (exerciseId: string) => {
-    setExpandedExerciseId((prev) => {
-      if(prev === exerciseId){ //closing the tab
-        setEditMode(false)
-        setEditedConfig(null);
-        return null;
-      }else{ // open the tab
-        return exerciseId
-      }
-    });
-  };
-
-
-  // cancel
-  const cancelEdit = () =>{
-    if (isEditMode) {
-      setEditMode(false); 
-      setEditedConfig(null); 
-    }
-  }
-
 
 // Handlers
 const handleSave = (oldConfig: ExerciseConfig, newConfig: ExerciseConfig) => {
@@ -107,8 +80,8 @@ const handleAddExercise = () => {
     <PanelLayout
       title="Exercise Config"
       description="Add, Remove or Edit exercises. Exercises are ordered by their muscle groups."
-      footerAction={handleAddExercise}
-    >
+      footerAction={handleAddExercise} 
+      displayFooter={true} >
       <Search
         placeholder="Search exercises"
         onSearch={handleSearch}
@@ -121,11 +94,11 @@ const handleAddExercise = () => {
 
             <Collapse 
             header={
-              <div className="workout-settings-exercise-header" onClick={() => toggleCollapse(config.exercise.id)}>
+              <div className="workout-settings-exercise-header">
                 <div className="workout-settings-exercise-header-name">{config.exercise.name}</div>
                 <FontAwesomeIcon 
                   className="workout-settings-exercise-header-arrow"
-                  icon={expandedExerciseId === config.exercise.id ? faAngleUp : faAngleDown} 
+                  icon={faAngleDown} 
                   size="2x"
                 />
               </div>
