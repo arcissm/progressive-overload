@@ -6,11 +6,14 @@ import { WorkoutController } from "controller/WorkoutController";
 import { CONFIG_WORKOUT_VIEW, ConfigWorkoutsView } from "ui/view/ConfigWorkoutsView";
 import {  WorkoutView, WORKOUT_VIEW } from "ui/view/WorkoutView";
 import { ConfigController } from "controller/ConfigController";
+import { DBService } from "services/core/DBService";
 
 export default class WorkoutPlugin extends Plugin {
 	private settings: PluginSettings;
+	private db: DBService;
 	private workoutController: WorkoutController;
 	private configController: ConfigController;
+
 
 	private configView: ConfigWorkoutsView;
 	private statsView: WorkoutView;
@@ -20,8 +23,12 @@ export default class WorkoutPlugin extends Plugin {
 
 	async onload() {
 		await this.loadSettings();
-		this.workoutController = new WorkoutController(this.app, this.settings);
-		this.configController = new ConfigController(this.app, this.settings);
+
+		// @ts-ignore
+		const dirPath = app.vault.adapter.basePath;
+		this.db = new DBService(dirPath);
+		this.workoutController = new WorkoutController(this.app, this.settings, this.db);
+		this.configController = new ConfigController(this.settings, this.db);
 
 		// Add the settings tab to Obsidian's settings
 		this.addSettingTab(new SettingsTab(this.app, this));

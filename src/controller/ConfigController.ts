@@ -1,23 +1,16 @@
 import { ExerciseConfig } from "models/configs/ExerciseConfig";
 import { Exercise } from "models/Exercise";
 import { Muscle } from "models/Muscle";
-import { App } from "obsidian";
 import { DBService } from "services/core/DBService";
 import { PluginSettings } from "services/settings/Settings";
 import { TreeNode } from "utils/data-structure/TreeNode";
 
 export class ConfigController {
-
-    private app: App;
     private db: DBService;
 
 	
-	constructor(app: App, settings: PluginSettings ) {
-		this.app = app;
-
-        // @ts-ignore
-        const dirPath = app.vault.adapter.basePath;
-        this.db = new DBService(dirPath);
+	constructor(settings: PluginSettings, db:DBService ) {
+        this.db = db;
 	}
 
 
