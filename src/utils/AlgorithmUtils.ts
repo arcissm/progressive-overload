@@ -3,7 +3,6 @@ export function newDate(date: string){
 	const year = dateParts[0];
 	const month = dateParts[1] - 1; // Months are zero-based in JavaScript Date
 	const day = dateParts[2];
-
 	return new Date(year, month, day)
 }
 
@@ -13,6 +12,11 @@ export function isSameDate(date1: Date, date2:Date) {
         date1.getMonth() === date2.getMonth() &&        // Compare month (0-11)
         date1.getDate() === date2.getDate()             // Compare day of the month (1-31)
     );
+}
+
+export function getTodayLocalDate() {
+    const now = new Date();
+    return new Date(now.getFullYear(), now.getMonth(), now.getDate());
 }
 
 // includes min ands max

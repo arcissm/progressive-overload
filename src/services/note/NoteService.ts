@@ -1,6 +1,6 @@
 import {App, Notice, TFile, TFolder} from 'obsidian';
 import {WorkoutService} from "../core/WorkoutService";
-import {getTitleInfo, newDate} from "../../utils/AlgorithmUtils";
+import {getTitleInfo, getTodayLocalDate, newDate} from "../../utils/AlgorithmUtils";
 import {CheckBox} from "../../models/Checkbox";
 import { Workout } from 'models/Workout';
 
@@ -57,7 +57,6 @@ export class NoteService {
 
 	async addMotivation(workout: Workout){
 		const note = await this.createMotivationalNote()
-		console.log(note)
 		workout.note = note
 	}
 
@@ -164,7 +163,7 @@ export class NoteService {
 	}
 
 	private async getNotePath(): Promise<string> {
-		const todayDateUTC = new Date();
+		const todayDateUTC = getTodayLocalDate();
 		const todayDateString = todayDateUTC.toISOString().split('T')[0];
 		const year = todayDateString.substring(0, 4);
 		const yearDir = this.notesDir + "/" + year + "/";

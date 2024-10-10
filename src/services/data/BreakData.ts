@@ -1,6 +1,6 @@
 import * as fs from 'fs';
 import { BREAK, BREAK_DATA_PATH } from "utils/Constants";
-import { getRandomInt } from "utils/AlgorithmUtils";
+import { getRandomInt, getTodayLocalDate } from "utils/AlgorithmUtils";
 import { Workout } from 'models/Workout';
 
 export class BreakData {
@@ -31,7 +31,7 @@ export class BreakData {
 		parsedData.forEach((rawBreak: any, index:number) => {
             const workout = new Workout(
                 BREAK,
-                new Date(),
+                getTodayLocalDate(),
                 rawBreak,
                 false,
                 false,

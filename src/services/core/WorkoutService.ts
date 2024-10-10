@@ -2,7 +2,7 @@ import {Exercise} from "../../models/Exercise";
 import {Muscle} from "../../models/Muscle";
 import {Workout} from "../../models/Workout";
 import { DBService } from "./DBService";
-import { getRandomInt, isSameDate } from "utils/AlgorithmUtils";
+import { getRandomInt, getTodayLocalDate, isSameDate } from "utils/AlgorithmUtils";
 import * as path from "path";
 import { PRGRESSIVE_OVERLOAD_REPS, YOGA_CHANCE, YOGA_WORKOUT } from "utils/Constants";
 import { SPECIAL } from "utils/ExerciseConstants";
@@ -29,7 +29,7 @@ export class WorkoutService {
 
 		const workout = new Workout(
 			workoutType,
-			new Date(),
+			getTodayLocalDate(),
 			"",
 			false,
 			false,
