@@ -61,7 +61,6 @@ const VariationPanel: React.FC = () => {
 
   const handleExerciseNameChange = (selectedName: string, rootNode: TreeNode<string>) => {
     const oldName = rootNode.data;
-    console.log(oldName)
 
     const newEditingVariations = new Map(editingVariations);
     newEditingVariations.set(rootNode.data, selectedName);

@@ -21,12 +21,9 @@ export class WorkoutController {
 
 
 	
-	constructor(app: App, settings: PluginSettings ) {
+	constructor(app: App, settings: PluginSettings, db:DBService ) {
 		this.app = app;
-
-        // @ts-ignore
-        const dirPath = app.vault.adapter.basePath;
-        this.db = new DBService(dirPath);
+        this.db = db;
 
         this.workoutService = new WorkoutService(this.db);
 		this.noteService = new NoteService(this.app, this.workoutService, settings.notesDir, settings.imagesDir)
