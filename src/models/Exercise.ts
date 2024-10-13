@@ -38,8 +38,8 @@ export class Exercise {
 		this.time = time;
 		this.note = note;
 		this.variation = variation;
-		this.isSuccess = isCompleted;
-		this.isCompleted = isSuccess;
+		this.isSuccess = isSuccess;
+		this.isCompleted = isCompleted;
 		this.isUnlocked = isUnlocked;
 		this.weightIncrease = weightIncrease;
 		this.boosted = boosted;
@@ -120,7 +120,7 @@ export class Exercise {
 			}
 		}else{ // we add sets
 			const index = PRGRESSIVE_OVERLOAD_REPS.findIndex(reps => reps === this.reps)
-			if ((Math.random() > UNLUCKY)){ // 10% chanche you do 12-15 reps
+			if ((this.reps === "10-12") && (Math.random() > UNLUCKY)){ // 10% chanche you do 12-15 reps
 				this.reps = "12-15"
 			}else{
 				this.reps = PRGRESSIVE_OVERLOAD_REPS[index + 1]
