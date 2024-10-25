@@ -1,27 +1,5 @@
 [
   {
-    "muscle": "cardio",
-    "exercises": [
-      {
-        "name": "sweat"
-      }
-    ]
-  },
-  {
-    "muscle": "forearm",
-    "exercises": [
-      {
-        "name": "nyan"
-      },
-      {
-        "name": "nyan-open-palm"
-      },
-      {
-        "name": "curls"
-      }
-    ]
-  },
-  {
     "muscle": "biceps",
     "exercises": [
       {
@@ -73,23 +51,6 @@
       },
       {
         "name": "inverted-deadlift"
-      }
-    ]
-  },
-  {
-    "muscle": "tricep",
-    "exercises": [
-      {
-        "name": "dips"
-      },
-      {
-        "name": "band-triceps"
-      },
-      {
-        "name": "triceps-over-head"
-      },
-      {
-        "name": "archer-push-up"
       }
     ]
   },
@@ -254,6 +215,45 @@
       },
       {
         "name": "thrusters"
+      }
+    ]
+  },
+  {
+    "muscle": "cardio",
+    "exercises": [
+      {
+        "name": "sweat"
+      }
+    ]
+  },
+  {
+    "muscle": "tricep",
+    "exercises": [
+      {
+        "name": "dips"
+      },
+      {
+        "name": "band-triceps"
+      },
+      {
+        "name": "triceps-over-head"
+      },
+      {
+        "name": "archer-push-up"
+      }
+    ]
+  },
+  {
+    "muscle": "forearm",
+    "exercises": [
+      {
+        "name": "nyan"
+      },
+      {
+        "name": "nyan-open-palm"
+      },
+      {
+        "name": "curls"
       }
     ]
   }
