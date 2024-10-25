@@ -1,11 +1,11 @@
-export const WORKOUT_DATA_PATH = "/.obsidian/plugins/obsidian-but-better/src/data/workouts.json";
-export const EXERCISE_DATA_PATH = "/.obsidian/plugins/obsidian-but-better/src/data/exercises.json";
-export const MUSCLE_DATA_PATH = "/.obsidian/plugins/obsidian-but-better/src/data/muscles.json";
-export const MUSCLE_EXERCISE_DATA_PATH = "/.obsidian/plugins/obsidian-but-better/src/data/muscle-exercise.json";
-export const WORKOUT_MUSCLE_DATA_PATH = "/.obsidian/plugins/obsidian-but-better/src/data/workout-muscle.json";
-export const BREAK_DATA_PATH = "/.obsidian/plugins/obsidian-but-better/src/data/break.json";
-export const BREAK_TRACKER_DATA_PATH = "/.obsidian/plugins/obsidian-but-better/src/data/break-tracker.json";
-export const VARIATION_DATA_PATH = "/.obsidian/plugins/obsidian-but-better/src/data/variations.json";
+export const WORKOUT_DATA_PATH = "/.obsidian/plugins/obsidian-but-better/data/workouts.json";
+export const EXERCISE_DATA_PATH = "/.obsidian/plugins/obsidian-but-better/data/exercises.json";
+export const MUSCLE_DATA_PATH = "/.obsidian/plugins/obsidian-but-better/data/muscles.json";
+export const MUSCLE_EXERCISE_DATA_PATH = "/.obsidian/plugins/obsidian-but-better/data/muscle-exercise.json";
+export const WORKOUT_MUSCLE_DATA_PATH = "/.obsidian/plugins/obsidian-but-better/data/workout-muscle.json";
+export const BREAK_DATA_PATH = "/.obsidian/plugins/obsidian-but-better/data/break.json";
+export const BREAK_TRACKER_DATA_PATH = "/.obsidian/plugins/obsidian-but-better/data/break-tracker.json";
+export const VARIATION_DATA_PATH = "/.obsidian/plugins/obsidian-but-better/data/variations.json";
 
 export const MINIMUM_SUCCESS_TO_UNLOCK_NEW_EXERCISE = 3;
 export const MAXIMUM_ALLOWED_MUSCLE_FAILURES = 4;

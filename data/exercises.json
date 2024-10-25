@@ -48,9 +48,9 @@
     "name": "triceps over head",
     "id": "triceps-over-head",
     "weight": 20,
-    "sets": 1,
-    "reps": "5",
-    "time": 30,
+    "sets": 3,
+    "reps": "6-8",
+    "time": 48,
     "note": "",
     "variation": "",
     "isSuccess": false,
@@ -242,9 +242,9 @@
   {
     "name": "dips",
     "id": "dips",
-    "weight": 0,
-    "sets": 1,
-    "reps": "6-8",
+    "weight": 5,
+    "sets": 2,
+    "reps": "5",
     "time": 20,
     "note": "",
     "variation": "",
@@ -807,21 +807,6 @@
     "isCompleted": false,
     "isUnlocked": false,
     "weightIncrease": 0,
-    "boosted": null
-  },
-  {
-    "name": "ssssss",
-    "id": "ssssss",
-    "weight": 0,
-    "sets": 0,
-    "reps": "5",
-    "time": 30,
-    "note": "",
-    "variation": "",
-    "isSuccess": false,
-    "isCompleted": false,
-    "isUnlocked": false,
-    "weightIncrease": 10,
     "boosted": null
   }
 ]

@@ -42,8 +42,8 @@
   },
   {
     "name": "tricep",
-    "minSets": 4,
-    "maxSets": 2,
+    "minSets": 3,
+    "maxSets": 6,
     "boosted": 0,
     "coreExercises": [
       "triceps-over-head"
@@ -68,8 +68,8 @@
   },
   {
     "name": "forearm",
-    "minSets": 3,
-    "maxSets": 5,
+    "minSets": 2,
+    "maxSets": 4,
     "boosted": 0,
     "coreExercises": [
       "nyan-open-palm"
@@ -382,7 +382,9 @@
     "minSets": 0,
     "maxSets": 0,
     "boosted": 0,
-    "coreExercises": [],
+    "coreExercises": [
+      "sweat"
+    ],
     "warmUps": []
   }
 ]
