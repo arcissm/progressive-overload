@@ -37,3 +37,36 @@ export function getTitleInfo(filename: string){
 	}
 	return {workoutType, date, index}
 }
+
+export function chooseRandomIndex(totalPictures: number): number {
+    // Step 1: Randomly select a number between 2 and 5 for the number of groups
+    const numberOfGroups = Math.floor(Math.random() * 4) + 2; // Random integer between 2 and 5
+    const groupSize = totalPictures / numberOfGroups;
+    const selectedIndices: number[] = [];
+
+    // Step 2: Divide the images into groups and pick a random index from each group
+    for (let i = 0; i < numberOfGroups; i++) {
+        const startIndex = Math.floor(i * groupSize);
+        let endIndex: number;
+
+        // Handle the last group to include any remaining images
+        if (i === numberOfGroups - 1) {
+            endIndex = totalPictures - 1;
+        } else {
+            endIndex = Math.floor((i + 1) * groupSize) - 1;
+        }
+
+        // Ensure the group has at least one image
+        if (startIndex > endIndex) {
+            continue;
+        }
+
+        // Pick a random index within the current group
+        const indexInGroup = Math.floor(Math.random() * (endIndex - startIndex + 1)) + startIndex;
+        selectedIndices.push(indexInGroup);
+    }
+
+    // Step 3: Select a random index from the selected indices of each group
+    const finalIndex = selectedIndices[Math.floor(Math.random() * selectedIndices.length)];
+    return finalIndex;
+}

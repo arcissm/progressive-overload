@@ -1,6 +1,6 @@
 import {App, Notice, TFile, TFolder} from 'obsidian';
 import {WorkoutService} from "../core/WorkoutService";
-import {getTitleInfo, getTodayLocalDate, newDate} from "../../utils/AlgorithmUtils";
+import {chooseRandomIndex, getTitleInfo, getTodayLocalDate, newDate} from "../../utils/AlgorithmUtils";
 import {CheckBox} from "../../models/Checkbox";
 import { Workout } from 'models/Workout';
 
@@ -91,25 +91,23 @@ export class NoteService {
 
 	async getMotivationalImage(): Promise<string> {
 		try {
-			// Get the folder from the vault
 			const imageFolder = this.app.vault.getAbstractFileByPath(this.imagesDir);
 	
-			// Check if the directory exists and is a folder
 			if (imageFolder && imageFolder instanceof TFolder) {
-				// Get all the files in the folder
-				const files = imageFolder.children.filter(file => file instanceof TFile && /\.(jpg|jpeg|png|gif)$/i.test(file.name));
+				const files = imageFolder.children.filter(
+					file => file instanceof TFile && /\.(jpg|jpeg|png|gif)$/i.test(file.name)
+				);
 	
-				// If there are no images, return an empty string
 				if (files.length === 0) {
 					console.warn("No images found in the directory.");
 					return "";
 				}
 	
-				// Select a random image
-				const randomImage = files[Math.floor(Math.random() * files.length)] as TFile;
+				// Use the custom random index function
+				const randomIndex = chooseRandomIndex(files.length);
+				const randomImage = files[randomIndex] as TFile;
 	
-				// Return the relative path to the image
-				return randomImage.path;  // This is the relative path within the vault
+				return randomImage.path;
 			} else {
 				console.error("Image directory does not exist or is not a folder.");
 				return "";
@@ -119,7 +117,6 @@ export class NoteService {
 			return "";
 		}
 	}
-	
 	
 
 	
