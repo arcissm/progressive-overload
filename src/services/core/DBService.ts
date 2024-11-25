@@ -195,10 +195,11 @@ export class DBService {
 	countCompletedWorkoutsInPeriod(numberWeeks: number){
 		let completedWorkoutsCount = 0;
 		const twoWeeksAgo = new Date();
-		twoWeeksAgo.setDate(twoWeeksAgo.getDate() - (numberWeeks * 7));
+		twoWeeksAgo.setDate(twoWeeksAgo.getDate() - (numberWeeks * 7) -1);
 
 
 		this.workoutData.getCompletedWorkouts().forEach(workout =>{
+
 			if(workout.date >= twoWeeksAgo){
 				completedWorkoutsCount++;
 			}

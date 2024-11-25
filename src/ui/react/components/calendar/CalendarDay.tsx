@@ -8,9 +8,10 @@ interface CalendarDayProps {
   currentDate: Date;
   isGreyedOut: boolean;
   isOutsideMonth: boolean;
+  today: Date;
 }
 
-const CalendarDay: React.FC<CalendarDayProps> = ({ dayText, currentDate, isGreyedOut, isOutsideMonth }) => {
+const CalendarDay: React.FC<CalendarDayProps> = ({ dayText, currentDate, isGreyedOut, isOutsideMonth, today }) => {
   const { controller } = useWorkoutController();
   const workouts = controller.getWorkoutsByDate(currentDate);
 
@@ -30,7 +31,7 @@ const CalendarDay: React.FC<CalendarDayProps> = ({ dayText, currentDate, isGreye
     <div
       key={currentDate.toISOString()}
       className={`calendar-day ${isGreyedOut ? 'greyed-out' : ''} ${
-        isSameDate(currentDate, new Date()) ? 'current-day' : ''
+        isSameDate(currentDate, today) ? 'current-day' : ''
       }`}
       onClick={() => controller.openNote(currentDate)}
     >

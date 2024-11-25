@@ -34,8 +34,8 @@ export class WorkoutView extends ItemView {
             <WorkoutControllerProvider controller={this.controller}>
                 <div>
                     <Calendar />
-                    <Checklist />
-                    <WorkoutStats />
+                    {/* <Checklist />
+                    <WorkoutStats /> */}
                 </div>
             </WorkoutControllerProvider>
         );

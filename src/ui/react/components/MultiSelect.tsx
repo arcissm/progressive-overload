@@ -2,45 +2,53 @@ import React, { useState, useEffect } from "react";
 
 interface MultiSelectInputProps {
   options: string[];
-  selectedValues?: string[]; // Optional prop to receive pre-selected values
-  onSelectionChange: (selected: string[]) => void; // Callback function prop
+  selectedValues?: string[];
+  onSelectionChange: (selected: string[]) => void;
+  disabled?: boolean;
 }
 
-function MultiSelectInput({ options, selectedValues = [], onSelectionChange }: MultiSelectInputProps) {
+function MultiSelectInput({
+  options,
+  selectedValues = [],
+  onSelectionChange,
+  disabled = false,
+}: MultiSelectInputProps) {
   const [internalSelectedValues, setInternalSelectedValues] = useState<string[]>(selectedValues);
   const [inputValue, setInputValue] = useState("");
   const [showDropdown, setShowDropdown] = useState(false);
 
-  // Update internal selected values if the parent updates the selectedValues prop
   useEffect(() => {
     setInternalSelectedValues(selectedValues);
   }, [selectedValues]);
 
-  // Filter options based on the input value and exclude already selected values
-  const filteredOptions = options.filter((item) =>
-    item.toLowerCase().includes(inputValue.toLowerCase()) &&
-    !internalSelectedValues.includes(item)
+  const filteredOptions = options.filter(
+    (item) =>
+      item.toLowerCase().includes(inputValue.toLowerCase()) &&
+      !internalSelectedValues.includes(item)
   );
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (disabled) return;
     setInputValue(e.target.value);
     setShowDropdown(true);
   };
 
   const handleOptionClick = (optionText: string) => {
+    if (disabled) return;
     if (!internalSelectedValues.includes(optionText)) {
       const newSelectedValues = [...internalSelectedValues, optionText];
       setInternalSelectedValues(newSelectedValues);
-      onSelectionChange(newSelectedValues); // Notify the parent of the change
+      onSelectionChange(newSelectedValues);
     }
     setInputValue("");
     setShowDropdown(false);
   };
 
   const handleRemoveClick = (optionText: string) => {
+    if (disabled) return;
     const updatedValues = internalSelectedValues.filter((value) => value !== optionText);
     setInternalSelectedValues(updatedValues);
-    onSelectionChange(updatedValues); // Notify the parent of the change
+    onSelectionChange(updatedValues);
   };
 
   const handleBlur = () => {
@@ -53,25 +61,25 @@ function MultiSelectInput({ options, selectedValues = [], onSelectionChange }: M
         {internalSelectedValues.map((value) => (
           <div key={value} className="selected-tag">
             {value}
-            <span
-              className="remove-icon"
-              onClick={() => handleRemoveClick(value)}
-            >
-              ×
-            </span>
+            {!disabled && (
+              <span className="remove-icon" onClick={() => handleRemoveClick(value)}>
+                ×
+              </span>
+            )}
           </div>
         ))}
-        </div>
-        <div className="custom-select-input-container">
-          <input
-            type="text"
-            value={inputValue}
-            onChange={handleInputChange}
-            onClick={() => setShowDropdown(true)}
-            onBlur={handleBlur}
-            placeholder="Select..."
-            className="multi-select-input"
-          />
+      </div>
+      <div className="custom-select-input-container">
+        <input
+          type="text"
+          value={inputValue}
+          onChange={handleInputChange}
+          onClick={() => !disabled && setShowDropdown(true)}
+          onBlur={handleBlur}
+          placeholder="Select..."
+          className="multi-select-input"
+          disabled={disabled}
+        />
       </div>
       {showDropdown && filteredOptions.length > 0 && (
         <ul className="dropdown-list">
@@ -79,8 +87,10 @@ function MultiSelectInput({ options, selectedValues = [], onSelectionChange }: M
             <li
               key={index}
               onClick={() => handleOptionClick(item)}
-              className={`dropdown-item ${internalSelectedValues.includes(item) ? 'selected' : ''}`}
-              onMouseDown={(e) => e.preventDefault()} 
+              className={`dropdown-item ${
+                internalSelectedValues.includes(item) ? "selected" : ""
+              }`}
+              onMouseDown={(e) => e.preventDefault()}
             >
               {item}
             </li>

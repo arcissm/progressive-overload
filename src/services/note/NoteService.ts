@@ -178,12 +178,14 @@ export class NoteService {
 		const startOfYear = new Date(date.getFullYear(), 0, 1);
 		// Calculate the number of days from the start of the year to the current date
 		const daysDifference = Math.floor((date.getTime() - startOfYear.getTime()) / (24 * 60 * 60 * 1000));
+	
 		// Determine the day of the week (0 = Sunday, 1 = Monday, ..., 6 = Saturday)
-		const dayOfWeek = (startOfYear.getDay() + 6) % 7; // Convert startOfYear's day of the week
+		const dayOfWeek = startOfYear.getDay(); // 0 for Sunday
+		const adjustedDayOfWeek = (dayOfWeek === 0 ? 0 : 7 - dayOfWeek); // Adjust so Sunday is the start
+	
 		// Calculate the week number
-		return Math.ceil((daysDifference + dayOfWeek + 1) / 7);
+		return Math.ceil((daysDifference + adjustedDayOfWeek + 1) / 7);
 	}
-
 
 	private async ensureDirectoryExists(directoryPath: string) {
 		// Check if the directory already exists

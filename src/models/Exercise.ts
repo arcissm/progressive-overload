@@ -112,6 +112,10 @@ export class Exercise {
 
 		// we upgrade the exercise weight or variation
 		if(this.isMaxedOutReps()){
+
+			// You've maxed out the skill
+			if(this.weightIncrease === 0)return
+
 			this.reps = PRGRESSIVE_OVERLOAD_REPS[0]
 			if(this.weight === 0 && this.variation){
 				this.variation = variation;

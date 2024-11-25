@@ -71,7 +71,6 @@ export class WorkoutService {
 			const index = workout.exercises.findIndex(exercise => exercise.id == exerciseId)
 			if(index!= -1){
 				workout.exercises[index].isSuccess = true
-				console.log(workout.exercises[index])
 			}
 		}
 
@@ -357,10 +356,16 @@ export class WorkoutService {
 		});
 	}
 	
-	// TODO: Make a warm up config
 	private getWarmUp(muscles: Muscle[]): Exercise[] {
+
+		let isCardio = false
+		if(muscles.find(muscle => muscle.name === "cardio")){
+			isCardio = true
+		}
+		console.log(isCardio)
+
 		// 25% of the time, you do yoga as a warmup
-		if(Math.random() < YOGA_CHANCE){
+		if(Math.random() < YOGA_CHANCE && !isCardio){
 			const index = getRandomInt(0, YOGA_WORKOUT.length -1)
 			const yoga = new Exercise("yoga", 0, "", 0, 0, 0, "", 0, YOGA_WORKOUT[index], false, false, false,)
 			return [yoga];
