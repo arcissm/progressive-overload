@@ -164,6 +164,7 @@ const ExerciseForm: React.FC<ExerciseFormProps> = ({
                 options={muscles}
                 selectedValues={editedConfig.muscles}
                 onSelectionChange={handleMuscleSelectionChange}
+                disabled={!isEditMode}
               />
             </div>
 
