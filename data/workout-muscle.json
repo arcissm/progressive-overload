@@ -1,0 +1,81 @@
+[
+  {
+    "workout": "legs",
+    "muscles": [
+      {
+        "name": "quads"
+      },
+      {
+        "name": "hamstring"
+      },
+      {
+        "name": "abs"
+      }
+    ]
+  },
+  {
+    "workout": "back",
+    "muscles": [
+      {
+        "name": "back"
+      },
+      {
+        "name": "abs"
+      },
+      {
+        "name": "rear delt"
+      }
+    ]
+  },
+  {
+    "workout": "chest",
+    "muscles": [
+      {
+        "name": "chest"
+      },
+      {
+        "name": "front delt"
+      }
+    ]
+  },
+  {
+    "workout": "arms",
+    "muscles": [
+      {
+        "name": "forearm"
+      },
+      {
+        "name": "biceps"
+      },
+      {
+        "name": "tricep"
+      }
+    ]
+  },
+  {
+    "workout": "shoulder",
+    "muscles": [
+      {
+        "name": "front delt"
+      },
+      {
+        "name": "side delt"
+      },
+      {
+        "name": "rear delt"
+      }
+    ]
+  },
+  {
+    "workout": "cardio",
+    "muscles": [
+      {
+        "name": "cardio"
+      }
+    ]
+  },
+  {
+    "workout": "break",
+    "muscles": []
+  }
+]
