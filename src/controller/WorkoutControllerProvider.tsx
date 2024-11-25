@@ -5,6 +5,7 @@ import { WorkoutController } from "controller/WorkoutController";
 const WorkoutControllerContext = createContext<{
   controller: WorkoutController;
   workouts: any[];
+  currentDate: Date; // Add currentDate to the context type
 } | undefined>(undefined);
 
 // Create a custom hook to use the WorkoutControllerContext more easily
@@ -25,6 +26,9 @@ interface WorkoutControllerProviderProps {
 export const WorkoutControllerProvider: React.FC<WorkoutControllerProviderProps> = ({ controller, children }) => {
   const [workouts, setWorkouts] = useState<any[]>([]);
 
+  // **Add currentDate state**
+  const [currentDate, setCurrentDate] = useState(new Date());
+
   // Subscribe to workout updates from the controller
   useEffect(() => {
     const updateWorkouts = () => {
@@ -41,9 +45,28 @@ export const WorkoutControllerProvider: React.FC<WorkoutControllerProviderProps>
     return () => controller.unsubscribe(updateWorkouts);
   }, [controller]);
 
+  // **Effect to update currentDate at midnight**
+  useEffect(() => {
+    const now = new Date();
+    const msUntilMidnight =
+      new Date(now.getFullYear(), now.getMonth(), now.getDate() + 1).getTime() - now.getTime() + 100;
 
+    const testTime = 3600
+    const timeoutId = setTimeout(() => {
+      
+      const d = (new Date(now.getFullYear(), now.getMonth(), now.getDate() + 1))
+      setCurrentDate(d);
+      // setCurrentDate(new Date());
+      // console.log(currentDate)
+    }, msUntilMidnight);
+
+    // // Cleanup the timeout when the component unmounts or effect re-runs
+    return () => clearTimeout(timeoutId);
+  }, [currentDate]);
+
+  // **Include currentDate in the context value**
   return (
-    <WorkoutControllerContext.Provider value={{ controller, workouts }}>
+    <WorkoutControllerContext.Provider value={{ controller, workouts, currentDate }}>
       {children}
     </WorkoutControllerContext.Provider>
   );

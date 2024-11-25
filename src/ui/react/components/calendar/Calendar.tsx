@@ -3,9 +3,20 @@ import CalendarDay from './CalendarDay';
 import CalendarNav from './CalendarNav';
 import WeekDayHeader from './WeekDayHeader';
 import MonthGrid from './MonthGrid';
+import { useWorkoutController } from 'controller/WorkoutControllerProvider';
 
 const Calendar: React.FC = () => {
-  const [currentMonth, setCurrentMonth] = useState(new Date());
+  const { currentDate: today } = useWorkoutController(); // Rename for clarity
+
+  // Initialize currentMonth based on today's date
+  const [currentMonth, setCurrentMonth] = useState(
+    new Date(today.getFullYear(), today.getMonth(), 1)
+  );
+
+  // Update currentMonth whenever today's date changes
+  useEffect(() => {
+    setCurrentMonth(new Date(today.getFullYear(), today.getMonth(), 1));
+  }, [today]);
 
   // Navigation handlers
   const goToPrevMonth = () => {
@@ -23,7 +34,7 @@ const Calendar: React.FC = () => {
     const daysInPrevMonth = new Date(prevMonth.getFullYear(), prevMonth.getMonth() + 1, 0).getDate();
 
     return [...Array(firstDayOfMonth)].map((_, i) => {
-      const dayOfPrevMonth = daysInPrevMonth - i;
+      const dayOfPrevMonth = daysInPrevMonth - (firstDayOfMonth - 1 - i);
       const currentDate = new Date(prevMonth.getFullYear(), prevMonth.getMonth(), dayOfPrevMonth);
       return (
         <CalendarDay
@@ -32,6 +43,7 @@ const Calendar: React.FC = () => {
           currentDate={currentDate}
           isGreyedOut={true}
           isOutsideMonth={true}
+          today={today} // Pass 'today' from provider
         />
       );
     });
@@ -50,6 +62,7 @@ const Calendar: React.FC = () => {
           currentDate={currentDate}
           isGreyedOut={false}
           isOutsideMonth={false}
+          today={today} // Pass 'today' from provider
         />
       );
     });
@@ -71,6 +84,7 @@ const Calendar: React.FC = () => {
           currentDate={currentDate}
           isGreyedOut={true}
           isOutsideMonth={true}
+          today={today} // Pass 'today' from provider
         />
       );
     });
