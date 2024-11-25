@@ -5,6 +5,12 @@
 ## Getting Started
 To start the development server, run:
 
+You only need to do this one once to generate the node_modules folder
+```bash
+npm install esbuild --save-dev
+```
+
+You need to run this one whenever you code, it recreates the main.js file
 ```bash
 npm run dev
 ```
