@@ -469,7 +469,16 @@ export class DBService {
 
 
 
+	// BREAKS
+	getAllBreaks(){
+		return this.breakData.getAllBreaks();
+	}
 
+	saveBreaks(breaks: Workout[]){
+		this.breakData.updateBreaks(breaks)
+		this.breakData.saveBreak()
+		
+	}
 
 	// INIT
 	private initMuscleExerciseMap(){

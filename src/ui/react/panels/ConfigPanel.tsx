@@ -6,6 +6,7 @@ import VariationPanel from './VariationPanel';
 import Tabs from '../components/Tabs';
 import { CONFIG_TABS } from 'utils/Constants';
 import WarmUpPannel from './WarmUpPanel';
+import BreakPanel from './BreakPanel';
 
 const ConfigPanel: React.FC = () => {
   // State management for the current tab, initialized with the first tab
@@ -23,6 +24,7 @@ const ConfigPanel: React.FC = () => {
         {currentTab === 'exercises' && <ExercisePanel />}
         {currentTab === 'variations' && <VariationPanel />}
         {currentTab === 'warmups' && <WarmUpPannel />}
+        {currentTab === 'breaks' && <BreakPanel />}
 
       </div>
     </div>

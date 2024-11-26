@@ -23,7 +23,8 @@ export const CONFIG_TABS = [
 	{ key: 'muscles', label: 'Muscles' },
 	{ key: 'exercises', label: 'Exercises' },
 	{ key: 'variations', label: 'Variations' },
-	{ key: 'warmups', label: 'Warm Ups' }
+	{ key: 'warmups', label: 'Warm Ups' },
+	{ key: 'breaks', label: 'Punishments' }
   ];
   
 export const YOGA_CHANCE = 0.25;
