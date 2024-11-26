@@ -16,7 +16,6 @@ const ExercisePanel: React.FC = () => {
   const [exerciseConfigs, setExerciseConfigs] = useState<ExerciseConfig[]>([]); 
   const [filteredConfigs, setFilteredConfgis] = useState<ExerciseConfig[]>([]);
   const [searchQuery, setSearchQuery] = useState<string>("");
-  const exerciseListRef = useRef<HTMLDivElement>(null);
 
   // Load workout data
   useEffect(() => {
@@ -60,12 +59,6 @@ const handleAddExercise = () => {
   const newExercise = new Exercise('New Exercise');
   const updatedConfigs = controller.addExerciseConfig(newExercise);
   setExerciseConfigs([...updatedConfigs]);
-  // Scroll to the bottom to show the new exercise
-  setTimeout(() => {
-    if (exerciseListRef.current) {
-      exerciseListRef.current.scrollIntoView({ behavior: 'smooth', block: 'end' });
-    }
-  }, 100);
 };
 
 
@@ -88,7 +81,7 @@ const handleAddExercise = () => {
         debounceTime={500}
       />
 
-      <div className="workout-settings-exercise-list" ref={exerciseListRef} onClick={(e) => e.stopPropagation()}>
+      <div className="workout-settings-exercise-list" onClick={(e) => e.stopPropagation()}>
       {filteredConfigs.map((config) => (
           <div key={config.exercise.id}>
 

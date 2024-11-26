@@ -1,6 +1,31 @@
 [
   {
     "workoutType": "cardio",
+    "date": "2024-11-25T05:00:00.000Z",
+    "isCompleted": false,
+    "isSuccess": false,
+    "note": "![[bad_21.jpg]]\n\n<div class=\"motivationalSpeech\">\nDo you want to look like that forever?</div>\n",
+    "warmUps": [],
+    "exercises": [
+      {
+        "name": "sweat",
+        "id": "sweat",
+        "weight": 0,
+        "sets": 1,
+        "reps": "",
+        "time": 0,
+        "note": "🌳🌳🏃💨🌲🌳🌲🚴‍♂️🌲🌳🌳",
+        "variation": "",
+        "isSuccess": false,
+        "isCompleted": false,
+        "isUnlocked": false,
+        "weightIncrease": 10,
+        "boosted": null
+      }
+    ]
+  },
+  {
+    "workoutType": "cardio",
     "date": "2024-11-24T05:00:00.000Z",
     "isCompleted": true,
     "isSuccess": true,
@@ -611,7 +636,7 @@
         "name": "dips",
         "id": "dips",
         "weight": 0,
-        "sets": 5,
+        "sets": 8,
         "reps": "8-10",
         "time": 32,
         "note": "",
@@ -620,7 +645,7 @@
         "isCompleted": true,
         "isUnlocked": true,
         "weightIncrease": 5,
-        "boosted": 1
+        "boosted": 4
       },
       {
         "name": "push up feet on wall",
@@ -641,7 +666,7 @@
         "name": "handstand",
         "id": "handstand",
         "weight": 0,
-        "sets": 3,
+        "sets": 9,
         "reps": "5",
         "time": 48,
         "note": "",
@@ -650,7 +675,7 @@
         "isCompleted": true,
         "isUnlocked": true,
         "weightIncrease": 0,
-        "boosted": 2
+        "boosted": 8
       }
     ]
   },
