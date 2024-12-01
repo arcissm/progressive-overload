@@ -173,17 +173,19 @@ export class NoteService {
 
 	private getWeekNumber(date: Date): number {
 		const startOfYear = new Date(date.getFullYear(), 0, 1);
-		// Calculate the number of days from the start of the year to the current date
-		const daysDifference = Math.floor((date.getTime() - startOfYear.getTime()) / (24 * 60 * 60 * 1000));
+		const dayOfWeek = (startOfYear.getDay() + 6) % 7; // Adjust so Monday is 0, ..., Sunday is 6
 	
-		// Determine the day of the week (0 = Sunday, 1 = Monday, ..., 6 = Saturday)
-		const dayOfWeek = startOfYear.getDay(); // 0 for Sunday
-		const adjustedDayOfWeek = (dayOfWeek === 0 ? 0 : 7 - dayOfWeek); // Adjust so Sunday is the start
+		// Find the first Monday of the year
+		const startOfFirstWeek = new Date(startOfYear);
+		startOfFirstWeek.setDate(startOfYear.getDate() + (dayOfWeek > 0 ? 7 - dayOfWeek : 0));
 	
-		// Calculate the week number
-		return Math.ceil((daysDifference + adjustedDayOfWeek + 1) / 7);
+		// Calculate the difference in days from the start of the first week
+		const daysDifference = Math.floor((date.getTime() - startOfFirstWeek.getTime()) / (24 * 60 * 60 * 1000));
+	
+		// Calculate the week number (adding 1 because we count from 1, not 0)
+		return daysDifference >= 0 ? Math.ceil((daysDifference + 1) / 7) : 1;
 	}
-
+	
 	private async ensureDirectoryExists(directoryPath: string) {
 		// Check if the directory already exists
 		const existingFolder = this.app.vault.getAbstractFileByPath(directoryPath);
