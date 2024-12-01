@@ -30,11 +30,12 @@ const Calendar: React.FC = () => {
   // Render previous, current, and next month days
   const renderPrevMonthDays = (): JSX.Element[] => {
     const firstDayOfMonth = new Date(currentMonth.getFullYear(), currentMonth.getMonth(), 1).getDay();
+    const adjustedFirstDay = (firstDayOfMonth + 6) % 7; // Shift Sunday (0) to the end of the week
     const prevMonth = new Date(currentMonth.getFullYear(), currentMonth.getMonth() - 1, 1);
     const daysInPrevMonth = new Date(prevMonth.getFullYear(), prevMonth.getMonth() + 1, 0).getDate();
 
-    return [...Array(firstDayOfMonth)].map((_, i) => {
-      const dayOfPrevMonth = daysInPrevMonth - (firstDayOfMonth - 1 - i);
+    return [...Array(adjustedFirstDay)].map((_, i) => {
+      const dayOfPrevMonth = daysInPrevMonth - (adjustedFirstDay - 1 - i);
       const currentDate = new Date(prevMonth.getFullYear(), prevMonth.getMonth(), dayOfPrevMonth);
       return (
         <CalendarDay
@@ -70,7 +71,8 @@ const Calendar: React.FC = () => {
 
   const renderNextMonthDays = (): JSX.Element[] => {
     const lastDayOfMonth = new Date(currentMonth.getFullYear(), currentMonth.getMonth() + 1, 0).getDay();
-    const daysToFill = 6 - lastDayOfMonth;
+    const adjustedLastDay = (lastDayOfMonth + 6) % 7; // Shift Sunday (0) to the end of the week
+    const daysToFill = 6 - adjustedLastDay;
 
     const nextMonth = new Date(currentMonth.getFullYear(), currentMonth.getMonth() + 1, 1);
 
