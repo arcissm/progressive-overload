@@ -2,6 +2,7 @@ import { ExerciseConfig } from "models/configs/ExerciseConfig";
 import { Exercise } from "models/Exercise";
 import { Muscle } from "models/Muscle";
 import { Workout } from "models/Workout";
+import { Yoga } from "models/Yoga";
 import { DBService } from "services/core/DBService";
 import { PluginSettings } from "services/settings/Settings";
 import { TreeNode } from "utils/data-structure/TreeNode";
@@ -14,6 +15,15 @@ export class ConfigController {
         this.db = db;
 	}
 
+
+	//YOGA
+	getYoga(){
+		return this.db.getYoga()
+	}
+
+	updateYoga(newYoga: Yoga){
+		this.db.updateYoga(newYoga)
+	}
 
 	// WORKOUT TYPE
 	getWorkoutTypeMuscleArray() {

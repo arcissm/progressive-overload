@@ -2,6 +2,7 @@ import { ExerciseConfig } from "models/configs/ExerciseConfig";
 import { Exercise } from "models/Exercise";
 import { Muscle } from "models/Muscle";
 import { Workout } from "models/Workout";
+import { Yoga } from "models/Yoga";
 import { BreakData } from "services/data/BreakData";
 import { ExerciseData } from "services/data/ExerciseData";
 import { MuscleData } from "services/data/MuscleData";
@@ -44,6 +45,11 @@ export class DBService {
 
 	getYoga(){
 		return this.yogaData.yoga;
+	}
+
+	updateYoga(newYoga: Yoga){
+		this.yogaData.updateYoga(newYoga)
+		this.yogaData.saveYoga()
 	}
 	
 	getVariations(){

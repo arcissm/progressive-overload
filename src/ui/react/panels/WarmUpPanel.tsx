@@ -7,12 +7,15 @@ import PanelLayout from "../components/PanelLayout";
 import Collapse from "../components/Collapse";
 import WarmUpForm from "../forms/WarmUpForm";
 import { Exercise } from "models/Exercise";
+import { Yoga } from "models/Yoga";
+import YogaForm from "../forms/YogaForm";
 
 
 
 const WarmUpPannel: React.FC = () => {
   const controller = useWorkoutController();
   const [muscles, setMuscles] = useState<Muscle[]>([]); 
+  const [yoga, setYoga] = useState<Yoga>(); 
 
 
   // Use useEffect to load the muscles when the component mounts
@@ -20,6 +23,9 @@ const WarmUpPannel: React.FC = () => {
     const loadData = async () => {
       const fetchedMuscles = controller.getMuscles();
       setMuscles(fetchedMuscles);
+
+      const fetchedYoga = controller.getYoga();
+      setYoga(fetchedYoga);
     };
     
     loadData();
@@ -69,11 +75,29 @@ const handleAdd = (oldMuscle: Muscle) => {
       description="Add, Remove or Edit Warm Ups. Every muscle group should have a warm up."
       displayFooter={false} >
 
+
       <div className="workout-settings-muscle-container">
+      <Collapse 
+        header={
+          <div className="workout-settings-exercise-header">
+            <div className="workout-settings-exercise-header-name">YOGA</div>
+            <FontAwesomeIcon 
+              className="workout-settings-exercise-header-arrow"
+              icon={faAngleDown} 
+              size="2x"
+            />
+          </div>
+        }>
+          <div className="workout-settings-exercise-list workout-setings-warmup-container warmup-yoga">
+            {yoga ? <YogaForm initialYoga={yoga} /> : <div>Loading...</div>}
+          </div>
+        </Collapse>
+
+
         {muscles.map((muscle, index) => (
             <div key={index} >
                 <div>
-                    <h2>{muscle.name}</h2>
+                    <h2>{muscle.name.toUpperCase()}</h2>
                 </div>
                 <div>
                 <div className="workout-settings-exercise-list workout-setings-warmup-container">

@@ -1,14 +1,14 @@
 {
-    "chance": "0.25",
-    "urls": [
-        "https://www.youtube.com/watch?v=iY-rGdoLX_8",
-        "https://www.youtube.com/watch?v=lbElK4wUZJA",
-        "https://www.youtube.com/watch?v=CJLDkGC4FxM",
-        "https://www.youtube.com/watch?v=qYTUGCDj8Y0",
-        "https://www.youtube.com/watch?v=D1CBQTCSDvY",
-        "https://www.youtube.com/watch?v=eWCe_KE-l5o",
-        "https://www.youtube.com/watch?v=Pt3mQT8vsQA",
-        "https://www.youtube.com/watch?v=BieNFcV8Uw8",
-        "https://www.youtube.com/watch?v=KpN2DkU4DN8"
-    ]
-  }
+  "chance": 0.25,
+  "urls": [
+    "https://www.youtube.com/watch?v=iY-rGdoLX_8",
+    "https://www.youtube.com/watch?v=lbElK4wUZJA",
+    "https://www.youtube.com/watch?v=CJLDkGC4FxM",
+    "https://www.youtube.com/watch?v=qYTUGCDj8Y0",
+    "https://www.youtube.com/watch?v=D1CBQTCSDvY",
+    "https://www.youtube.com/watch?v=eWCe_KE-l5o",
+    "https://www.youtube.com/watch?v=Pt3mQT8vsQA",
+    "https://www.youtube.com/watch?v=BieNFcV8Uw8",
+    "https://www.youtube.com/watch?v=KpN2DkU4DN8"
+  ]
+}

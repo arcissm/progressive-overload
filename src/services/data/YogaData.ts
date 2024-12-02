@@ -12,8 +12,8 @@ export class YogaData {
         this.convertDataToYoga(this.dataPath);
     }
 
-    updateYoga(breaks: Workout[]) {
-        
+    updateYoga(newYoga: Yoga) {
+        this.yoga = newYoga;
     }
 
     saveYoga() {
