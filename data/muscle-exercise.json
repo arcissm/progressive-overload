@@ -1,5 +1,86 @@
 [
   {
+    "muscle": "side delt",
+    "exercises": [
+      {
+        "name": "side-laterals"
+      },
+      {
+        "name": "shoulder-twisties"
+      },
+      {
+        "name": "cartwheel"
+      },
+      {
+        "name": "thrusters"
+      }
+    ]
+  },
+  {
+    "muscle": "cardio",
+    "exercises": [
+      {
+        "name": "sweat"
+      }
+    ]
+  },
+  {
+    "muscle": "forearm",
+    "exercises": [
+      {
+        "name": "nyan"
+      },
+      {
+        "name": "nyan-open-palm"
+      }
+    ]
+  },
+  {
+    "muscle": "front delt",
+    "exercises": [
+      {
+        "name": "handstand"
+      },
+      {
+        "name": "archer-push-up"
+      },
+      {
+        "name": "over-head-press"
+      },
+      {
+        "name": "front-raises"
+      },
+      {
+        "name": "thrusters"
+      },
+      {
+        "name": "push-up-feet-on-wall"
+      }
+    ]
+  },
+  {
+    "muscle": "hamstring",
+    "exercises": [
+      {
+        "name": "ass-up"
+      },
+      {
+        "name": "romanian-deadlift"
+      }
+    ]
+  },
+  {
+    "muscle": "rear delt",
+    "exercises": [
+      {
+        "name": "rear-delt-dumbell"
+      },
+      {
+        "name": "rear-row"
+      }
+    ]
+  },
+  {
     "muscle": "quads",
     "exercises": [
       {
@@ -37,45 +118,12 @@
       },
       {
         "name": "one-arm-deadlift"
-      }
-    ]
-  },
-  {
-    "muscle": "side delt",
-    "exercises": [
-      {
-        "name": "side-laterals"
       },
       {
-        "name": "shoulder-twisties"
+        "name": "practice-squat"
       },
       {
-        "name": "cartwheel"
-      },
-      {
-        "name": "thrusters"
-      }
-    ]
-  },
-  {
-    "muscle": "cardio",
-    "exercises": [
-      {
-        "name": "sweat"
-      }
-    ]
-  },
-  {
-    "muscle": "forearm",
-    "exercises": [
-      {
-        "name": "nyan"
-      },
-      {
-        "name": "nyan-open-palm"
-      },
-      {
-        "name": "curls"
+        "name": "practice-deadlift"
       }
     ]
   },
@@ -97,16 +145,46 @@
     ]
   },
   {
-    "muscle": "biceps",
+    "muscle": "back",
     "exercises": [
       {
-        "name": "hammer-curls"
+        "name": "deadlift"
       },
       {
-        "name": "curls"
+        "name": "ass-up"
       },
       {
         "name": "chin-up"
+      },
+      {
+        "name": "row"
+      },
+      {
+        "name": "pull-up"
+      },
+      {
+        "name": "piston-row"
+      },
+      {
+        "name": "band-row"
+      },
+      {
+        "name": "band-pull-down"
+      },
+      {
+        "name": "band-superman"
+      },
+      {
+        "name": "scapula-uppies"
+      },
+      {
+        "name": "one-arm-deadlift"
+      },
+      {
+        "name": "inverted-deadlift"
+      },
+      {
+        "name": "practice-deadlift"
       }
     ]
   },
@@ -161,47 +239,6 @@
     ]
   },
   {
-    "muscle": "back",
-    "exercises": [
-      {
-        "name": "deadlift"
-      },
-      {
-        "name": "ass-up"
-      },
-      {
-        "name": "chin-up"
-      },
-      {
-        "name": "row"
-      },
-      {
-        "name": "pull-up"
-      },
-      {
-        "name": "piston-row"
-      },
-      {
-        "name": "band-row"
-      },
-      {
-        "name": "band-pull-down"
-      },
-      {
-        "name": "band-superman"
-      },
-      {
-        "name": "scapula-uppies"
-      },
-      {
-        "name": "one-arm-deadlift"
-      },
-      {
-        "name": "inverted-deadlift"
-      }
-    ]
-  },
-  {
     "muscle": "chest",
     "exercises": [
       {
@@ -218,51 +255,31 @@
       },
       {
         "name": "push-up-feet-on-wall"
+      },
+      {
+        "name": "practice-bench"
       }
     ]
   },
   {
-    "muscle": "front delt",
+    "muscle": "biceps",
+    "exercises": [
+      {
+        "name": "hammer-curls"
+      },
+      {
+        "name": "curls"
+      },
+      {
+        "name": "chin-up"
+      }
+    ]
+  },
+  {
+    "muscle": "test",
     "exercises": [
       {
         "name": "handstand"
-      },
-      {
-        "name": "archer-push-up"
-      },
-      {
-        "name": "over-head-press"
-      },
-      {
-        "name": "front-raises"
-      },
-      {
-        "name": "thrusters"
-      },
-      {
-        "name": "push-up-feet-on-wall"
-      }
-    ]
-  },
-  {
-    "muscle": "hamstring",
-    "exercises": [
-      {
-        "name": "ass-up"
-      },
-      {
-        "name": "romanian-deadlift"
-      }
-    ]
-  },
-  {
-    "muscle": "rear delt",
-    "exercises": [
-      {
-        "name": "rear-delt-dumbell"
-      },
-      {
-        "name": "rear-row"
       }
     ]
   }

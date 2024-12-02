@@ -8,6 +8,7 @@ import { MuscleData } from "services/data/MuscleData";
 import { RelationalData } from "services/data/RelationalData";
 import { VariationData } from "services/data/VariationData";
 import { WorkoutData } from "services/data/WorkoutData";
+import { YogaData } from "services/data/YogaData";
 import { NEW_VARIAITON } from "utils/Constants";
 import { TreeNode } from "utils/data-structure/TreeNode";
 
@@ -19,6 +20,7 @@ export class DBService {
 	private exerciseData: ExerciseData;
     private relationalData: RelationalData;
 	private breakData: BreakData;
+	private yogaData: YogaData;
 	private variationData: VariationData
 	private muscleExerciseMap: Map<Muscle, Exercise[]>;
 	private workoutTypeMuscleMap: Map<string, Muscle[]>;
@@ -29,6 +31,7 @@ export class DBService {
         this.exerciseData = new ExerciseData(dirPath);
         this.relationalData = new RelationalData(dirPath);
 		this.breakData = new BreakData(dirPath);
+		this.yogaData = new YogaData(dirPath)
 		this.variationData = new VariationData(dirPath);
 
 		this.initMuscleExerciseMap();
@@ -39,6 +42,10 @@ export class DBService {
 	}
 
 
+	getYoga(){
+		return this.yogaData.yoga;
+	}
+	
 	getVariations(){
 		return this.variationData.variations
 	}

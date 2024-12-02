@@ -1,8 +1,8 @@
 [
   {
     "name": "biceps",
-    "minSets": 5,
-    "maxSets": 7,
+    "minSets": 4,
+    "maxSets": 6,
     "boosted": 1,
     "coreExercises": [
       "curls"
@@ -42,8 +42,8 @@
   },
   {
     "name": "tricep",
-    "minSets": 4,
-    "maxSets": 7,
+    "minSets": 3,
+    "maxSets": 5,
     "boosted": 1,
     "coreExercises": [
       "triceps-over-head"
@@ -175,9 +175,9 @@
   },
   {
     "name": "rear delt",
-    "minSets": 5,
-    "maxSets": 7,
-    "boosted": 2,
+    "minSets": 6,
+    "maxSets": 8,
+    "boosted": 3,
     "coreExercises": [
       "rear-row"
     ],
@@ -201,11 +201,12 @@
   },
   {
     "name": "chest",
-    "minSets": 5,
-    "maxSets": 6,
+    "minSets": 6,
+    "maxSets": 8,
     "boosted": 0,
     "coreExercises": [
-      "dips"
+      "dips",
+      "practice-bench"
     ],
     "warmUps": [
       {
@@ -242,13 +243,14 @@
   },
   {
     "name": "back",
-    "minSets": 8,
+    "minSets": 7,
     "maxSets": 10,
     "boosted": 1,
     "coreExercises": [
       "deadlift",
       "row",
-      "pull-up"
+      "pull-up",
+      "practice-deadlift"
     ],
     "warmUps": [
       {
@@ -289,7 +291,8 @@
     "maxSets": 8,
     "boosted": 0,
     "coreExercises": [
-      "squat"
+      "squat",
+      "practice-squat"
     ],
     "warmUps": [
       {
@@ -367,9 +370,9 @@
   },
   {
     "name": "abs",
-    "minSets": 6,
-    "maxSets": 7,
-    "boosted": 3,
+    "minSets": 3,
+    "maxSets": 5,
+    "boosted": 7,
     "coreExercises": [
       "band-press",
       "plank"
@@ -414,6 +417,16 @@
     "boosted": 0,
     "coreExercises": [
       "sweat"
+    ],
+    "warmUps": []
+  },
+  {
+    "name": "test",
+    "minSets": 4,
+    "maxSets": 6,
+    "boosted": 0,
+    "coreExercises": [
+      "handstand"
     ],
     "warmUps": []
   }
