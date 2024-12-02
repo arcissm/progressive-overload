@@ -1,4 +1,3 @@
-export const PROGRESSION = ["5", "6-8", "8-10", "10-12", "12-15"];
 export const SPECIAL = [
 	"Dropset",
 	"Pause Rep",

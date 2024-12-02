@@ -3,8 +3,7 @@ import {Muscle} from "../../models/Muscle";
 import {Workout} from "../../models/Workout";
 import { DBService } from "./DBService";
 import { getRandomInt, getTodayLocalDate, isSameDate } from "utils/AlgorithmUtils";
-import * as path from "path";
-import { PRGRESSIVE_OVERLOAD_REPS, YOGA_CHANCE, YOGA_WORKOUT } from "utils/Constants";
+import { PRGRESSIVE_OVERLOAD_REPS } from "utils/Constants";
 import { SPECIAL } from "utils/ExerciseConstants";
 
 //In future use to create workout stats
@@ -337,6 +336,8 @@ export class WorkoutService {
 			
 			if(exercise.sets > 2){
 				const nextVariationExercise = exercise.clone();
+				nextVariationExercise.id += "_variation"
+
 				let sharedSets = 1;
 				if(exercise.sets > 4){
 					sharedSets = 2;
@@ -362,12 +363,13 @@ export class WorkoutService {
 		if(muscles.find(muscle => muscle.name === "cardio")){
 			isCardio = true
 		}
-		console.log(isCardio)
-
+		
+		const yoga = this.db.getYoga()
+		const urls = yoga.urls
 		// 25% of the time, you do yoga as a warmup
-		if(Math.random() < YOGA_CHANCE && !isCardio){
-			const index = getRandomInt(0, YOGA_WORKOUT.length -1)
-			const yoga = new Exercise("yoga", 0, "", 0, 0, 0, "", 0, YOGA_WORKOUT[index], false, false, false,)
+		if(Math.random() < yoga.chance && !isCardio){
+			const index = getRandomInt(0, urls.length -1)
+			const yoga = new Exercise("yoga", 0, "", 0, 0, 0, "", 0, urls[index], false, false, false,)
 			return [yoga];
 		}
 		else{

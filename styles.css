@@ -427,7 +427,31 @@ input[type=checkbox]:checked:after{
 	padding-bottom: 1rem;
 }
 
+.warmup-yoga{
+	max-height: 25rem;
+	overflow-y: auto
+}
 
+.yoga-videos_url{
+	display: flex;
+	flex-direction: row;
+}
+.yoga-videos_url-input{
+	flex: 5;
+}
+.yoga-videos_url-button{
+	flex: 1;
+	display: flex;
+	align-items: center; /* Center vertically */
+	justify-content: center; /* Center horizontally */
+
+}
+
+.yoga-add-button_place {
+	display: flex; /* Use Flexbox for layout */
+	justify-content: center; /* Center horizontally */
+	align-items: center; /* Center vertically */
+  }
 .workout-settings-warmup-button-add-container{
 	display: flex;
 	justify-content: center;
