@@ -337,6 +337,8 @@ export class WorkoutService {
 			
 			if(exercise.sets > 2){
 				const nextVariationExercise = exercise.clone();
+				nextVariationExercise.id += "_variation"
+
 				let sharedSets = 1;
 				if(exercise.sets > 4){
 					sharedSets = 2;
