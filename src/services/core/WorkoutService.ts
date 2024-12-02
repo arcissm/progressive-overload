@@ -106,97 +106,97 @@ export class WorkoutService {
 	}
 	
 	// Steroids
-	private useSteroids(muscles: Array<Muscle>){
+	// private useSteroids(muscles: Array<Muscle>){
 
-		if(muscles == null){
-			return;
-		}
+	// 	if(muscles == null){
+	// 		return;
+	// 	}
 
-		muscles.forEach(muscle => {
-			const lastTwoWorkouts = this.db.getLastTwoWorkoutsWithMuscle(muscle.name);
+	// 	muscles.forEach(muscle => {
+	// 		const lastTwoWorkouts = this.db.getLastTwoWorkoutsWithMuscle(muscle.name);
 			
-			let isCompleted = true;
-			let isSuccess = true;
+	// 		let isCompleted = true;
+	// 		let isSuccess = true;
 
-			lastTwoWorkouts.forEach(workout => {
-				isCompleted = isCompleted && workout.isCompleted
-				isSuccess = isSuccess && workout.isSuccess
-			});
+	// 		lastTwoWorkouts.forEach(workout => {
+	// 			isCompleted = isCompleted && workout.isCompleted
+	// 			isSuccess = isSuccess && workout.isSuccess
+	// 		});
 
-			if(isCompleted && isSuccess){
-				this.chillOnTheRoids(muscle)
-			}
-			if(isCompleted && !isSuccess){
-				this.addCreatine(lastTwoWorkouts, muscle);
-			}
-		})
+	// 		if(isCompleted && isSuccess){
+	// 			this.chillOnTheRoids(muscle)
+	// 		}
+	// 		if(isCompleted && !isSuccess){
+	// 			this.addCreatine(lastTwoWorkouts, muscle);
+	// 		}
+	// 	})
 
-	}
+	// }
 
 	
-	private chillOnTheRoids(muscle: Muscle){
-		if(muscle.boosted > 0){
-			muscle.boosted--;
-			muscle.maxSets--;
-			muscle.minSets--;
-			return
-		}
+	// private chillOnTheRoids(muscle: Muscle){
+	// 	if(muscle.boosted > 0){
+	// 		muscle.boosted--;
+	// 		muscle.maxSets--;
+	// 		muscle.minSets--;
+	// 		return
+	// 	}
 
-		const exercises = this.db.getExercisesForMuscle(muscle.name)
-		if(exercises == null){
-			return
-		}
+	// 	const exercises = this.db.getExercisesForMuscle(muscle.name)
+	// 	if(exercises == null){
+	// 		return
+	// 	}
 
-		exercises.forEach(exercise => {
-			if(exercise.boosted > 0){
-				exercise.boosted--;
-				exercise.sets--;
-				return
-			}
-		})
-	}
+	// 	exercises.forEach(exercise => {
+	// 		if(exercise.boosted > 0){
+	// 			exercise.boosted--;
+	// 			exercise.sets--;
+	// 			return
+	// 		}
+	// 	})
+	// }
 
-	private addCreatine(lastTwoWorkouts: Array<Workout>, muscle: Muscle) {
-		// you can't fail if you have done less than 2 of these workouts
-		if (lastTwoWorkouts.length < 2) {
-			return;
-		}
+	// private addCreatine(lastTwoWorkouts: Array<Workout>, muscle: Muscle) {
+	// 	// you can't fail if you have done less than 2 of these workouts
+	// 	if (lastTwoWorkouts.length < 2) {
+	// 		return;
+	// 	}
 	
-		const w1FailedExercises = this.getFailedExercises(lastTwoWorkouts[0]);
-		const w2FailedExercises = this.getFailedExercises(lastTwoWorkouts[1]);
+	// 	const w1FailedExercises = this.getFailedExercises(lastTwoWorkouts[0]);
+	// 	const w2FailedExercises = this.getFailedExercises(lastTwoWorkouts[1]);
 	
-		if (w1FailedExercises.length > 0 && w2FailedExercises.length > 0) {
-			const w2FailedIds = new Set(w2FailedExercises.map(exercise => exercise.id));
+	// 	if (w1FailedExercises.length > 0 && w2FailedExercises.length > 0) {
+	// 		const w2FailedIds = new Set(w2FailedExercises.map(exercise => exercise.id));
 			
-			const commonExercises = w1FailedExercises.filter(exercise => w2FailedIds.has(exercise.id));
+	// 		const commonExercises = w1FailedExercises.filter(exercise => w2FailedIds.has(exercise.id));
 			
-			if (commonExercises.length > 0) {
-				commonExercises.forEach(exercise =>{
-					exercise.sets++;
-					exercise.boosted++;
-				})
-			}else{
-				muscle.boosted++;
-				muscle.maxSets++;
-				muscle.minSets++;
-			}
-		}
-	}
+	// 		if (commonExercises.length > 0) {
+	// 			commonExercises.forEach(exercise =>{
+	// 				exercise.sets++;
+	// 				exercise.boosted++;
+	// 			})
+	// 		}else{
+	// 			muscle.boosted++;
+	// 			muscle.maxSets++;
+	// 			muscle.minSets++;
+	// 		}
+	// 	}
+	// }
 	
 	
-	private getFailedExercises(workout: Workout){
-		const failedExercises: Array<Exercise> = []
-		workout.exercises.forEach(exercise => {
-			if(!exercise.isSuccess){
-				failedExercises.push(exercise)
-			}
-		})
-		return failedExercises;
-	}
+	// private getFailedExercises(workout: Workout){
+	// 	const failedExercises: Array<Exercise> = []
+	// 	workout.exercises.forEach(exercise => {
+	// 		if(!exercise.isSuccess){
+	// 			failedExercises.push(exercise)
+	// 		}
+	// 	})
+	// 	return failedExercises;
+	// }
 
 
 	private createWorkoutExercises(muscles: Muscle[]){
-		this.useSteroids(muscles);
+		// this.useSteroids(muscles);
 		this.db.updateMuscles();
 
 		const exercises = this.createExercises(muscles) // returns a deepCopied subset of Exercises list from DB (because we edit the exercises so we can't use the direct reference)
