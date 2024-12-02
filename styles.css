@@ -142,7 +142,7 @@ input[type=checkbox]:checked:after{
 }
 /* Dot for started workouts on days outside the current month */
 .calendar-day__container-circles-dot.started-outside-month {
-	border: 1px solid #8D6F0B; /* Customize the outline color */
+	border: 1px solid #AD83FF; /* Customize the outline color */
 	opacity: 0.4;
 }
 
