@@ -4,9 +4,35 @@ import CalendarNav from './CalendarNav';
 import WeekDayHeader from './WeekDayHeader';
 import MonthGrid from './MonthGrid';
 import { useWorkoutController } from 'controller/WorkoutControllerProvider';
+import CalendarLegend from './CalendarLegend';
+import { useSettingsController } from 'controller/SettingsControllerProvider';
 
 const Calendar: React.FC = () => {
-  const { currentDate: today } = useWorkoutController(); // Rename for clarity
+  const { currentDate: today } = useWorkoutController(); // Access settings from context
+  const { settings, updateSettings } = useSettingsController();
+  
+  const [colorMapping, setColorMapping] = useState({
+    completed: settings.calendarCompletedColor,
+    completedCardio: settings.calendarCardioColor,
+    started: settings.calendarStartedColor,
+  });
+
+  useEffect(() => {
+    // Only update settings if there's a real difference
+    if (
+      colorMapping.completed !== settings.calendarCompletedColor ||
+      colorMapping.completedCardio !== settings.calendarCardioColor ||
+      colorMapping.started !== settings.calendarStartedColor
+    ) {
+      updateSettings({
+        calendarCompletedColor: colorMapping.completed,
+        calendarCardioColor: colorMapping.completedCardio,
+        calendarStartedColor: colorMapping.started,
+      });
+    }
+  }, [colorMapping, settings, updateSettings]);
+
+  
 
   // Initialize currentMonth based on today's date
   const [currentMonth, setCurrentMonth] = useState(
@@ -45,6 +71,7 @@ const Calendar: React.FC = () => {
           isGreyedOut={true}
           isOutsideMonth={true}
           today={today} // Pass 'today' from provider
+          colorMapping={colorMapping}
         />
       );
     });
@@ -64,7 +91,7 @@ const Calendar: React.FC = () => {
           isGreyedOut={false}
           isOutsideMonth={false}
           today={today} // Pass 'today' from provider
-        />
+          colorMapping={colorMapping}        />
       );
     });
   };
@@ -87,7 +114,7 @@ const Calendar: React.FC = () => {
           isGreyedOut={true}
           isOutsideMonth={true}
           today={today} // Pass 'today' from provider
-        />
+          colorMapping={colorMapping}        />
       );
     });
   };
@@ -101,7 +128,8 @@ const Calendar: React.FC = () => {
         renderCurrentMonthDays={renderCurrentMonthDays}
         renderNextMonthDays={renderNextMonthDays}
       />
-    </div>
+      <CalendarLegend colorMapping={colorMapping} setColorMapping={setColorMapping} />
+      </div>
   );
 };
 
