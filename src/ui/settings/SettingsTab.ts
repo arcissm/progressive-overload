@@ -1,12 +1,10 @@
 import { App, PluginSettingTab, Setting } from "obsidian";
+import WorkoutPlugin from "main";
 
-// This is what appears in the settings UI
-// It updates the Settings Object when a value is changed
-// It tells the plugin to save the Settings
 export class SettingsTab extends PluginSettingTab {
-    plugin: any;
+    plugin: WorkoutPlugin;
 
-    constructor(app: App, plugin: any) {
+    constructor(app: App, plugin: WorkoutPlugin) {
         super(app, plugin);
         this.plugin = plugin;
     }
@@ -17,16 +15,17 @@ export class SettingsTab extends PluginSettingTab {
 
         containerEl.createEl('h2', { text: 'Workout Plugin Settings' });
 
+        const settings = this.plugin.settingsController.settings;
+
         // Note Path Setting
         new Setting(containerEl)
             .setName('Note Path')
             .setDesc('Path where the workout notes will be created')
             .addText(text => text
                 .setPlaceholder('Enter path')
-                .setValue(this.plugin.settings.notesDir) // Adjusted to use notesDir
+                .setValue(settings.notesDir)
                 .onChange(async (value) => {
-                    this.plugin.settings.notesDir = value;
-                    await this.plugin.saveSettings();
+                    this.plugin.settingsController.updateSettings({ notesDir: value });
                 }));
 
         // Image Directory Path Setting
@@ -35,10 +34,9 @@ export class SettingsTab extends PluginSettingTab {
             .setDesc('Directory where images will be stored')
             .addText(text => text
                 .setPlaceholder('Enter directory name for images')
-                .setValue(this.plugin.settings.imagesDir)  // New setting for image directory
+                .setValue(settings.imagesDir)
                 .onChange(async (value) => {
-                    this.plugin.settings.imagesDir = value;
-                    await this.plugin.saveSettings();
+                    this.plugin.settingsController.updateSettings({ imagesDir: value });
                 }));
     }
 }

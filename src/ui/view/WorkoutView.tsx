@@ -5,15 +5,19 @@ import { WorkoutController } from "controller/WorkoutController";
 import Calendar from "ui/react/components/calendar/Calendar";
 import Checklist from "ui/react/components/checklist/Checklist";
 import WorkoutStats from "ui/react/components/stats/WorkoutStats";
+import { SettingsControllerProvider } from "controller/SettingsControllerProvider";
+import { SettingsController } from "controller/SettingsController";
 
 export const WORKOUT_VIEW = "workout-view";
 
 export class WorkoutView extends ItemView {
-    private controller: WorkoutController;
+    private workoutController: WorkoutController;
+    private settingsController: SettingsController
 
-    constructor(leaf: WorkspaceLeaf, controller: WorkoutController) {
+    constructor(leaf: WorkspaceLeaf, workoutController: WorkoutController, settingsController:SettingsController) {
         super(leaf);
-        this.controller = controller;
+        this.workoutController = workoutController;
+        this.settingsController = settingsController
     }
 
     getViewType(): string {
@@ -31,13 +35,16 @@ export class WorkoutView extends ItemView {
     async onOpen(): Promise<void> {
         const root = createRoot((this as any).contentEl);
         root.render(
-            <WorkoutControllerProvider controller={this.controller}>
-                <div>
-                    <Calendar />
-                    {/* <Checklist />
-                    <WorkoutStats /> */}
-                </div>
-            </WorkoutControllerProvider>
+            <SettingsControllerProvider controller={this.settingsController}>
+                <WorkoutControllerProvider controller={this.workoutController}>
+                    <div>
+                        <Calendar />
+                        {/* Uncomment the following components when they are ready */}
+                        {/* <Checklist />
+                        <WorkoutStats /> */}
+                    </div>
+                </WorkoutControllerProvider>
+            </SettingsControllerProvider>
         );
     }
 }

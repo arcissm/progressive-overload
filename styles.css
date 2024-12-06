@@ -114,37 +114,41 @@ input[type=checkbox]:checked:after{
 	bottom: 5px; /* Position the dot at the bottom */
 }
 
-.calendar-day__container-circles-dot.completed {
-	background-color: orange; /* Customize the color of the dot */
+/* calendar-legend.css */
+.calendar-legend {
+	display: flex;
+	justify-content: space-around;
+	margin-top: 20px;
+  }
+  
+  .legend-item {
+	display: flex;
+	align-items: center;
+  }
+  
+  .legend-item input[type='color'] {
+	margin-right: 8px;
+  }
+
+
+  .calendar-day__container-circles-dot.completed {
+	background-color: var(--completed-color);
 	border: none;
-}
-
-.calendar-day__container-circles-dot.completed-cardio {
-	background-color: teal; /* Customize the color of the dot */
+  }
+  
+  .calendar-day__container-circles-dot.completed-cardio {
+	background-color: var(--completed-cardio-color);
 	border: none;
-}
-
-
-.calendar-day__container-circles-dot.started {
-	border: 1px solid #AD83FF; /* Customize the outline color */
+  }
+  
+  .calendar-day__container-circles-dot.started {
+	border: 1px solid var(--started-color);
 	background-color: transparent;
-}
+  }
 
-/* Dot for completed workouts on days outside the current month */
-.calendar-day__container-circles-dot.completed-outside-month {
-	background-color: rgba(228, 186, 73); /* Customize the color of the dot */
-	opacity: 0.4;
-}
 
-.calendar-day__container-circles-dot.completed-cardio-outside-month {
-	background-color: teal; /* Customize the color of the dot */
-	opacity: 0.4;
-}
-/* Dot for started workouts on days outside the current month */
-.calendar-day__container-circles-dot.started-outside-month {
-	border: 1px solid #AD83FF; /* Customize the outline color */
-	opacity: 0.4;
-}
+
+
 
 .calendar-day.current-day {
 	background-color: rgb(0,0,0,1);

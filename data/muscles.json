@@ -243,8 +243,8 @@
   },
   {
     "name": "back",
-    "minSets": 7,
-    "maxSets": 10,
+    "minSets": 10,
+    "maxSets": 12,
     "boosted": 1,
     "coreExercises": [
       "deadlift",
@@ -370,8 +370,8 @@
   },
   {
     "name": "abs",
-    "minSets": 3,
-    "maxSets": 5,
+    "minSets": 2,
+    "maxSets": 4,
     "boosted": 7,
     "coreExercises": [
       "band-press",

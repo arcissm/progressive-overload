@@ -145,6 +145,51 @@
     ]
   },
   {
+    "muscle": "chest",
+    "exercises": [
+      {
+        "name": "handstand"
+      },
+      {
+        "name": "push-up"
+      },
+      {
+        "name": "diamond-push-up"
+      },
+      {
+        "name": "dips"
+      },
+      {
+        "name": "push-up-feet-on-wall"
+      },
+      {
+        "name": "practice-bench"
+      }
+    ]
+  },
+  {
+    "muscle": "biceps",
+    "exercises": [
+      {
+        "name": "hammer-curls"
+      },
+      {
+        "name": "curls"
+      },
+      {
+        "name": "chin-up"
+      }
+    ]
+  },
+  {
+    "muscle": "test",
+    "exercises": [
+      {
+        "name": "handstand"
+      }
+    ]
+  },
+  {
     "muscle": "back",
     "exercises": [
       {
@@ -235,51 +280,6 @@
       },
       {
         "name": "plank"
-      }
-    ]
-  },
-  {
-    "muscle": "chest",
-    "exercises": [
-      {
-        "name": "handstand"
-      },
-      {
-        "name": "push-up"
-      },
-      {
-        "name": "diamond-push-up"
-      },
-      {
-        "name": "dips"
-      },
-      {
-        "name": "push-up-feet-on-wall"
-      },
-      {
-        "name": "practice-bench"
-      }
-    ]
-  },
-  {
-    "muscle": "biceps",
-    "exercises": [
-      {
-        "name": "hammer-curls"
-      },
-      {
-        "name": "curls"
-      },
-      {
-        "name": "chin-up"
-      }
-    ]
-  },
-  {
-    "muscle": "test",
-    "exercises": [
-      {
-        "name": "handstand"
       }
     ]
   }
