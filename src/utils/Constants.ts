@@ -9,9 +9,8 @@ export const VARIATION_DATA_PATH = "/.obsidian/plugins/obsidian-but-better/data/
 export const YOGA_DATA_PATH = "/.obsidian/plugins/obsidian-but-better/data/yoga.json";
 
 export const MINIMUM_SUCCESS_TO_UNLOCK_NEW_EXERCISE = 3;
-export const MAXIMUM_ALLOWED_MUSCLE_FAILURES = 4;
 export const MINIMUM_MUSCLE_SUCCESS_STREAK = 2;
-export const MINIMUM_WORKOUT_DAYS_2_WEEKS = 8;
+// export const MINIMUM_WORKOUT_DAYS_2_WEEKS = 8;
 
 export const NEW_VARIAITON = "New Variations";
 export const BREAK = "break"

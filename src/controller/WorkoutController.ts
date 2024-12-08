@@ -27,7 +27,7 @@ export class WorkoutController {
 
         this.workoutService = new WorkoutService(this.db);
 		this.noteService = new NoteService(this.app, this.workoutService, settings.notesDir, settings.imagesDir)
-		this.breakService = new BreakService(this.db);
+		this.breakService = new BreakService(this.db, settings.numberWorkoutDays2Weeks);
 	}
 
 	unsubscribe(callback: Function) {

@@ -1,116 +1,102 @@
 import React, { useState, useEffect } from 'react';
-import { Exercise } from 'models/Exercise';
-import { Yoga } from 'models/Yoga';
 import { faPlus, faTrashCan } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useWorkoutController } from 'controller/ConfigControllerProvider';
+import { useSettingsController } from 'controller/SettingsControllerProvider';
+import LabelledInput from '../components/LabelledInput';
 
 interface YogaFormProps {
-    initialYoga: Yoga;
-//   onSave: (oldYoga: Yoga, newYoga: Yoga) => void;
-//   onDelete: (exerciseId: string) => void;
+    initialYoga: string[]; // Now this is just a string array
 }
+
 const YogaForm: React.FC<YogaFormProps> = ({ initialYoga }) => {
   const controller = useWorkoutController();
-  const [editedYoga, setEditedYoga] = useState<Yoga>(initialYoga);
-  const [debouncedYogaUpdate, setDebouncedYogaUpdate] = useState<Yoga | null>(null);
+  const { settings, updateSettings } = useSettingsController();
+
+  const [editedYoga, setEditedYoga] = useState<string[]>(initialYoga);
+  const [debouncedYogaUpdate, setDebouncedYogaUpdate] = useState<string[] | null>(null);
 
   useEffect(() => {
-    // Reset editedYoga when initialYoga changes
+    // Whenever initialYoga changes or settings.yogaChance changes, we synchronize.
+    // In this case, we only need to sync the string array.
     setEditedYoga(initialYoga);
   }, [initialYoga]);
 
-  // Input change handlers
-  const handleInputChange = (
-    field: keyof Yoga,
-    value: string | number,
-    urlIndex?: number
-  ) => {
-    setEditedYoga((prevYoga) => {
-      const updatedYoga = new Yoga(prevYoga.chance, [...prevYoga.urls]);
-
-      if (field === "chance") {
-        updatedYoga.chance = Number(value);
-      } else if (field === "urls" && typeof urlIndex === "number") {
-        updatedYoga.urls[urlIndex] = String(value);
-      }
-
-      // Set the updated yoga for debouncing
-      setDebouncedYogaUpdate(updatedYoga);
-
-      return updatedYoga;
-    });
-  };
-
-  // Add a new empty URL to the list
   const handleAdd = () => {
-    setEditedYoga((prevYoga) => {
-      const updatedYoga = new Yoga(prevYoga.chance, [...prevYoga.urls, ""]);
-      setDebouncedYogaUpdate(updatedYoga);
-      return updatedYoga;
+    setEditedYoga((prev) => {
+      const updated = [...prev, ""];
+      setDebouncedYogaUpdate(updated);
+      return updated;
     });
   };
 
-  // Delete a URL at the specified index
   const handleDelete = (index: number) => {
-    setEditedYoga((prevYoga) => {
-      const updatedYoga = new Yoga(
-        prevYoga.chance,
-        prevYoga.urls.filter((_, i) => i !== index)
-      );
-      setDebouncedYogaUpdate(updatedYoga);
-      return updatedYoga;
+    setEditedYoga((prev) => {
+      const updated = prev.filter((_, i) => i !== index);
+      setDebouncedYogaUpdate(updated);
+      return updated;
     });
   };
 
-  // Debounce yoga updates
+  const handleUrlChange = (urlIndex: number, value: string) => {
+    setEditedYoga((prev) => {
+      const updated = [...prev];
+      updated[urlIndex] = value;
+      setDebouncedYogaUpdate(updated);
+      return updated;
+    });
+  };
+
+  const handleChanceChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const newChance = Number(e.target.value);
+    if (!isNaN(newChance)) {
+      updateSettings({ yogaChance: newChance });
+    }
+  };
+
+  // Debounce saving the updated yoga string list
   useEffect(() => {
     if (debouncedYogaUpdate) {
       const timeoutId = setTimeout(() => {
-        // Update yoga in the controller
-        if(debouncedYogaUpdate) controller.updateYoga(debouncedYogaUpdate);
-        setDebouncedYogaUpdate(null); // Clear the debounced update
+        controller.updateYoga(debouncedYogaUpdate);
+        setDebouncedYogaUpdate(null);
       }, 500);
 
       return () => clearTimeout(timeoutId);
     }
-  }, [debouncedYogaUpdate]);
+  }, [debouncedYogaUpdate, controller]);
 
   return (
     <div className="workout-settings-exercise-container">
       <div className="workout-settings-exercise-container-details">
         <div className="workout-settings-exercise-container-details-list">
           {/* Chance Input */}
-          <div className="workout-settings-exercise-container-details-element-box">
-            <label>Chance</label>
-            <input
-              className="workout-settings-exercise-container-details-input"
-              type="number"
-              value={editedYoga.chance}
-              onChange={(e) =>
-                handleInputChange("chance", Number(e.target.value))
-              }
-            />
-          </div>
+          <LabelledInput
+            label={"What is the chance that you get a Yoga warmup"}
+            description={"1/4 workouts = 25% = 0.25"}
+            value={settings.yogaChance}
+            type={"number"}
+            onChange={handleChanceChange}
+          />
 
           {/* Videos List and Add Button */}
           <div className="workout-settings-exercise-container-details-element-box">
-            <label>Videos</label>
+            <label className="label-workout-days">Videos</label>
 
             <div className="yoga-add-button_place">
               <div className="yoga-add-button">
-                <button type="button" className="" onClick={handleAdd}>
+                <button type="button" onClick={handleAdd}>
                   <FontAwesomeIcon icon={faPlus} size="lg" />
                 </button>
               </div>
             </div>
 
             {/* Display URLs in reverse */}
-            {editedYoga.urls
+            {editedYoga
               .slice()
               .reverse()
               .map((url, reversedIndex) => {
-                const originalIndex = editedYoga.urls.length - 1 - reversedIndex;
+                const originalIndex = editedYoga.length - 1 - reversedIndex;
                 return (
                   <div key={reversedIndex} className="yoga-videos_url">
                     <div className="yoga-videos_url-input">
@@ -118,9 +104,7 @@ const YogaForm: React.FC<YogaFormProps> = ({ initialYoga }) => {
                         className="workout-settings-exercise-container-details-input"
                         type="text"
                         value={url}
-                        onChange={(e) =>
-                          handleInputChange("urls", e.target.value, originalIndex)
-                        }
+                        onChange={(e) => handleUrlChange(originalIndex, e.target.value)}
                       />
                     </div>
                     <div className="yoga-videos_url-button">

@@ -1,5 +1,131 @@
 [
   {
+    "workoutType": "cardio",
+    "date": "2024-12-07T05:00:00.000Z",
+    "isCompleted": false,
+    "isSuccess": false,
+    "note": "![[bad_13.jpg]]\n\n<div class=\"motivationalSpeech\">\nDo you want to look like that forever?</div>\n",
+    "warmUps": [],
+    "exercises": [
+      {
+        "name": "sweat",
+        "id": "sweat",
+        "weight": 0,
+        "sets": 1,
+        "reps": "",
+        "time": 0,
+        "note": "🌳🌳🏃💨🌲🌳🌲🚴‍♂️🌲🌳🌳",
+        "variation": "",
+        "isSuccess": false,
+        "isCompleted": false,
+        "isUnlocked": false,
+        "weightIncrease": 10,
+        "boosted": null
+      }
+    ]
+  },
+  {
+    "workoutType": "chest",
+    "date": "2024-12-06T05:00:00.000Z",
+    "isCompleted": true,
+    "isSuccess": true,
+    "note": "![[good_8.png]]\n\n<div class=\"motivationalSpeech\">\nYou can look like this too.</div>\n",
+    "warmUps": [
+      {
+        "name": "yoga",
+        "id": "yoga",
+        "weight": 0,
+        "sets": 0,
+        "reps": "",
+        "time": 0,
+        "note": "https://www.youtube.com/watch?v=BieNFcV8Uw8",
+        "variation": "",
+        "isSuccess": false,
+        "isCompleted": false,
+        "isUnlocked": false,
+        "weightIncrease": 0,
+        "boosted": 0
+      }
+    ],
+    "exercises": [
+      {
+        "name": "dips",
+        "id": "dips",
+        "weight": 0,
+        "sets": 2,
+        "reps": "8-10",
+        "time": 32,
+        "note": "",
+        "variation": "",
+        "isSuccess": true,
+        "isCompleted": true,
+        "isUnlocked": true,
+        "weightIncrease": 5,
+        "boosted": null
+      },
+      {
+        "name": "Practice Bench",
+        "id": "practice-bench",
+        "weight": 0,
+        "sets": 2,
+        "reps": "10-12",
+        "time": 48,
+        "note": "",
+        "variation": "",
+        "isSuccess": true,
+        "isCompleted": true,
+        "isUnlocked": true,
+        "weightIncrease": 0,
+        "boosted": null
+      },
+      {
+        "name": "push up feet on wall",
+        "id": "push-up-feet-on-wall",
+        "weight": 10,
+        "sets": 4,
+        "reps": "5",
+        "time": 48,
+        "note": "",
+        "variation": "",
+        "isSuccess": true,
+        "isCompleted": true,
+        "isUnlocked": true,
+        "weightIncrease": 10,
+        "boosted": null
+      },
+      {
+        "name": "handstand",
+        "id": "handstand",
+        "weight": 0,
+        "sets": 2,
+        "reps": "5",
+        "time": 48,
+        "note": "",
+        "variation": "walk on wall",
+        "isSuccess": false,
+        "isCompleted": true,
+        "isUnlocked": true,
+        "weightIncrease": 0,
+        "boosted": null
+      },
+      {
+        "name": "handstand",
+        "id": "handstand_variation",
+        "weight": 0,
+        "sets": 1,
+        "reps": "5",
+        "time": 48,
+        "note": "",
+        "variation": "walk on wall to handstand",
+        "isSuccess": false,
+        "isCompleted": true,
+        "isUnlocked": true,
+        "weightIncrease": 0,
+        "boosted": null
+      }
+    ]
+  },
+  {
     "workoutType": "legs",
     "date": "2024-12-05T05:00:00.000Z",
     "isCompleted": true,
