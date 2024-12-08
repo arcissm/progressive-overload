@@ -60,3 +60,5 @@ I'm at 18.3%
 - Custom workout - sometimes you workout with a friend, trainer or you are on vacation. So the workout becomes more random. It's more to log the workout than to do what is written
 - Stats view
 - Steroids functions that increase/decreases #sets based on how much you've been struggling
+- progressivelly overload time of exercises
+- add unloacked + muscle tag to search through exercises

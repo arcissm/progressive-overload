@@ -28,6 +28,8 @@ export class SettingsController {
         this.settings.calendarCompletedColor = this.settings.calendarCompletedColor || DEFAULT_SETTINGS.calendarCompletedColor;
         this.settings.calendarCardioColor = this.settings.calendarCardioColor || DEFAULT_SETTINGS.calendarCardioColor;
         this.settings.calendarStartedColor = this.settings.calendarStartedColor || DEFAULT_SETTINGS.calendarStartedColor;
+        this.settings.yogaChance = this.settings.yogaChance || DEFAULT_SETTINGS.yogaChance;
+        this.settings.numberWorkoutDays2Weeks = this.settings.numberWorkoutDays2Weeks || DEFAULT_SETTINGS.numberWorkoutDays2Weeks;
     }
 
     async saveSettings() {

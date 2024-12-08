@@ -5,23 +5,28 @@ import BreakForm from "../forms/BreakForms";
 import { Workout } from "models/Workout";
 import { getTodayLocalDate } from "utils/AlgorithmUtils";
 import { BREAK } from "utils/Constants";
+import { useSettingsController } from "controller/SettingsControllerProvider";
+import LabelledInput from "../components/LabelledInput";
 
 const BreakPanel: React.FC = () => {
   const controller = useWorkoutController();
-  const [breaks, setBreaks] = useState<Workout[]>([]);
+  const { settings, updateSettings } = useSettingsController();
 
-  // Load the breaks when the component mounts
+  const [breaks, setBreaks] = useState<Workout[]>([]);
+  const [workoutDays2Weeks, setWorkoutDays2Weeks] = useState(settings.numberWorkoutDays2Weeks);
+
   useEffect(() => {
-    const loadData = async () => {
-      const fetchedBreaks = controller.getAllBreaks();
-      setBreaks(fetchedBreaks);
-    };
-    loadData();
+    const fetchedBreaks = controller.getAllBreaks();
+    setBreaks(fetchedBreaks);
   }, [controller]);
 
-  // Update the break at the specified index with the new note
+  useEffect(() => {
+    if (workoutDays2Weeks !== settings.numberWorkoutDays2Weeks) {
+      updateSettings({ numberWorkoutDays2Weeks: workoutDays2Weeks });
+    }
+  }, [workoutDays2Weeks, settings, updateSettings]);
+
   const handleSave = (index: number, newBreak: string) => {
-    // Create the updated breaks array
     const updatedBreaks = breaks.map((breakItem, idx) =>
       idx === index
         ? new Workout(
@@ -36,28 +41,17 @@ const BreakPanel: React.FC = () => {
         : breakItem
     );
 
-    // Update the state with the new breaks
     setBreaks(updatedBreaks);
-
-    // Save the updated breaks
     controller.saveBreaks(updatedBreaks);
   };
 
-  // Remove the break at the specified index
   const handleDelete = (index: number) => {
-    // Create the updated breaks array without the deleted break
     const updatedBreaks = breaks.filter((_, idx) => idx !== index);
-
-    // Update the state with the new breaks
     setBreaks(updatedBreaks);
-
-    // Save the updated breaks
     controller.saveBreaks(updatedBreaks);
   };
 
-  // Add a new empty break to the list
   const handleAddBreak = () => {
-    // Create the new break
     const newBreak = new Workout(
       BREAK,
       getTodayLocalDate(),
@@ -67,15 +61,18 @@ const BreakPanel: React.FC = () => {
       [],
       []
     );
-
-    // Create the updated breaks array with the new break
     const updatedBreaks = [...breaks, newBreak];
-
-    // Update the state with the new breaks
     setBreaks(updatedBreaks);
-
-    // Save the updated breaks
     controller.saveBreaks(updatedBreaks);
+  };
+
+  const handleWorkoutDaysChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const value = parseInt(event.target.value, 10);
+    if (!isNaN(value)) {
+      setWorkoutDays2Weeks(value);
+    } else if (event.target.value === "") {
+      setWorkoutDays2Weeks(0);
+    }
   };
 
   return (
@@ -85,18 +82,23 @@ const BreakPanel: React.FC = () => {
       displayFooter={true}
       footerAction={handleAddBreak}
     >
-      <div className="workout-settings-muscle-container">
-        {breaks.map((breakWorkout, index) => (
-          <div key={index}>
-            <BreakForm
-              index={index}
-              initialBreak={breakWorkout.note}
-              onSave={(newBreak: string) => handleSave(index, newBreak)}
-              onDelete={() => handleDelete(index)}
-            />
-          </div>
-        ))}
-      </div>
+      <LabelledInput 
+        label={"Number of Workout Days in 2 Weeks"} 
+        description={"Number of workout days planned within a 14-day period"} 
+        value={workoutDays2Weeks} 
+        type={"number"} 
+        onChange={handleWorkoutDaysChange}/>
+
+      {breaks.map((breakWorkout, index) => (
+        <div key={index}>
+          <BreakForm
+            index={index}
+            initialBreak={breakWorkout.note}
+            onSave={(newBreak: string) => handleSave(index, newBreak)}
+            onDelete={() => handleDelete(index)}
+          />
+        </div>
+      ))}
     </PanelLayout>
   );
 };

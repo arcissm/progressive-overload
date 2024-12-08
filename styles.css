@@ -826,3 +826,33 @@ input[type=checkbox]:checked:after{
   .single-select-container{
 	position: relative;
   }
+
+
+
+
+
+
+
+
+
+.workout-days-container{
+	display: flex;
+	justify-content: space-between;
+	background-color: var(--background-primary);
+	padding: 1rem;
+}
+
+.label-description-workout-days{
+	display: flex;
+	flex-direction: column;
+}
+
+.label-workout-days{
+	font-size: large;
+	font-weight: bold;
+}
+
+.workout-days-description{
+	padding-top: 0.5rem
+}
+

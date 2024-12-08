@@ -90,7 +90,7 @@ export default class WorkoutPlugin extends Plugin {
 	private registerViews(): void {
 		this.registerView(
 			CONFIG_WORKOUT_VIEW,
-			(leaf: WorkspaceLeaf) => (this.configView = new ConfigWorkoutsView(leaf, this.configController))
+			(leaf: WorkspaceLeaf) => (this.configView = new ConfigWorkoutsView(leaf, this.configController, this.settingsController))
 		);
 
 		this.registerView(

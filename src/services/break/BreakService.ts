@@ -1,12 +1,13 @@
-import { MINIMUM_WORKOUT_DAYS_2_WEEKS} from "../../utils/Constants";
 import { DBService } from "services/core/DBService";
 
 
 export class BreakService{
 	private db: DBService;
+	private numberWorkoutDays2Weeks: number;
 
-	constructor(db: DBService) {
+	constructor(db: DBService, numberWorkoutDays2Weeks: number) {
 		this.db = db;
+		this.numberWorkoutDays2Weeks = numberWorkoutDays2Weeks;
 	}
 
 	getRandomBreakWorkout(){
@@ -18,10 +19,10 @@ export class BreakService{
 		let isBreak = false;
 		const totalWorkouts = this.db.countCompletedWorkouts();
 
-		if(totalWorkouts >= MINIMUM_WORKOUT_DAYS_2_WEEKS){
+		if(totalWorkouts >= this.numberWorkoutDays2Weeks){
 			const wokoutsIn2Weeks = this.db.countCompletedWorkoutsInPeriod(2);
 
-			if(wokoutsIn2Weeks < MINIMUM_WORKOUT_DAYS_2_WEEKS){
+			if(wokoutsIn2Weeks < this.numberWorkoutDays2Weeks){
 				isBreak = true;
 			}
 		}
