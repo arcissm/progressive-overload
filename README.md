@@ -25,6 +25,7 @@ npm run dev
     1. Add exercises you like
         1. say how many reps, sets and weight
         2. associate it to a muscle
+        - Note: time is unnused
     2. Add a muscle group
         - ex: quads, hamstrings, booty
     3.  Add a name for you workout type - upper body, arms, booty, legs...
@@ -62,3 +63,4 @@ I'm at 18.3%
 - Steroids functions that increase/decreases #sets based on how much you've been struggling
 - progressivelly overload time of exercises
 - add unloacked + muscle tag to search through exercises
+- Fix mumbo jumbo of backend. There's definetly a cleaner way to write it. Find it.

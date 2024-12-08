@@ -7,7 +7,6 @@ import PanelLayout from "../components/PanelLayout";
 import Collapse from "../components/Collapse";
 import WarmUpForm from "../forms/WarmUpForm";
 import { Exercise } from "models/Exercise";
-import { Yoga } from "models/Yoga";
 import YogaForm from "../forms/YogaForm";
 
 
@@ -15,7 +14,7 @@ import YogaForm from "../forms/YogaForm";
 const WarmUpPannel: React.FC = () => {
   const controller = useWorkoutController();
   const [muscles, setMuscles] = useState<Muscle[]>([]); 
-  const [yoga, setYoga] = useState<Yoga>(); 
+  const [yoga, setYoga] = useState<string[]>(); 
 
 
   // Use useEffect to load the muscles when the component mounts

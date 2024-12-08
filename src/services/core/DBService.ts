@@ -2,15 +2,14 @@ import { ExerciseConfig } from "models/configs/ExerciseConfig";
 import { Exercise } from "models/Exercise";
 import { Muscle } from "models/Muscle";
 import { Workout } from "models/Workout";
-import { Yoga } from "models/Yoga";
 import { BreakData } from "services/data/BreakData";
 import { ExerciseData } from "services/data/ExerciseData";
 import { MuscleData } from "services/data/MuscleData";
 import { RelationalData } from "services/data/RelationalData";
+import { StringListData } from "services/data/StringListData";
 import { VariationData } from "services/data/VariationData";
 import { WorkoutData } from "services/data/WorkoutData";
-import { YogaData } from "services/data/YogaData";
-import { NEW_VARIAITON } from "utils/Constants";
+import { NEW_VARIAITON, YOGA_DATA_PATH } from "utils/Constants";
 import { TreeNode } from "utils/data-structure/TreeNode";
 
 
@@ -21,7 +20,7 @@ export class DBService {
 	private exerciseData: ExerciseData;
     private relationalData: RelationalData;
 	private breakData: BreakData;
-	private yogaData: YogaData;
+	private yogaData: StringListData;
 	private variationData: VariationData
 	private muscleExerciseMap: Map<Muscle, Exercise[]>;
 	private workoutTypeMuscleMap: Map<string, Muscle[]>;
@@ -32,7 +31,7 @@ export class DBService {
         this.exerciseData = new ExerciseData(dirPath);
         this.relationalData = new RelationalData(dirPath);
 		this.breakData = new BreakData(dirPath);
-		this.yogaData = new YogaData(dirPath)
+		this.yogaData = new StringListData(dirPath + YOGA_DATA_PATH)
 		this.variationData = new VariationData(dirPath);
 
 		this.initMuscleExerciseMap();
@@ -44,12 +43,12 @@ export class DBService {
 
 
 	getYoga(){
-		return this.yogaData.yoga;
+		return this.yogaData.getStringList();
 	}
 
-	updateYoga(newYoga: Yoga){
-		this.yogaData.updateYoga(newYoga)
-		this.yogaData.saveYoga()
+	updateYoga(newYoga: string[]){
+		this.yogaData.updateStringList(newYoga)
+		this.yogaData.saveStringList()
 	}
 	
 	getVariations(){
