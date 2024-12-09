@@ -39,9 +39,6 @@
     "workout": "arms",
     "muscles": [
       {
-        "name": "forearm"
-      },
-      {
         "name": "biceps"
       },
       {
@@ -74,13 +71,5 @@
   {
     "workout": "break",
     "muscles": []
-  },
-  {
-    "workout": "test",
-    "muscles": [
-      {
-        "name": "test"
-      }
-    ]
   }
 ]

@@ -82,16 +82,6 @@
     ]
   },
   {
-    "name": "forearm",
-    "minSets": 3,
-    "maxSets": 5,
-    "boosted": 1,
-    "coreExercises": [
-      "nyan-open-palm"
-    ],
-    "warmUps": []
-  },
-  {
     "name": "front delt",
     "minSets": 3,
     "maxSets": 5,
@@ -417,16 +407,6 @@
     "boosted": 0,
     "coreExercises": [
       "sweat"
-    ],
-    "warmUps": []
-  },
-  {
-    "name": "test",
-    "minSets": 4,
-    "maxSets": 6,
-    "boosted": 0,
-    "coreExercises": [
-      "handstand"
     ],
     "warmUps": []
   }
