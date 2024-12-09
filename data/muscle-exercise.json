@@ -25,17 +25,6 @@
     ]
   },
   {
-    "muscle": "forearm",
-    "exercises": [
-      {
-        "name": "nyan"
-      },
-      {
-        "name": "nyan-open-palm"
-      }
-    ]
-  },
-  {
     "muscle": "front delt",
     "exercises": [
       {
@@ -161,6 +150,9 @@
       },
       {
         "name": "practice-bench"
+      },
+      {
+        "name": "bench"
       }
     ]
   },
