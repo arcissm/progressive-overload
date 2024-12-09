@@ -9,15 +9,11 @@ import WarmUpPannel from './WarmUpPanel';
 import BreakPanel from './BreakPanel';
 
 const ConfigPanel: React.FC = () => {
-  // State management for the current tab, initialized with the first tab
   const [currentTab, setCurrentTab] = useState(CONFIG_TABS[0].key);
 
   return (
     <div className="config-workout-view">
-      {/* Render the Tabs and pass the currentTab and setCurrentTab functions */}
       <Tabs currentTab={currentTab} setCurrentTab={setCurrentTab} />
-      
-      {/* Render the correct panel based on the currentTab */}
       <div className="tab-content">
         {currentTab === 'workouts' && <WorkoutPanel />}
         {currentTab === 'muscles' && <MusclePanel />}

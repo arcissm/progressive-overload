@@ -10,12 +10,10 @@ export class WorkoutData{
 
 	constructor(dirPath:string, workoutTypes: string[]) {
 		this.dataPath = dirPath + WORKOUT_DATA_PATH;
-		// init workouts
 		this.convertDataToWorkout(this.dataPath, workoutTypes);
 	}
 
 	getAllWorkouts(): Workout[] {
-		// Combine all workouts from the map into a single array
 		const allWorkouts: Workout[] = [];
 		this.workouts.forEach(workoutsList => {
 			allWorkouts.push(...workoutsList);
@@ -49,10 +47,6 @@ export class WorkoutData{
 	}
 
 	
-
-
-	
-
 	deleteWorkout(workoutType: string, date: Date, index: number) {
 		const workoutsOfType = this.workouts.get(workoutType);
 
@@ -103,9 +97,7 @@ export class WorkoutData{
 		const rawData = fs.readFileSync(dataPath, 'utf8');
 		const parsedData = JSON.parse(rawData);
 	
-		// Assuming parsedData is an array of workouts
 		const workouts: Workout[] = parsedData.map((rawWorkout: any) => {
-			// Create Exercise instances for warm-ups
 			const warmUps = (rawWorkout.warmUps || []).map((rawWarmUp: any) => {
 				return new Exercise(
 					rawWarmUp.name,
@@ -123,7 +115,6 @@ export class WorkoutData{
 				);
 			});
 	
-			// Create Exercise instances for exercises
 			const exercises = (rawWorkout.exercises || []).map((rawExercise: any) => {
 				return new Exercise(
 					rawExercise.name,
@@ -152,7 +143,6 @@ export class WorkoutData{
 			);
 		});
 	
-		// Update the cache with the loaded workouts
 		this.updateCache(workouts, workoutTypes);
 	}
 	

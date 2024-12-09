@@ -19,7 +19,6 @@ export class Workout {
     this.exercises = exercises;
   }
   
-  // Check if two workouts are equal
   equals(otherWorkout: Workout): boolean {
     return this.workoutType === otherWorkout.workoutType &&
            this.date.getTime() === otherWorkout.date.getTime() &&
@@ -30,7 +29,6 @@ export class Workout {
            JSON.stringify(this.warmUps) === JSON.stringify(otherWorkout.warmUps);
   }
 
-  // Markdown representation (unchanged)
   toMarkdown() {
     let result = ``;
 

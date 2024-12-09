@@ -61,7 +61,6 @@ export class WorkoutController {
 
 	// Workout
     async createWorkout(workoutType:string) {
-        // check if should be on break
         if (this.breakService.isOnBreak()){
             this.noteService.createNote(this.breakService.getRandomBreakWorkout());
         }else{
@@ -94,7 +93,7 @@ export class WorkoutController {
 
 	// File
 	async openNote(date: Date) {
-		const formattedDate = date.toISOString().split('T')[0]; // Example: '2024-09-03'
+		const formattedDate = date.toISOString().split('T')[0];
 		const files = this.app.vault.getMarkdownFiles();
 		const matchingFile = files.find(file => file.basename.startsWith(`${formattedDate} `));
 	
@@ -149,7 +148,7 @@ export class WorkoutController {
 				this.workoutService.completeExercise(workout, exerciseId)
 
 			}else {
-				allCompleted = false; // Mark as incomplete if any completed checkbox is unchecked
+				allCompleted = false;
 			}
 		});
 

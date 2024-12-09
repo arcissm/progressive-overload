@@ -2,9 +2,8 @@ export class TreeNode<T> {
   data: T;
   parent: TreeNode<T> | null; 
   children: TreeNode<T>[];
-  id: string = ""; // parent.siblingIndex
+  id: string = "";
 
-  // Constructor
   constructor(data: T) {
       this.data = data;
       this.parent = null; 
@@ -21,7 +20,6 @@ export class TreeNode<T> {
     }
   }
   
-  // Find a node by data (Recursive search)
   findNode(searchData: T): TreeNode<T> | null {
     if (this.data === searchData) {
         return this;
@@ -35,7 +33,6 @@ export class TreeNode<T> {
     return null;
 }
 
-  // Override toString for better output
   toString(): string {
       return String(this.data);
   }

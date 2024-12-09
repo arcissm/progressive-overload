@@ -18,7 +18,7 @@ const VariationPanel: React.FC = () => {
   const [debounceTimeout, setDebounceTimeout] = useState<NodeJS.Timeout | null>(null);
 
 
-  //  load the variations when the component mounts
+  // Load the variations when the component mounts
   useEffect(() => {
     const loadTrees = async () => {
       const fetchedVariations = controller.getVariations();
@@ -48,17 +48,20 @@ const VariationPanel: React.FC = () => {
     loadTrees();
   }, [controller]);
 
+  // Add Variation
   const handleAddVariation = () => {
     const updatedVariations = controller.addTree();
     setVariations(new Map(updatedVariations));
   };
 
+  
+  // Delete Variation
   const handleDeleteVariation = (root: string) => {
     const updatedVariations = controller.deleteTree(root);
     setVariations(new Map(updatedVariations));
   }
 
-
+  // Update
   const handleExerciseNameChange = (selectedName: string, rootNode: TreeNode<string>) => {
     const oldName = rootNode.data;
 
@@ -84,9 +87,8 @@ const VariationPanel: React.FC = () => {
   setDebounceTimeout(newTimeout);
   };
 
-
+  // Debounce
   useEffect(() => {
-    // Cleanup the debounce timeout on component unmount
     return () => {
       if (debounceTimeout) {
         clearTimeout(debounceTimeout);
@@ -94,29 +96,31 @@ const VariationPanel: React.FC = () => {
     };
   }, [debounceTimeout]);
 
+  // Add Node
   const handleAddChildNode = (exerciseName: string, node: TreeNode<string>) => {
     const updatedVariations = controller.addNode(exerciseName, node);
     setVariations(new Map(updatedVariations));
-};
+  };
 
+  // Delete Node
   const handleRemoveNode = (exerciseName: string, node: TreeNode<string>) => {
     const updatedVariations = controller.removeNode(exerciseName, node);
     setVariations(new Map(updatedVariations)); 
   }
 
-
+  // Chande Node
   const handleChangeNode = (exerciseName: string, newValue: string, oldValue: string) => {
     const updatedVariations = controller.updateVariationName(exerciseName, oldValue, newValue);
     setVariations(new Map(updatedVariations));
   }
   
+  // Checkbox Node
   const handleCheckboxChange = (exerciseName: string, node: TreeNode<string>) => {
     setCheckedNodes((prevCheckedNodes) => {
       const newCheckedNodes = new Map(prevCheckedNodes);
       const currentCheckedNode = newCheckedNodes.get(exerciseName);
-      let checkedVariaiton = exerciseName; // this one line implies that you have a variation because its the exercise not a empty string
+      let checkedVariaiton = exerciseName;
 
-      // If the clicked node is already checked, uncheck it
       if (currentCheckedNode === node.id) {
         newCheckedNodes.set(exerciseName, null);
       } else {

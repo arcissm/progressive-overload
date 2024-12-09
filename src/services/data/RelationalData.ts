@@ -66,7 +66,6 @@ export class RelationalData {
     
 
     updateMuscle(oldMuscleName: string, newMuscleName: string) {
-        // Check if the Muscle Exercise contains the old muscle name as a key
         if (this.muscleExerciseMap.has(oldMuscleName)) {
             const exercises = this.muscleExerciseMap.get(oldMuscleName);
             if (exercises) {
@@ -74,8 +73,6 @@ export class RelationalData {
                 this.muscleExerciseMap.set(newMuscleName, exercises);
             }
         }
-
-        // Check if the Workout Muscle contains the old muscle name as a key
         this.workoutMuscleMap.forEach((muscleList) => {
             const index = muscleList.indexOf(oldMuscleName);
             if (index !== -1) {
@@ -85,7 +82,6 @@ export class RelationalData {
 
         this.saveMuscleExerciseMap()
         this.saveWorkoutMuscleMap()
-
     }
     
     addWorkoutType(){
@@ -117,40 +113,30 @@ export class RelationalData {
 	  
 
     saveMuscleExerciseMap() {
-        // Convert Map to JSON structure
         const mapAsArray = Array.from(this.muscleExerciseMap.entries()).map(([muscle, exercises]) => {
             return {
                 muscle: muscle,
                 exercises: exercises.map(exercise => ({ name: exercise }))
             };
         });
-
-        // Save the updated JSON back to the file
         fs.writeFileSync(this.muscleExerciseDataPath, JSON.stringify(mapAsArray, null, 2), 'utf8');
     }
 
     saveWorkoutMuscleMap() {
-        // Convert Map to JSON structure
         const mapAsArray = Array.from(this.workoutMuscleMap.entries()).map(([workout, muscles]) => {
             return {
                 workout: workout,
                 muscles: muscles.map(muscle => ({ name: muscle }))
             };
         });
-
-
-        // Save the updated JSON back to the file
         fs.writeFileSync(this.workoutMuscleDataPath, JSON.stringify(mapAsArray, null, 2), 'utf8');
     }
     
     private initializeMuscleExerciseMap(dataPath: string) {
-        // Read and parse the JSON file
         const rawData = fs.readFileSync(dataPath, 'utf8');
         const parsedData = JSON.parse(rawData);
 
         this.muscleExerciseMap = new Map<string, string[]>();
-
-        // Process each muscle from the parsed data
         parsedData.forEach((muscleEntry: any) => {
             const muscleName = muscleEntry.muscle;
             const exerciseNames = muscleEntry.exercises.map((exercise: any) => exercise.name);
@@ -160,13 +146,10 @@ export class RelationalData {
     }
 
 	private initializeWorkoutMuscleMap(dataPath: string) {
-        // Read and parse the JSON file
         const rawData = fs.readFileSync(dataPath, 'utf8');
         const parsedData = JSON.parse(rawData);
 
         this.workoutMuscleMap = new Map<string, string[]>();
-
-        // Process each workout from the parsed data
         parsedData.forEach((workoutEntry: any) => {
             const workoutName = workoutEntry.workout;
             const muscleNames = workoutEntry.muscles.map((muscle: any) => muscle.name);

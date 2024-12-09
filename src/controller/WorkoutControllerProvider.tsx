@@ -1,14 +1,12 @@
 import React, { createContext, useContext, useState, useEffect } from "react";
 import { WorkoutController } from "controller/WorkoutController";
 
-// Create the context with the workout data and controller
 const WorkoutControllerContext = createContext<{
   controller: WorkoutController;
   workouts: any[];
-  currentDate: Date; // Add currentDate to the context type
+  currentDate: Date;
 } | undefined>(undefined);
 
-// Create a custom hook to use the WorkoutControllerContext more easily
 export const useWorkoutController = () => {
   const context = useContext(WorkoutControllerContext);
   if (!context) {
@@ -17,7 +15,9 @@ export const useWorkoutController = () => {
   return context;
 };
 
-// Create a provider component
+
+
+
 interface WorkoutControllerProviderProps {
   controller: WorkoutController;
   children: React.ReactNode;
@@ -25,8 +25,6 @@ interface WorkoutControllerProviderProps {
 
 export const WorkoutControllerProvider: React.FC<WorkoutControllerProviderProps> = ({ controller, children }) => {
   const [workouts, setWorkouts] = useState<any[]>([]);
-
-  // **Add currentDate state**
   const [currentDate, setCurrentDate] = useState(new Date());
 
   // Subscribe to workout updates from the controller
@@ -56,15 +54,13 @@ export const WorkoutControllerProvider: React.FC<WorkoutControllerProviderProps>
       
       const d = (new Date(now.getFullYear(), now.getMonth(), now.getDate() + 1))
       setCurrentDate(d);
-      // setCurrentDate(new Date());
-      // console.log(currentDate)
     }, msUntilMidnight);
 
     // // Cleanup the timeout when the component unmounts or effect re-runs
     return () => clearTimeout(timeoutId);
   }, [currentDate]);
 
-  // **Include currentDate in the context value**
+
   return (
     <WorkoutControllerContext.Provider value={{ controller, workouts, currentDate }}>
       {children}

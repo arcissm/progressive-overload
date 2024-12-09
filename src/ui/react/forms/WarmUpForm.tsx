@@ -24,7 +24,7 @@ const WarmUpForm: React.FC<WarmUpFormProps> = ({
     setEditMode(false);
   }, [initialExercise]);
 
-  // Input change handlers
+  // Input
   const handleInputChange = (field: keyof Exercise, value: any) => {
     if (isEditMode && editedExercise) {
       const updatedExercise = new Exercise(
@@ -41,8 +41,6 @@ const WarmUpForm: React.FC<WarmUpFormProps> = ({
         editedExercise.isCompleted,
         editedExercise.isUnlocked
       );
-  
-      // Convert the value to a number if the field is expected to be numeric
       if (['sets', 'weight', 'time'].includes(field)) {
         (updatedExercise as any)[field] = value === "" ? 0 : Number(value);
       } else {
@@ -56,16 +54,19 @@ const WarmUpForm: React.FC<WarmUpFormProps> = ({
     }
   };
 
+  // Save
   const handleSave = (e: React.FormEvent) => {
     e.preventDefault();
     onSave(initialExercise, editedExercise);
     setEditMode(false);
   };
 
+  // Edit Mode
   const handleEdit = () => {
     setEditMode(true);
   };
 
+  // Cancel Edit Mode
   const handleCancelEdit = () => {
     setEditiedExercise(initialExercise);
     setEditMode(false);

@@ -7,7 +7,7 @@ interface TreeProps<T extends string> {
   node: TreeNode<T>;
   onAddChildNode: (node: TreeNode<T>) => void;
   onRemoveNode: (node: TreeNode<T>) => void;
-  onChangeNode: (newValue: string, oldValue: string) => void; // Adjusted type to pass old value
+  onChangeNode: (newValue: string, oldValue: string) => void;
   checkedNodeId: T | null;
   onCheckboxChange: (node: TreeNode<T>) => void;
 }
@@ -26,9 +26,11 @@ const TreeComponent = <T extends string>({
 
   const hasChildren = node.children.length > 0;
 
+  // Hover
   const handleMouseEnter = () => setIsHovered(true);
   const handleMouseLeave = () => setIsHovered(false);
 
+  // Input
   const handleInputChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
     const value = event.target.value;
     const oldValue = node.data.toString();
@@ -45,17 +47,17 @@ const TreeComponent = <T extends string>({
         // Pass the old node value along with the new value
         onChangeNode(value, oldValue);
       }
-    }, 1000); // Adjust the debounce delay as needed
-
+    }, 1000);
     setDebounceTimeout(newTimeout);
   };
 
+  // Chexbox Input
   const handleCheckboxChange = () => {
     onCheckboxChange(node);
   };
 
+  // Debounce
   useEffect(() => {
-    // Cleanup the debounce timeout on component unmount
     return () => {
       if (debounceTimeout) {
         clearTimeout(debounceTimeout);

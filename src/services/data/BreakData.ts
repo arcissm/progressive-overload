@@ -35,7 +35,6 @@ export class BreakData {
     }
 
     saveBreak() {
-        // Extract notes from each workout to save
         const notes = this.breaks.map((workout) => workout.note);
         const updatedData = JSON.stringify(notes, null, 2);
         fs.writeFileSync(this.dataPath, updatedData, 'utf8');

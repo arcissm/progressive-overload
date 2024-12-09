@@ -28,7 +28,7 @@ const ExerciseForm: React.FC<ExerciseFormProps> = ({
     setEditMode(false);
   }, [initialConfig]);
 
-  // Input change handlers
+  // Input
   const handleInputChange = (field: keyof Exercise, value: any) => {
     if (isEditMode && editedConfig) {
       const updatedExercise = new Exercise(
@@ -45,8 +45,6 @@ const ExerciseForm: React.FC<ExerciseFormProps> = ({
         editedConfig.exercise.isCompleted,
         editedConfig.exercise.isUnlocked
       );
-  
-      // Convert the value to a number if the field is expected to be numeric
       if (['sets', 'weight', 'time', 'weightIncrease'].includes(field)) {
         (updatedExercise as any)[field] = value === "" ? 0 : Number(value);
       } else {
@@ -60,6 +58,7 @@ const ExerciseForm: React.FC<ExerciseFormProps> = ({
     }
   };
 
+  // Muscle Input
   const handleMuscleSelectionChange = (selected: string[]) => {
     if (isEditMode) {
       setEditedConfig((prevConfig) => {
@@ -68,16 +67,19 @@ const ExerciseForm: React.FC<ExerciseFormProps> = ({
     }
   };
 
+  // Save
   const handleSave = (e: React.FormEvent) => {
     e.preventDefault();
     onSave(initialConfig, editedConfig);
     setEditMode(false);
   };
 
+  // Edit Mode
   const handleEdit = () => {
     setEditMode(true);
   };
 
+  // Cancelt Edit
   const handleCancelEdit = () => {
     setEditedConfig(initialConfig);
     setEditMode(false);

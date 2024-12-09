@@ -49,7 +49,6 @@ export class NoteService {
 		try {
 			// Create the note
 			const file = await this.app.vault.create(fullPath, workout.toMarkdown());
-			// console.log("Note created:", file.path);
 		} catch (error) {
 			console.error(`Failed to create note at path: ${fullPath}`, error);
 		}
@@ -102,8 +101,6 @@ export class NoteService {
 					console.warn("No images found in the directory.");
 					return "";
 				}
-	
-				// Use the custom random index function
 				const randomIndex = chooseRandomIndex(files.length);
 				const randomImage = files[randomIndex] as TFile;
 	
@@ -173,16 +170,11 @@ export class NoteService {
 
 	private getWeekNumber(date: Date): number {
 		const startOfYear = new Date(date.getFullYear(), 0, 1);
-		const dayOfWeek = (startOfYear.getDay() + 6) % 7; // Adjust so Monday is 0, ..., Sunday is 6
-	
-		// Find the first Monday of the year
+		const dayOfWeek = (startOfYear.getDay() + 6) % 7;
 		const startOfFirstWeek = new Date(startOfYear);
 		startOfFirstWeek.setDate(startOfYear.getDate() + (dayOfWeek > 0 ? 7 - dayOfWeek : 0));
-	
-		// Calculate the difference in days from the start of the first week
 		const daysDifference = Math.floor((date.getTime() - startOfFirstWeek.getTime()) / (24 * 60 * 60 * 1000));
-	
-		// Calculate the week number (adding 1 because we count from 1, not 0)
+
 		return daysDifference >= 0 ? Math.ceil((daysDifference + 1) / 7) : 1;
 	}
 	
@@ -210,7 +202,6 @@ export class NoteService {
 		while ((match = checkboxRegex.exec(content)) !== null) {
 			checkboxes.push(new CheckBox(match[2], match[1] === 'x'));
 		}
-	
 		return checkboxes;
 	}
 	

@@ -1,10 +1,8 @@
 import React, { createContext, useContext } from "react";
 import { ConfigController } from "./ConfigController";
 
-// Create the context
 const ConfigControllerContext = createContext<ConfigController | undefined>(undefined);
 
-// Create a custom hook to use the WorkoutControllerContext more easily
 export const useWorkoutController = () => {
   const context = useContext(ConfigControllerContext);
   if (!context) {
@@ -13,7 +11,10 @@ export const useWorkoutController = () => {
   return context;
 };
 
-// Create a provider component
+
+
+
+
 interface ConfigControllerProviderProps {
   controller: ConfigController;
   children: React.ReactNode;

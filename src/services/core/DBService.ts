@@ -101,7 +101,7 @@ export class DBService {
 		const newExercise = this.exerciseData.getExerciseById(id)
 		
 		if(oldExercise && newExercise){
-			if(oldExercise.name === NEW_VARIAITON){ //base case
+			if(oldExercise.name === NEW_VARIAITON){
 				newExercise.variation = newExercise.name
 			}
 			else{
@@ -109,7 +109,7 @@ export class DBService {
 
 				if(oldVariation === oldExercise.name){ //variation and exercise name are the same (we dont have a variation checked yet but the tree exists)
 					newExercise.variation = newExercise.name
-				}else if(oldVariation !== oldExercise.name){ //we have a cariation checked in the tree
+				}else if(oldVariation !== oldExercise.name){ //we have a variation checked in the tree
 					newExercise.variation = oldVariation
 				}else{
 					console.error("Error: Exercise " + oldExercise.name + " is missing a variation")
@@ -554,7 +554,7 @@ export class DBService {
 			if (!reverseMap.has(exercise)) {
 			  reverseMap.set(exercise, []);
 			}
-			reverseMap.get(exercise)!.push(muscle); // Use non-null assertion operator (!)
+			reverseMap.get(exercise)!.push(muscle);
 		  });
 		});
 	  

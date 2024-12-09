@@ -16,6 +16,7 @@ const Search: React.FC<SearchProps> = ({
   const [localQuery, setLocalQuery] = useState('');
   const [debounceTimeout, setDebounceTimeout] = useState<NodeJS.Timeout | null>(null);
 
+  // Debounce
   useEffect(() => {
     // Clear the previous timeout
     if (debounceTimeout) {

@@ -6,7 +6,7 @@ import { useSettingsController } from 'controller/SettingsControllerProvider';
 import LabelledInput from '../components/LabelledInput';
 
 interface YogaFormProps {
-    initialYoga: string[]; // Now this is just a string array
+    initialYoga: string[];
 }
 
 const YogaForm: React.FC<YogaFormProps> = ({ initialYoga }) => {
@@ -21,7 +21,8 @@ const YogaForm: React.FC<YogaFormProps> = ({ initialYoga }) => {
     // In this case, we only need to sync the string array.
     setEditedYoga(initialYoga);
   }, [initialYoga]);
-
+  
+  // Delete
   const handleAdd = () => {
     setEditedYoga((prev) => {
       const updated = [...prev, ""];
@@ -30,6 +31,7 @@ const YogaForm: React.FC<YogaFormProps> = ({ initialYoga }) => {
     });
   };
 
+  // Delete
   const handleDelete = (index: number) => {
     setEditedYoga((prev) => {
       const updated = prev.filter((_, i) => i !== index);
@@ -38,6 +40,7 @@ const YogaForm: React.FC<YogaFormProps> = ({ initialYoga }) => {
     });
   };
 
+  // List Input
   const handleUrlChange = (urlIndex: number, value: string) => {
     setEditedYoga((prev) => {
       const updated = [...prev];
@@ -47,6 +50,7 @@ const YogaForm: React.FC<YogaFormProps> = ({ initialYoga }) => {
     });
   };
 
+  // Chance Input
   const handleChanceChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const newChance = Number(e.target.value);
     if (!isNaN(newChance)) {
