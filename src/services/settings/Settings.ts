@@ -8,7 +8,6 @@ export interface PluginSettings {
     numberWorkoutDays2Weeks: number;
 }
 
-// Default values for all our setting options
 export const DEFAULT_SETTINGS: PluginSettings = {
     notesDir: "Gyming",
     imagesDir: "Motivation Pics",

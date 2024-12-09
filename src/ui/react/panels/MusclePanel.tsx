@@ -8,7 +8,6 @@ import MultiSelectInput from "../components/MultiSelect";
 import PanelLayout from "../components/PanelLayout";
 
 
-// Define a new type for debouncing multiple muscles
 type MuscleUpdate = {
   oldMuscle: Muscle;
   newMuscle: Muscle;
@@ -18,7 +17,7 @@ const MusclePanel: React.FC = () => {
   const controller = useWorkoutController();
   const [muscles, setMuscles] = useState<Muscle[]>([]); 
   const [muscleExerciseMap, setMuscleExerciseMap] = useState< Map<string, string[]>>(new Map());
-  const [debouncedMuscleUpdates, setDebouncedMuscleUpdates] = useState<MuscleUpdate[]>([]); // Track multiple updates
+  const [debouncedMuscleUpdates, setDebouncedMuscleUpdates] = useState<MuscleUpdate[]>([]);
 
 
   // Use useEffect to load the muscles when the component mounts
@@ -35,6 +34,7 @@ const MusclePanel: React.FC = () => {
   }, [controller]);
 
 
+  // Add
   const handleAddMuscle = () => {
     const muscleWithEmptyNameExists = muscles.some(muscle => muscle.name === "");
   
@@ -51,11 +51,9 @@ const MusclePanel: React.FC = () => {
     }
   };
 
+  // Delete
   const handleDeleteMuscle = (muscle: Muscle, index: number) => {
-    // Call the controller to delete the muscle from the backend
     controller.deleteMuscle(muscle);
-  
-    // Update the state by removing the muscle from the list
     setMuscles((prevMuscles) => {
       const updatedMuscles = [...prevMuscles];
       updatedMuscles.splice(index, 1); // Remove the muscle at the given index
@@ -63,12 +61,10 @@ const MusclePanel: React.FC = () => {
     });
   };
 
-  
-
+  // Input
   const handleInputChange = (index: number, field: keyof Muscle, value: string | number | string[]) => {
     setMuscles((prevMuscles) => {
-      const updatedMuscles = [...prevMuscles]; // Copy the previous state
-  
+      const updatedMuscles = [...prevMuscles];
       
       if (field === 'name' && !isNameUnique(prevMuscles, String(value), index)) {
         new Notice("Be original");
@@ -102,7 +98,7 @@ const MusclePanel: React.FC = () => {
   };
   
 
-  // UseEffect for debouncing multiple muscle updates
+  // Debouncing
   useEffect(() => {
     if (debouncedMuscleUpdates.length > 0) {
       const timeoutId = setTimeout(() => {
@@ -137,6 +133,8 @@ const MusclePanel: React.FC = () => {
       );
     });
   };
+
+
 
 
     

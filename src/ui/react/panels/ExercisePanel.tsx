@@ -43,25 +43,25 @@ const ExercisePanel: React.FC = () => {
     setSearchQuery(query);
   };
 
-// Handlers
+// Save
 const handleSave = (oldConfig: ExerciseConfig, newConfig: ExerciseConfig) => {
   setExerciseConfigs(() => {
     return controller.saveExerciseConfigs(oldConfig, newConfig);
   });
 };
 
+// Delete
 const handleDeleteExercise = (exerciseId: string) => {
   const updatedConfigs = controller.deleteExerciseConfig(exerciseId);
   setExerciseConfigs([...updatedConfigs]);
 };
 
+// Add
 const handleAddExercise = () => {
   const newExercise = new Exercise('New Exercise');
   const updatedConfigs = controller.addExerciseConfig(newExercise);
   setExerciseConfigs([...updatedConfigs]);
 };
-
-
 
 
 
@@ -84,7 +84,6 @@ const handleAddExercise = () => {
       <div className="workout-settings-exercise-list" onClick={(e) => e.stopPropagation()}>
       {filteredConfigs.map((config) => (
           <div key={config.exercise.id}>
-
             <Collapse 
             header={
               <div className="workout-settings-exercise-header">
@@ -102,7 +101,6 @@ const handleAddExercise = () => {
                 onSave={handleSave}
                 onDelete={handleDeleteExercise}
               />
-
             </Collapse>
           </div>
         ))}

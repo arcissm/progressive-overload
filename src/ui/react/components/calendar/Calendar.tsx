@@ -8,7 +8,7 @@ import CalendarLegend from './CalendarLegend';
 import { useSettingsController } from 'controller/SettingsControllerProvider';
 
 const Calendar: React.FC = () => {
-  const { currentDate: today } = useWorkoutController(); // Access settings from context
+  const { currentDate: today } = useWorkoutController();
   const { settings, updateSettings } = useSettingsController();
   
   const [colorMapping, setColorMapping] = useState({
@@ -17,8 +17,8 @@ const Calendar: React.FC = () => {
     started: settings.calendarStartedColor,
   });
 
+  // Update Colors
   useEffect(() => {
-    // Only update settings if there's a real difference
     if (
       colorMapping.completed !== settings.calendarCompletedColor ||
       colorMapping.completedCardio !== settings.calendarCardioColor ||
@@ -53,7 +53,7 @@ const Calendar: React.FC = () => {
     setCurrentMonth((prev) => new Date(prev.getFullYear(), prev.getMonth() + 1, 1));
   };
 
-  // Render previous, current, and next month days
+  // Previous Month Days
   const renderPrevMonthDays = (): JSX.Element[] => {
     const firstDayOfMonth = new Date(currentMonth.getFullYear(), currentMonth.getMonth(), 1).getDay();
     const adjustedFirstDay = (firstDayOfMonth + 6) % 7; // Shift Sunday (0) to the end of the week
@@ -77,6 +77,7 @@ const Calendar: React.FC = () => {
     });
   };
 
+  // Current Month Days
   const renderCurrentMonthDays = (): JSX.Element[] => {
     const daysInMonth = new Date(currentMonth.getFullYear(), currentMonth.getMonth() + 1, 0).getDate();
 
@@ -96,6 +97,7 @@ const Calendar: React.FC = () => {
     });
   };
 
+  // Next Month Days
   const renderNextMonthDays = (): JSX.Element[] => {
     const lastDayOfMonth = new Date(currentMonth.getFullYear(), currentMonth.getMonth() + 1, 0).getDay();
     const adjustedLastDay = (lastDayOfMonth + 6) % 7; // Shift Sunday (0) to the end of the week

@@ -75,7 +75,6 @@ const WorkoutPanel: React.FC = () => {
     }
     const newTimeout = setTimeout(() => {
       controller.updateWorkoutTypeMuscleMap(workoutTypeMuscleArray);
-      // console.log("Array sent to the backend:", workoutTypeMuscleArray);
     }, 500);
     setDebounceTimeout(newTimeout);
 

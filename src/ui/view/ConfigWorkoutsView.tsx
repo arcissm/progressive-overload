@@ -44,7 +44,6 @@ export class ConfigWorkoutsView extends ItemView {
       </SettingsControllerProvider>
     );
   
-    // Use createRoot instead of ReactDOM.render
     const root = createRoot((this as any).contentEl);
     root.render(this.reactComponent);
   }

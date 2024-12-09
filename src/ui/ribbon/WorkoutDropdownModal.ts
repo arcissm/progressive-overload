@@ -31,7 +31,7 @@ export class WorkoutDropdownModal extends Modal {
 		this.inputField.type = 'text';
 		this.inputField.autocapitalize = 'off';
 		this.inputField.enterKeyHint = 'done';
-		this.inputField.placeholder = 'Enter a workout type...'; // Placeholder text
+		this.inputField.placeholder = 'Enter a workout type...';
 		this.inputField.addEventListener('input', () => this.filterOptions());
 		inputContainer.appendChild(this.inputField);
 

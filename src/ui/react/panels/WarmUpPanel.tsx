@@ -30,8 +30,9 @@ const WarmUpPannel: React.FC = () => {
     loadData();
   }, [controller]);
 
-// Handlers
-const handleSave = (oldMuscle: Muscle, oldExercise: Exercise, newExercise: Exercise) => {
+
+  // Save
+  const handleSave = (oldMuscle: Muscle, oldExercise: Exercise, newExercise: Exercise) => {
   const newMuscle = oldMuscle.clone();
   const exerciseIndex = newMuscle.warmUps.findIndex((exercise) => exercise.id === oldExercise.id);
   
@@ -46,25 +47,25 @@ const handleSave = (oldMuscle: Muscle, oldExercise: Exercise, newExercise: Exerc
   }
 };
 
+  // Delete
+  const handleDeleteExercise = (oldMuscle: Muscle, exerciseId: string) => {
+    const newMuscle = oldMuscle.clone();
+    newMuscle.warmUps = newMuscle.warmUps.filter((warmUp) => warmUp.id !== exerciseId);
+    controller.updateMuscle(oldMuscle, newMuscle);
+    setMuscles((prevMuscles) => 
+      prevMuscles.map((muscle) => (muscle.equals(oldMuscle) ? newMuscle : muscle))
+    );
+  };
 
-const handleDeleteExercise = (oldMuscle: Muscle, exerciseId: string) => {
-  const newMuscle = oldMuscle.clone();
-  newMuscle.warmUps = newMuscle.warmUps.filter((warmUp) => warmUp.id !== exerciseId);
-  controller.updateMuscle(oldMuscle, newMuscle);
-  setMuscles((prevMuscles) => 
-    prevMuscles.map((muscle) => (muscle.equals(oldMuscle) ? newMuscle : muscle))
-  );
-};
-
-
-const handleAdd = (oldMuscle: Muscle) => {
-  const newMuscle = oldMuscle.clone()
-  newMuscle.warmUps.push(new Exercise("New Exercise"))
-  controller.updateMuscle(oldMuscle, newMuscle)
-  setMuscles((prevMuscles) => 
-    prevMuscles.map((muscle) => (muscle.equals(oldMuscle) ? newMuscle : muscle))
-  );
-}
+  // Add
+  const handleAdd = (oldMuscle: Muscle) => {
+    const newMuscle = oldMuscle.clone()
+    newMuscle.warmUps.push(new Exercise("New Exercise"))
+    controller.updateMuscle(oldMuscle, newMuscle)
+    setMuscles((prevMuscles) => 
+      prevMuscles.map((muscle) => (muscle.equals(oldMuscle) ? newMuscle : muscle))
+    );
+  }
 
     
 

@@ -1,4 +1,3 @@
-// SettingsController.ts
 import WorkoutPlugin from "main";
 import { DEFAULT_SETTINGS, PluginSettings } from "services/settings/Settings";
 
@@ -11,13 +10,11 @@ export class SettingsController {
     }
 
     async updateSettings(newSettings: Partial<PluginSettings>) {
-        // Legacy method if you still need partial updates somewhere
         this.settings = { ...this.settings, ...newSettings };
         await this.saveSettings();
     }
 
     async updateFullSettings(updatedSettings: PluginSettings) {
-        // This method replaces the entire settings object
         this.settings = updatedSettings;
         await this.saveSettings();
     }

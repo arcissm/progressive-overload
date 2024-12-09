@@ -8,7 +8,6 @@ export class ExerciseData {
 
 	constructor(dirPath: string) {
 		this.dataPath = dirPath + EXERCISE_DATA_PATH;
-		// init workouts
 		this.convertDataToExercises(this.dataPath);
 	}
 
@@ -40,11 +39,9 @@ export class ExerciseData {
 
 
 	private convertDataToExercises(dataPath: string) {
-		// Read and parse the JSON file
 		const rawData = fs.readFileSync(dataPath, 'utf8');
 		const parsedData = JSON.parse(rawData);
 
-		// Process each exercise from the parsed data
 		parsedData.forEach((rawExercise: any) => {
 
 			const exercise = new Exercise(

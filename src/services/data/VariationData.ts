@@ -5,22 +5,19 @@ import { TreeNode } from 'utils/data-structure/TreeNode';
 
 export class VariationData {
 	private dataPath: string;
-	variations: Map<string, Tree<string>>; // Change to Map
+	variations: Map<string, Tree<string>>;
 
 	constructor(dirPath: string) {
 		this.dataPath = dirPath + VARIATION_DATA_PATH;
 		this.convertDataToTree(this.dataPath);
 	}
 
-// Function to print all the trees in the variations map using the iterator
 printTrees() {
     console.log("Printing all trees:");
     this.variations.forEach((tree, key) => {
         console.log(`\nTree Root: ${key}`);
         
-        // Using the iterator to go through each node in the tree
         for (const node of tree) {
-            // Calculate the depth of the current node for indentation
             let depth = 0;
             let currentNode = node;
             while (currentNode.parent) {
@@ -28,7 +25,6 @@ printTrees() {
                 currentNode = currentNode.parent;
             }
 
-            // Print the node with the appropriate indentation
             console.log(`${'--'.repeat(depth)}${node.id} ::: ${node.data}`);
         }
     });
@@ -105,7 +101,7 @@ printTrees() {
 	                next: node.children.map(child => child.data),
 	            };
 	            variations.push(variationEntry);
-	            
+	    
 	            // Recursively traverse each child
 	            node.children.forEach(child => traverseTree(child));
 	        };
@@ -126,41 +122,40 @@ printTrees() {
 
 	private convertDataToTree(dataPath: string) {
         this.variations = new Map()
-    // Read and parse the JSON file
-    const rawData = fs.readFileSync(dataPath, 'utf8');
-    const parsedData = JSON.parse(rawData);
 
-    // Process each exercise from the parsed data
-    parsedData.forEach((rawTree: any) => {
-        // Create a new tree with the root exercise
-        const tree = new Tree(rawTree.exercise); // Initialize Tree with the root exercise
-        const nodeMap: Map<string, TreeNode<string>> = new Map(); // Map to track nodes by their names
+        const rawData = fs.readFileSync(dataPath, 'utf8');
+        const parsedData = JSON.parse(rawData);
 
-        // Add the root node to the map
-        nodeMap.set(tree.root.data, tree.root);
+        // Process each exercise from the parsed data
+        parsedData.forEach((rawTree: any) => {
+            // Create a new tree with the root exercise
+            const tree = new Tree(rawTree.exercise); // Initialize Tree with the root exercise
+            const nodeMap: Map<string, TreeNode<string>> = new Map(); // Map to track nodes by their names
 
-        // Build the tree using the variations data
-        rawTree.variations.forEach((rawEdge: any) => {
-            // Ensure the parent node exists in the map
-            let parentNode = nodeMap.get(rawEdge.name);
+            // Add the root node to the map
+            nodeMap.set(tree.root.data, tree.root);
 
-            if (!parentNode) {
-                console.error(`Parent node "${rawEdge.name}" not found in tree.`);
-                return; // Skip this iteration if the parent is not found
-            }
+            // Build the tree using the variations data
+            rawTree.variations.forEach((rawEdge: any) => {
+                // Ensure the parent node exists in the map
+                let parentNode = nodeMap.get(rawEdge.name);
 
-            // Create children nodes for the current variation
-            rawEdge.next.forEach((childName: string) => {
-                const childNode = tree.addNode(childName, parentNode);
+                if (!parentNode) {
+                    console.error(`Parent node "${rawEdge.name}" not found in tree.`);
+                    return; // Skip this iteration if the parent is not found
+                }
 
-                // Add the child node to the map for future reference
-                nodeMap.set(childName, childNode);
+                // Create children nodes for the current variation
+                rawEdge.next.forEach((childName: string) => {
+                    const childNode = tree.addNode(childName, parentNode);
+
+                    // Add the child node to the map for future reference
+                    nodeMap.set(childName, childNode);
+                });
             });
-        });
 
-        // Add the constructed tree to the Map using the root's data as the key
-        this.variations.set(tree.root.data, tree);
-    });
-    // this.printTrees()
-}
+            // Add the constructed tree to the Map using the root's data as the key
+            this.variations.set(tree.root.data, tree);
+        });
+    }
 }

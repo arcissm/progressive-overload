@@ -50,11 +50,9 @@ export class MuscleData {
 
 
 	private convertDataToMuscles(dataPath: string) {
-		// Read and parse the JSON file
 		const rawData = fs.readFileSync(dataPath, 'utf8');
 		const parsedData = JSON.parse(rawData);
 	
-		// Process each exercise from the parsed data
 		parsedData.forEach((rawMuscle: any) => {
 
 			const warmUps = (rawMuscle.warmUps || []).map((rawWarmUp: any) => {
@@ -79,7 +77,7 @@ export class MuscleData {
 				rawMuscle.minSets, 
 				rawMuscle.maxSets, 
 				rawMuscle.boosted,
-				rawMuscle.coreExercises || [], // Read coreExercises or set it to an empty array if not present
+				rawMuscle.coreExercises || [],
 				warmUps || [] 
 			);
 			this.muscles.push(muscle);

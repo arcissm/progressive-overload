@@ -6,25 +6,26 @@ import { faPlus } from '@fortawesome/free-solid-svg-icons';
 interface PanelLayoutProps {
   title: string;
   description: string;
-  footerAction?: () => void; // Made optional to avoid issues when displayFooter is false
-  displayFooter: boolean; // New prop to control footer visibility
+  footerAction?: () => void; // Optional to avoid issues when displayFooter is false
+  displayFooter: boolean;
   children: React.ReactNode;
 }
 
 const PanelLayout: React.FC<PanelLayoutProps> = ({ title, description, footerAction, displayFooter, children }) => {
   const contentEndRef = useRef<HTMLDivElement>(null);
 
-  
+  // Add
   const handleAdd = () => {
-    // Define your handleAdd logic here if needed
     if (footerAction) {
       footerAction(); // Call the footerAction if it's provided
     }
+
+    // Goes all the way down
     setTimeout(() => {
       if (contentEndRef.current) {
         contentEndRef.current.scrollIntoView({ behavior: 'smooth', block: 'end' });
       }
-    }, 100); // Adjust the delay as needed
+    }, 100);
   };
 
   return (

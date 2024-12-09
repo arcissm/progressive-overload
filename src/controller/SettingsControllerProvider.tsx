@@ -1,4 +1,3 @@
-// SettingsControllerProvider.tsx
 import React, { createContext, useContext, useState, useEffect } from "react";
 import { PluginSettings } from "services/settings/Settings";
 import { SettingsController } from "controller/SettingsController";
@@ -22,6 +21,12 @@ interface SettingsControllerProviderProps {
   controller: SettingsController;
   children: React.ReactNode;
 }
+
+
+
+
+
+
 
 export const SettingsControllerProvider: React.FC<SettingsControllerProviderProps> = ({ controller, children }) => {
   const [settings, setSettings] = useState(controller.settings);

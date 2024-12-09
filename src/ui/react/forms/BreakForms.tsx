@@ -13,7 +13,7 @@ const BreakForm: React.FC<BreakFormProps> = ({ initialBreak, index, onSave, onDe
   const [isEditMode, setEditMode] = useState<boolean>(false);
   const [editedBreak, seteditedBreak] = useState<string>(initialBreak);
 
-  // Helper function to process the initialBreak string
+  // Utity
   const processBreakString = (breakString: string): string => {
     return breakString.replace(/\\n/g, '\n').replace(/\\t/g, '\t');
   };
@@ -25,17 +25,19 @@ const BreakForm: React.FC<BreakFormProps> = ({ initialBreak, index, onSave, onDe
   }, [initialBreak]);
 
 
+  // Save
   const handleSave = (e: React.FormEvent) => {
     e.preventDefault();
     onSave(editedBreak);
     setEditMode(false);
   };
 
-
+  // Edit Mode
   const handleEdit = () => {
     setEditMode(true);
   };
 
+  // Cancel Edit
   const handleCancelEdit = () => {
     setEditMode(false);
     seteditedBreak(processBreakString(initialBreak));

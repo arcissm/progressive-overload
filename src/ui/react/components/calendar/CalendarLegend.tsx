@@ -1,21 +1,17 @@
-// CalendarLegend.tsx
 import React from 'react';
 
-// Define the ColorMapping interface
 interface ColorMapping {
   completed: string;
   completedCardio: string;
   started: string;
 }
 
-// Define the props interface for CalendarLegend
 interface CalendarLegendProps {
   colorMapping: ColorMapping;
   setColorMapping: React.Dispatch<React.SetStateAction<ColorMapping>>;
 }
 
 const CalendarLegend: React.FC<CalendarLegendProps> = ({ colorMapping, setColorMapping }) => {
-  // Event handler with typed parameters
   const handleColorChange = (
     event: React.ChangeEvent<HTMLInputElement>,
     key: keyof ColorMapping

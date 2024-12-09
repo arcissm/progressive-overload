@@ -6,7 +6,6 @@ import { getRandomInt, getTodayLocalDate, isSameDate } from "utils/AlgorithmUtil
 import { PRGRESSIVE_OVERLOAD_REPS } from "utils/Constants";
 import { SPECIAL } from "utils/ExerciseConstants";
 
-//In future use to create workout stats
 export class WorkoutService {
 	private db: DBService;
 
@@ -44,12 +43,8 @@ export class WorkoutService {
 		const workoutsOfType = this.db.getWorkoutsOfType(workoutType);
 
 		if (workoutsOfType) {
-			// Filter workouts by date
 			const filteredWorkouts = workoutsOfType.filter(workout => isSameDate(workout.date, date));
-
-			// Check if the index is within the bounds of the filtered workouts array
 			if (index >= 0 && index < filteredWorkouts.length) {
-				// filteredWorkouts[index] is a reference to the same workout object in workoutsOfType
 				return filteredWorkouts[index];
 			} else {
 				console.error("Index out of range for the filtered workouts");
@@ -208,9 +203,7 @@ export class WorkoutService {
 
 		// fun stuff that shouldn't be saved
 		this.makeExtraSetsFun(exercises)
-
 		this.tasteTestNextVariation(exercises)
-		// return 
 		
 		return exercises;
 	}
@@ -274,7 +267,7 @@ export class WorkoutService {
 				}
 			});
 		});
-		return Array.from(exercises.values()); // Convert the Map values to an array and return
+		return Array.from(exercises.values());
 	}
 	
 
@@ -315,7 +308,7 @@ export class WorkoutService {
 
 	private getMinimumSets(chooseFromExercises: Exercise[]): number {
         if (chooseFromExercises.length === 0) {
-            return 0; // Return null if there are no exercises
+            return 0;
         }
 
         let minSets = chooseFromExercises[0].sets;
@@ -365,9 +358,9 @@ export class WorkoutService {
 		}
 		
 		const yoga = this.db.getYoga()
-		const urls = yoga.urls
+		const urls = yoga
 		// 25% of the time, you do yoga as a warmup
-		if(Math.random() < yoga.chance && !isCardio){
+		if(Math.random() < settings.chance && !isCardio){
 			const index = getRandomInt(0, urls.length -1)
 			const yoga = new Exercise("yoga", 0, "", 0, 0, 0, "", 0, urls[index], false, false, false,)
 			return [yoga];

@@ -13,7 +13,7 @@ export class Muscle {
 	  this.minSets = minSets;
 	  this.maxSets = maxSets;
 	  this.boosted = boosted;
-	  this.coreExercises = coreExercises; // Corrected assignment
+	  this.coreExercises = coreExercises;
 	  this.warmUps = warmUps;
 	}
   
@@ -35,8 +35,8 @@ export class Muscle {
 		  this.minSets,
 		  this.maxSets,
 		  this.boosted,
-		  [...this.coreExercises], // Spread operator for shallow copy
-		  [...this.warmUps]        // Spread operator for shallow copy
+		  [...this.coreExercises],
+		  [...this.warmUps]
 		);
 	  }
   }

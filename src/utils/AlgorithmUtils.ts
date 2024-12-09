@@ -41,15 +41,13 @@ export function getTitleInfo(filename: string){
 export function chooseRandomIndex(totalPictures: number): number {
     // Handle the case where no images are available
     if (totalPictures === 0) {
-        return -1; // Return -1 or any sentinel value to indicate no valid index
+        return -1;
     }
 
-    // Step 1: Randomly select a number between 2 and 5 for the number of groups
-    const numberOfGroups = Math.floor(Math.random() * 4) + 2; // Random integer between 2 and 5
+    const numberOfGroups = Math.floor(Math.random() * 4) + 2;
     const groupSize = totalPictures / numberOfGroups;
     const selectedIndices: number[] = [];
 
-    // Step 2: Divide the images into groups and pick a random index from each group
     for (let i = 0; i < numberOfGroups; i++) {
         const startIndex = Math.floor(i * groupSize);
         let endIndex: number;
@@ -71,8 +69,6 @@ export function chooseRandomIndex(totalPictures: number): number {
         selectedIndices.push(indexInGroup);
     }
 
-    // Step 3: Select a random index from the selected indices of each group
-    // Note: If totalPictures = 1, this will always be index 0 since there's only one image.
     const finalIndex = selectedIndices[Math.floor(Math.random() * selectedIndices.length)];
     return finalIndex;
 }
