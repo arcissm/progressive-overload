@@ -3,20 +3,19 @@ import {WorkoutService} from "../core/WorkoutService";
 import {chooseRandomIndex, getTitleInfo, getTodayLocalDate, newDate} from "../../utils/AlgorithmUtils";
 import {CheckBox} from "../../models/Checkbox";
 import { Workout } from 'models/Workout';
+import { SettingsController } from 'controller/SettingsController';
 
 export class NoteService {
 	private app: App;
 	private workoutService: WorkoutService;
-	private notesDir: string;
-	private imagesDir: string;
+	private settings: SettingsController;
 
-	constructor(app: App, workoutService: WorkoutService, notesDir:string, imagesDir:string) {
+	constructor(app: App, workoutService: WorkoutService, settings: SettingsController) {
 		this.app = app;
-		this.notesDir = notesDir;
-		this.imagesDir = imagesDir;
+		this.settings = settings;
 		this.workoutService = workoutService;
 
-		this.ensureDirectoryExists(this.imagesDir)
+		this.ensureDirectoryExists(this.settings.settings.imagesDir)
 	}
 
 	async createWorkoutNote(workoutType:string){
@@ -90,7 +89,7 @@ export class NoteService {
 
 	async getMotivationalImage(): Promise<string> {
 		try {
-			const imageFolder = this.app.vault.getAbstractFileByPath(this.imagesDir);
+			const imageFolder = this.app.vault.getAbstractFileByPath(this.settings.settings.imagesDir);
 	
 			if (imageFolder && imageFolder instanceof TFolder) {
 				const files = imageFolder.children.filter(
@@ -160,7 +159,7 @@ export class NoteService {
 		const todayDateUTC = getTodayLocalDate();
 		const todayDateString = todayDateUTC.toISOString().split('T')[0];
 		const year = todayDateString.substring(0, 4);
-		const yearDir = this.notesDir + "/" + year + "/";
+		const yearDir = this.settings.settings.notesDir + "/" + year + "/";
 		const latestWeek = this.getWeekNumber(todayDateUTC);
 		const weekDir = yearDir + "Week " + (latestWeek + 1) + "/";
 		await this.ensureDirectoryExists(weekDir);

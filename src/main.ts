@@ -27,7 +27,7 @@ export default class WorkoutPlugin extends Plugin {
 		// @ts-ignore
 		const dirPath = app.vault.adapter.basePath;
 		this.db = new DBService(dirPath);
-		this.workoutController = new WorkoutController(this.app, this.settingsController.settings, this.db);
+		this.workoutController = new WorkoutController(this.app, this.settingsController, this.db);
 		this.configController = new ConfigController(this.settingsController.settings, this.db);
 
 		// Add the settings tab to Obsidian's settings
