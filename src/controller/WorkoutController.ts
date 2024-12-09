@@ -6,6 +6,7 @@ import { WorkoutService } from "services/core/WorkoutService";
 import { NoteService } from "services/note/NoteService";
 import { PluginSettings } from "services/settings/Settings";
 import { getTitleInfo, newDate } from "utils/AlgorithmUtils";
+import { SettingsController } from "./SettingsController";
 
 
 
@@ -21,13 +22,13 @@ export class WorkoutController {
 
 
 	
-	constructor(app: App, settings: PluginSettings, db:DBService ) {
+	constructor(app: App, settings: SettingsController, db:DBService ) {
 		this.app = app;
         this.db = db;
 
-        this.workoutService = new WorkoutService(this.db);
-		this.noteService = new NoteService(this.app, this.workoutService, settings.notesDir, settings.imagesDir)
-		this.breakService = new BreakService(this.db, settings.numberWorkoutDays2Weeks);
+        this.workoutService = new WorkoutService(this.db, settings);
+		this.noteService = new NoteService(this.app, this.workoutService, settings)
+		this.breakService = new BreakService(this.db, settings);
 	}
 
 	unsubscribe(callback: Function) {

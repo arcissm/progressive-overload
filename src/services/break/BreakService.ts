@@ -1,13 +1,15 @@
+import { SettingsController } from "controller/SettingsController";
 import { DBService } from "services/core/DBService";
+import { PluginSettings } from "services/settings/Settings";
 
 
 export class BreakService{
 	private db: DBService;
-	private numberWorkoutDays2Weeks: number;
+	private settings: SettingsController;
 
-	constructor(db: DBService, numberWorkoutDays2Weeks: number) {
+	constructor(db: DBService, settings: SettingsController) {
 		this.db = db;
-		this.numberWorkoutDays2Weeks = numberWorkoutDays2Weeks;
+		this.settings = settings;
 	}
 
 	getRandomBreakWorkout(){
@@ -19,10 +21,10 @@ export class BreakService{
 		let isBreak = false;
 		const totalWorkouts = this.db.countCompletedWorkouts();
 
-		if(totalWorkouts >= this.numberWorkoutDays2Weeks){
+		if(totalWorkouts >= this.settings.settings.numberWorkoutDays2Weeks){
 			const wokoutsIn2Weeks = this.db.countCompletedWorkoutsInPeriod(2);
 
-			if(wokoutsIn2Weeks < this.numberWorkoutDays2Weeks){
+			if(wokoutsIn2Weeks < this.settings.settings.numberWorkoutDays2Weeks){
 				isBreak = true;
 			}
 		}

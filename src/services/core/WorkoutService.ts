@@ -5,12 +5,17 @@ import { DBService } from "./DBService";
 import { getRandomInt, getTodayLocalDate, isSameDate } from "utils/AlgorithmUtils";
 import { PRGRESSIVE_OVERLOAD_REPS } from "utils/Constants";
 import { SPECIAL } from "utils/ExerciseConstants";
+import { Settings } from "http2";
+import { PluginSettings } from "services/settings/Settings";
+import { SettingsController } from "controller/SettingsController";
 
 export class WorkoutService {
 	private db: DBService;
+	private settings: SettingsController;
 
-	constructor(db: DBService) {
+	constructor(db: DBService, settings: SettingsController) {
 		this.db = db;
+		this.settings = settings;
 	}
 
 
@@ -359,8 +364,10 @@ export class WorkoutService {
 		
 		const yoga = this.db.getYoga()
 		const urls = yoga
+
+		console.log(this.settings.settings.yogaChance)
 		// 25% of the time, you do yoga as a warmup
-		if(Math.random() < settings.chance && !isCardio){
+		if(Math.random() < this.settings.settings.yogaChance && !isCardio){
 			const index = getRandomInt(0, urls.length -1)
 			const yoga = new Exercise("yoga", 0, "", 0, 0, 0, "", 0, urls[index], false, false, false,)
 			return [yoga];
