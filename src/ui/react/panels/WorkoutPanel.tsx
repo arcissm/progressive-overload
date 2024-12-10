@@ -92,7 +92,7 @@ const WorkoutPanel: React.FC = () => {
   return (
     <PanelLayout
       title="Workout Types Config"
-      description="Add, Remove or Edit workout types. Every workout type includes one or more muscles that will be worked on."
+      description="Every workout type includes one or more muscles that will be worked on that day."
       footerAction={handleAddWorkoutType}
       displayFooter={true} >
         
