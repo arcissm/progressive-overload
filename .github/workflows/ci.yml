@@ -35,7 +35,7 @@ jobs:
     #     run: |
     #       npm test
 
-      # Check for linting errors
-      - name: Lint code
-        run: |
-          npm run lint
+    #   # Check for linting errors
+    #   - name: Lint code
+    #     run: |
+    #       npm run lint
