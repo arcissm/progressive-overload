@@ -141,8 +141,12 @@ const VariationPanel: React.FC = () => {
 
   return (
     <PanelLayout
-      title="Exercise Variations"
-      description="Add, Remove or Edit workout types"
+      title="Variations"
+      description="Some exercises can't be progressed with weight, use variations instead.
+      Title it with the exercise name.
+      Variation exercises share sets with the current and the next. Get good scrub.
+      CLICK ON THE VERTICAL LINE TO EXPAND
+      "
       footerAction={handleAddVariation}
       displayFooter={true} >
     

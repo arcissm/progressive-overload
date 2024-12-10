@@ -15,6 +15,16 @@ const BreakPanel: React.FC = () => {
   const [breaks, setBreaks] = useState<Workout[]>([]);
   const [workoutDays2Weeks, setWorkoutDays2Weeks] = useState(settings.numberWorkoutDays2Weeks);
 
+  const [breakDescription, setBreakDescription] = useState(
+    `They should inspire fear in your soul. When you fail to meet your quota of minimum ${workoutDays2Weeks} days in 2 weeks, you will be forced to doing these. Make them hard. They don't have to be related to working out. Just fears.`)
+
+  useEffect(() => {
+    setBreakDescription(
+      `They should inspire fear in your soul. When you fail to meet your quota of minimum ${workoutDays2Weeks} days in 2 weeks, you will be forced to doing these. Make them hard. They don't have to be related to working out. Just fears.`
+    );
+  }, [workoutDays2Weeks]);
+
+  
   useEffect(() => {
     const fetchedBreaks = controller.getAllBreaks();
     setBreaks(fetchedBreaks);
@@ -78,7 +88,7 @@ const BreakPanel: React.FC = () => {
   return (
     <PanelLayout
       title="Punishment Config"
-      description="They should inspire fear in your soul. When you fail, you must atone by doing these."
+      description={breakDescription}
       displayFooter={true}
       footerAction={handleAddBreak}
     >

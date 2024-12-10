@@ -72,7 +72,12 @@ const handleAddExercise = () => {
   return (
     <PanelLayout
       title="Exercise Config"
-      description="Add, Remove or Edit exercises. Exercises are ordered by their muscle groups."
+      description="
+      Create an exercise and associate it with one or more muscle groups.
+      Time doesn't work right now, use the note.
+      Sets are more of a suggestion unless it's a core exercise. For cores, they're the minimum.
+      Total sets for a muscle group are randomly split among unlocked exercises, keeping workouts varied but anchored to core exercises.
+      "
       footerAction={handleAddExercise} 
       displayFooter={true} >
       <Search
