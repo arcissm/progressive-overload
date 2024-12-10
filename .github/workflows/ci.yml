@@ -1,0 +1,41 @@
+name: Continuous Integration
+
+on:
+  push:          # Trigger when code is pushed
+    branches:    # Specify branches to monitor
+      - '**'     # all branches
+  pull_request:  # Trigger on pull requests
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Checkout the code
+      - uses: actions/checkout@v3
+
+      # Set up Node.js (if you're using JavaScript/TypeScript)
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18.x'
+
+      # Install dependencies
+      - name: Install dependencies
+        run: |
+          npm install
+
+      # Compile TypeScript
+      - name: Compile TypeScript
+        run: |
+          npm run build
+          
+      # Run tests
+    #   - name: Run tests
+    #     run: |
+    #       npm test
+
+    #   # Check for linting errors
+    #   - name: Lint code
+    #     run: |
+    #       npm run lint
