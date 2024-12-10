@@ -12,23 +12,23 @@ export class VariationData {
 		this.convertDataToTree(this.dataPath);
 	}
 
-printTrees() {
-    console.log("Printing all trees:");
-    this.variations.forEach((tree, key) => {
-        console.log(`\nTree Root: ${key}`);
-        
-        for (const node of tree) {
-            let depth = 0;
-            let currentNode = node;
-            while (currentNode.parent) {
-                depth++;
-                currentNode = currentNode.parent;
-            }
+    printTrees() {
+        console.log("Printing all trees:");
+        this.variations.forEach((tree, key) => {
+            console.log(`\nTree Root: ${key}`);
+            
+            for (const node of tree) {
+                let depth = 0;
+                let currentNode = node;
+                while (currentNode.parent) {
+                    depth++;
+                    currentNode = currentNode.parent;
+                }
 
-            console.log(`${'--'.repeat(depth)}${node.id} ::: ${node.data}`);
-        }
-    });
-}
+                console.log(`${'--'.repeat(depth)}${node.id} ::: ${node.data}`);
+            }
+        });
+    }
 
     updateVariationData(oldData: string, newData: string) {
         const tree = this.variations.get(oldData);
@@ -147,6 +147,11 @@ printTrees() {
 
                 // Create children nodes for the current variation
                 rawEdge.next.forEach((childName: string) => {
+                    if (!parentNode) {
+                        console.error(`Parent node "${rawEdge.name}" not found in tree.`);
+                        return; // Skip this iteration if the parent is not found
+                    }
+                    
                     const childNode = tree.addNode(childName, parentNode);
 
                     // Add the child node to the map for future reference
