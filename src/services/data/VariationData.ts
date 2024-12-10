@@ -42,33 +42,52 @@ printTrees() {
         }
     }
 
-	addNode(exerciseName: string, node: TreeNode<string>){
+    addNode(exerciseName: string, node: TreeNode<string>) {
         const tree = this.variations.get(exerciseName);
-        if(tree){
-            const treeNode = tree.findNode(node.data)
-            if(treeNode)
-            tree.addNode("New Variation", treeNode)
+        if (tree) {
+            const treeNode = tree.findNode(node.data);
+            if (treeNode) { // Ensure treeNode is not undefined
+                tree.addNode("New Variation", treeNode);
+            } else {
+                console.error(`Node with data "${node.data}" not found in tree "${exerciseName}".`);
+            }
+        } else {
+            console.error(`Tree for exercise "${exerciseName}" not found.`);
         }
-        return this.variations
-	}
-
-    removeNode(exerciseName: string, node: TreeNode<string>){
+        return this.variations;
+    }
+    
+    removeNode(exerciseName: string, node: TreeNode<string>) {
         const tree = this.variations.get(exerciseName);
-        if(tree){
-            tree.deleteNode(node.data)
+        if (tree) {
+            const treeNode = tree.findNode(node.data);
+            if (treeNode) {
+                tree.deleteNode(treeNode.data);
+            } else {
+                console.error(`Node with data "${node.data}" not found in tree "${exerciseName}".`);
+            }
+        } else {
+            console.error(`Tree for exercise "${exerciseName}" not found.`);
         }
-        return this.variations
-	}
+        return this.variations;
+    }
+    
 
     updateVariationName(exerciseName: string, oldValue: string, newValue: string) {
         const tree = this.variations.get(exerciseName);
-        if(tree){
-            const node =tree.findNode(oldValue)
-            if(node)
-            node.data = newValue
+        if (tree) {
+            const node = tree.findNode(oldValue);
+            if (node) {
+                node.data = newValue;
+            } else {
+                console.error(`Node with data "${oldValue}" not found in tree "${exerciseName}".`);
+            }
+        } else {
+            console.error(`Tree for exercise "${exerciseName}" not found.`);
         }
-        return this.variations	
+        return this.variations;
     }
+    
 
     addTree(){
         const root = NEW_VARIAITON
