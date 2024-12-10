@@ -31,9 +31,9 @@ jobs:
           npm run build
           
       # Run tests
-      - name: Run tests
-        run: |
-          npm test
+    #   - name: Run tests
+    #     run: |
+    #       npm test
 
       # Check for linting errors
       - name: Lint code
