@@ -5,8 +5,6 @@ on:
     branches:    # Specify branches to monitor
       - '**'     # all branches
   pull_request:  # Trigger on pull requests
-    branches:
-      - '**'
 
 jobs:
   build:
