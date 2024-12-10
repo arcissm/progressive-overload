@@ -72,7 +72,7 @@ const WarmUpPannel: React.FC = () => {
   return (
     <PanelLayout
       title="Warm Up Config"
-      description="Add, Remove or Edit Warm Ups. Every muscle group should have a warm up."
+      description="Every muscle group should have a warm up. Up to you if like your joints healthy."
       displayFooter={false} >
 
 

@@ -142,7 +142,9 @@ const MusclePanel: React.FC = () => {
   return (
     <PanelLayout
       title="Muscle Config"
-      description="Add, Remove or Edit muscles. Every workout will have a number of sets between Min Sets and Max Sets."
+      description="
+      Set the range (Min and Max) for how many sets to spend on a muscle group.
+      Core Exercises are always included and have a minimum number of sets assigned (in the exercise tab)."
       footerAction={handleAddMuscle}
       displayFooter={true} >
     
