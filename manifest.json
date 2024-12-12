@@ -1,7 +1,7 @@
 {
 	"id": "progressive-overload",
 	"name": "Progressive Overload",
-	"version": "1.0.2",
+	"version": "1.0.6",
 	"minAppVersion": "0.15.0",
 	"description": "Plugin to track and manage my workouts based on a simple algorithm: Progressive Overload.",
 	"author": "Arcissm",
