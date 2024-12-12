@@ -14,6 +14,10 @@ You need to run this one whenever you code, it recreates the main.js file
 ```bash
 npm run dev
 ```
+
+## How To Release
+https://docs.obsidian.md/Plugins/Releasing/Release+your+plugin+with+GitHub+Actions
+
 ## Start a Workout
 1. Click on the dumbbell
 2. Click on the type - back, arms, chest, booty, legs...
