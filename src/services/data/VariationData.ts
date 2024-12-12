@@ -9,7 +9,9 @@ export class VariationData {
 
 	constructor(dirPath: string) {
 		this.dataPath = dirPath + VARIATION_DATA_PATH;
-		this.convertDataToTree(this.dataPath);
+        this.ensureDirectoryExists(dirPath);
+        this.ensureFileExists();
+		this.convertDataToTree();
 	}
 
     printTrees() {
@@ -84,6 +86,17 @@ export class VariationData {
         return this.variations;
     }
     
+    private ensureDirectoryExists(dirPath: string) {
+        if (!fs.existsSync(dirPath)) {
+            fs.mkdirSync(dirPath, { recursive: true });
+        }
+    }
+
+    private ensureFileExists() {
+        if (!fs.existsSync(this.dataPath)) {
+            fs.writeFileSync(this.dataPath, JSON.stringify([], null, 2), 'utf8');
+        }
+    }
 
     // Function to save the Map data structure back to the JSON file
 	saveVariations() {
@@ -120,10 +133,10 @@ export class VariationData {
 	    fs.writeFileSync(this.dataPath, JSON.stringify(dataToSave, null, 2), 'utf8');
 	}
 
-	private convertDataToTree(dataPath: string) {
+	private convertDataToTree() {
         this.variations = new Map()
 
-        const rawData = fs.readFileSync(dataPath, 'utf8');
+        const rawData = fs.readFileSync(this.dataPath, 'utf8');
         const parsedData = JSON.parse(rawData);
 
         // Process each exercise from the parsed data

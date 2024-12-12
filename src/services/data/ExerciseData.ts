@@ -8,7 +8,9 @@ export class ExerciseData {
 
 	constructor(dirPath: string) {
 		this.dataPath = dirPath + EXERCISE_DATA_PATH;
-		this.convertDataToExercises(this.dataPath);
+		this.ensureDirectoryExists(dirPath);
+		this.ensureFileExists();
+		this.convertDataToExercises();
 	}
 
 
@@ -31,6 +33,17 @@ export class ExerciseData {
 		}
 	}
 
+	private ensureDirectoryExists(dirPath: string) {
+        if (!fs.existsSync(dirPath)) {
+            fs.mkdirSync(dirPath, { recursive: true });
+        }
+    }
+
+	private ensureFileExists() {
+		if (!fs.existsSync(this.dataPath)) {
+			fs.writeFileSync(this.dataPath, JSON.stringify([], null, 2), 'utf8');
+		}
+	}
 
 	saveExercises(){
 		const updatedData = JSON.stringify( this.exercises, null, 2);
@@ -38,8 +51,8 @@ export class ExerciseData {
 	}
 
 
-	private convertDataToExercises(dataPath: string) {
-		const rawData = fs.readFileSync(dataPath, 'utf8');
+	private convertDataToExercises() {
+		const rawData = fs.readFileSync(this.dataPath, 'utf8');
 		const parsedData = JSON.parse(rawData);
 
 		parsedData.forEach((rawExercise: any) => {

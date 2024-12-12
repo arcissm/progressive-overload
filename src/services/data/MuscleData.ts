@@ -2,6 +2,7 @@ import * as fs from 'fs';
 import {Muscle} from "../../models/Muscle";
 import { MUSCLE_DATA_PATH } from "utils/Constants";
 import { Exercise } from 'models/Exercise';
+import path from 'path';
 
 export class MuscleData {
 	private dataPath: string
@@ -9,7 +10,11 @@ export class MuscleData {
 
 	constructor(dirPath: string) {
 		this.dataPath = dirPath + MUSCLE_DATA_PATH;
-		this.convertDataToMuscles(this.dataPath);
+		console.log(dirPath)
+		console.log(this.dataPath)
+		this.ensureDirectoryExists(dirPath);
+		this.ensureFileExists();
+		this.convertDataToMuscles();
 	}
 
 	addMuscle(muscle: Muscle){
@@ -42,6 +47,26 @@ export class MuscleData {
 		this.saveMuscles();
 	}
 	
+	private ensureDirectoryExists(dirPath: string) {
+        if (!fs.existsSync(dirPath)) {
+            fs.mkdirSync(dirPath, { recursive: true });
+        }
+    }
+
+	private ensureFileExists() {
+		const directoryPath = path.dirname(this.dataPath);
+	
+		// Ensure the directory exists
+		if (!fs.existsSync(directoryPath)) {
+			fs.mkdirSync(directoryPath, { recursive: true });
+		}
+	
+		// Ensure the file exists
+		if (!fs.existsSync(this.dataPath)) {
+			fs.writeFileSync(this.dataPath, JSON.stringify([], null, 2), 'utf8');
+		}
+	}
+	
 
 	saveMuscles(){
 		const updatedData = JSON.stringify( this.muscles, null, 2);
@@ -49,8 +74,8 @@ export class MuscleData {
 	}
 
 
-	private convertDataToMuscles(dataPath: string) {
-		const rawData = fs.readFileSync(dataPath, 'utf8');
+	private convertDataToMuscles() {
+		const rawData = fs.readFileSync(this.dataPath, 'utf8');
 		const parsedData = JSON.parse(rawData);
 	
 		parsedData.forEach((rawMuscle: any) => {
