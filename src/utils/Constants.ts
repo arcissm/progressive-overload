@@ -4,7 +4,6 @@ export const MUSCLE_DATA_PATH = "/.obsidian/plugins/obsidian-but-better/data/mus
 export const MUSCLE_EXERCISE_DATA_PATH = "/.obsidian/plugins/obsidian-but-better/data/muscle-exercise.json";
 export const WORKOUT_MUSCLE_DATA_PATH = "/.obsidian/plugins/obsidian-but-better/data/workout-muscle.json";
 export const BREAK_DATA_PATH = "/.obsidian/plugins/obsidian-but-better/data/break.json";
-export const BREAK_TRACKER_DATA_PATH = "/.obsidian/plugins/obsidian-but-better/data/break-tracker.json";
 export const VARIATION_DATA_PATH = "/.obsidian/plugins/obsidian-but-better/data/variations.json";
 export const YOGA_DATA_PATH = "/.obsidian/plugins/obsidian-but-better/data/yoga.json";
 
