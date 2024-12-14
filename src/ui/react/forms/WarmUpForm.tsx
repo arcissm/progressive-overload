@@ -41,12 +41,17 @@ const WarmUpForm: React.FC<WarmUpFormProps> = ({
         editedExercise.isCompleted,
         editedExercise.isUnlocked
       );
+      // Allow empty value but enforce minimum when not empty
       if (['sets', 'weight', 'time'].includes(field)) {
-        (updatedExercise as any)[field] = value === "" ? 0 : Number(value);
+        let numericValue = value === "" ? "" : Number(value);
+        if (field === 'sets' && numericValue !== "" && typeof numericValue === "number" && numericValue < 1) {
+          numericValue = 1; // Enforce minimum value of 1 for sets
+        }
+        (updatedExercise as any)[field] = numericValue;
       } else {
         (updatedExercise as any)[field] = value;
       }
-  
+      
       updatedExercise.nameToId();
       setEditiedExercise((prevConfig) => {
         return updatedExercise.clone();

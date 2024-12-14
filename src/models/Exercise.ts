@@ -18,7 +18,7 @@ export class Exercise {
 
 	constructor(
 		name: string, 
-		sets: number = 0, 
+		sets: number = 1, 
 		reps = "5",
 		weight: number = 0, 
 		time: number = 30, 

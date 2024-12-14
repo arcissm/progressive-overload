@@ -77,12 +77,15 @@ const BreakPanel: React.FC = () => {
   };
 
   const handleWorkoutDaysChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const value = parseInt(event.target.value, 10);
-    if (!isNaN(value)) {
-      setWorkoutDays2Weeks(value);
-    } else if (event.target.value === "") {
-      setWorkoutDays2Weeks(0);
+    const inputValue = event.target.value;
+
+    if (inputValue === "") {
+      setWorkoutDays2Weeks(-1);
+      return;
     }
+  
+    const days = Number(inputValue)
+    setWorkoutDays2Weeks(days);
   };
 
   return (
@@ -95,7 +98,7 @@ const BreakPanel: React.FC = () => {
       <LabelledInput 
         label={"Number of Workout Days in 2 Weeks"} 
         description={"Number of workout days planned within a 14-day period"} 
-        value={workoutDays2Weeks} 
+        value={workoutDays2Weeks === -1 ? "" : workoutDays2Weeks}
         type={"number"} 
         onChange={handleWorkoutDaysChange}/>
 
