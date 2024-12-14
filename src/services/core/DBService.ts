@@ -305,6 +305,23 @@ export class DBService {
 		}
 	}
 
+	getUnlovkedCoreExercises(muscleName: string){
+		const muscle = this.muscleData.getMuscleByName(muscleName)
+		if(muscle == null) {
+			return [];
+		} else{
+			const exerciseIds = muscle.coreExercises;
+			const coreExercises: (Exercise)[] = []
+			exerciseIds.forEach(id => {
+				const exercise = this.exerciseData.getExerciseById(id)
+				if(exercise && exercise.isUnlocked){
+					coreExercises.push(exercise)
+				}
+			})
+			return coreExercises
+		}
+	}
+
 
 	getExercises(){
 		return this.exerciseData.getAllExercises()

@@ -5,8 +5,6 @@ import { DBService } from "./DBService";
 import { getRandomInt, getTodayLocalDate, isSameDate } from "utils/AlgorithmUtils";
 import { PRGRESSIVE_OVERLOAD_REPS } from "utils/Constants";
 import { SPECIAL } from "utils/ExerciseConstants";
-import { Settings } from "http2";
-import { PluginSettings } from "services/settings/Settings";
 import { SettingsController } from "controller/SettingsController";
 
 export class WorkoutService {
@@ -249,7 +247,7 @@ export class WorkoutService {
 	
 		muscles.forEach(muscle => {
 			// Deep copy because we are going to edit this
-			const coreExercises = this.db.getCoreExercises(muscle.name).map(exercise => 
+			const coreExercises = this.db.getUnlovkedCoreExercises(muscle.name).map(exercise => 
 				exercise.clone()
 			);
 			const chooseFromExercises = this.db.getUnlockedExercisesForMuscle(muscle.name).map(exercise => 
