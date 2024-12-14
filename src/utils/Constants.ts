@@ -1,12 +1,14 @@
-export const WORKOUT_DATA_PATH = "/.obsidian/plugins/obsidian-but-better/data/workouts.json";
-export const EXERCISE_DATA_PATH = "/.obsidian/plugins/obsidian-but-better/data/exercises.json";
-export const MUSCLE_DATA_PATH = "/.obsidian/plugins/obsidian-but-better/data/muscles.json";
-export const MUSCLE_EXERCISE_DATA_PATH = "/.obsidian/plugins/obsidian-but-better/data/muscle-exercise.json";
-export const WORKOUT_MUSCLE_DATA_PATH = "/.obsidian/plugins/obsidian-but-better/data/workout-muscle.json";
-export const BREAK_DATA_PATH = "/.obsidian/plugins/obsidian-but-better/data/break.json";
-export const BREAK_TRACKER_DATA_PATH = "/.obsidian/plugins/obsidian-but-better/data/break-tracker.json";
-export const VARIATION_DATA_PATH = "/.obsidian/plugins/obsidian-but-better/data/variations.json";
-export const YOGA_DATA_PATH = "/.obsidian/plugins/obsidian-but-better/data/yoga.json";
+import * as path from 'path';
+
+const DATA_PATH = path.join("/", ".obsidian", "plugins", "progressive-overload", "data");
+export const WORKOUT_DATA_PATH = path.join(DATA_PATH, "workouts.json");
+export const EXERCISE_DATA_PATH = path.join(DATA_PATH, "exercises.json");
+export const MUSCLE_DATA_PATH = path.join(DATA_PATH, "muscles.json");
+export const MUSCLE_EXERCISE_DATA_PATH = path.join(DATA_PATH, "muscle-exercise.json");
+export const WORKOUT_MUSCLE_DATA_PATH = path.join(DATA_PATH, "workout-muscle.json");
+export const BREAK_DATA_PATH = path.join(DATA_PATH, "break.json");
+export const VARIATION_DATA_PATH = path.join(DATA_PATH, "variations.json");
+export const YOGA_DATA_PATH = path.join(DATA_PATH, "yoga.json");
 
 export const MINIMUM_SUCCESS_TO_UNLOCK_NEW_EXERCISE = 3;
 export const MINIMUM_MUSCLE_SUCCESS_STREAK = 2;

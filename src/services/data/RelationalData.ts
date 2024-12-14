@@ -11,6 +11,8 @@ export class RelationalData {
 	constructor(dirPath: string) {
 		this.workoutMuscleDataPath = dirPath + WORKOUT_MUSCLE_DATA_PATH;
         this.muscleExerciseDataPath = dirPath + MUSCLE_EXERCISE_DATA_PATH;
+        this.ensureFilesExists();
+        this.ensureDirectoryExists(dirPath);
 		this.initializeWorkoutMuscleMap(this.workoutMuscleDataPath);
         this.initializeMuscleExerciseMap(this.muscleExerciseDataPath)
 	}
@@ -110,6 +112,21 @@ export class RelationalData {
         this.saveMuscleExerciseMap()
         this.saveWorkoutMuscleMap()
       }
+
+    private ensureDirectoryExists(dirPath: string) {
+        if (!fs.existsSync(dirPath)) {
+            fs.mkdirSync(dirPath, { recursive: true });
+        }
+    }
+
+    private ensureFilesExists() {
+        if (!fs.existsSync(this.workoutMuscleDataPath)) {
+            fs.writeFileSync(this.workoutMuscleDataPath, JSON.stringify([], null, 2), 'utf8');
+        }
+        if (!fs.existsSync(this.muscleExerciseDataPath)) {
+            fs.writeFileSync(this.muscleExerciseDataPath, JSON.stringify([], null, 2), 'utf8');
+        }
+    }
 	  
 
     saveMuscleExerciseMap() {

@@ -52,11 +52,20 @@ const YogaForm: React.FC<YogaFormProps> = ({ initialYoga }) => {
 
   // Chance Input
   const handleChanceChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const newChance = Number(e.target.value);
+    const inputValue = e.target.value;
+  
+    if (inputValue === "") {
+      // Treat an empty string as an intermediate state
+      updateSettings({ yogaChance: -1 }); // Or another value if -1 isn't suitable
+      return;
+    }
+  
+    const newChance = Number(inputValue);
     if (!isNaN(newChance)) {
       updateSettings({ yogaChance: newChance });
     }
   };
+  
 
   // Debounce saving the updated yoga string list
   useEffect(() => {
@@ -78,7 +87,7 @@ const YogaForm: React.FC<YogaFormProps> = ({ initialYoga }) => {
           <LabelledInput
             label={"What is the chance that you get a Yoga warmup"}
             description={"1/4 workouts = 25% = 0.25"}
-            value={settings.yogaChance}
+            value={settings.yogaChance === -1 ? "" : settings.yogaChance}
             type={"number"}
             onChange={handleChanceChange}
           />

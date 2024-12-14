@@ -62,40 +62,59 @@ const MusclePanel: React.FC = () => {
   };
 
   // Input
-  const handleInputChange = (index: number, field: keyof Muscle, value: string | number | string[]) => {
+  const handleInputChange = (
+    index: number,
+    field: keyof Muscle,
+    value: string | number | string[]
+  ) => {
     setMuscles((prevMuscles) => {
       const updatedMuscles = [...prevMuscles];
-      
-      if (field === 'name' && !isNameUnique(prevMuscles, String(value), index)) {
+  
+      if (field === "name" && !isNameUnique(prevMuscles, String(value), index)) {
         new Notice("Be original");
         return updatedMuscles;
       }
-      
-      // Create the new Muscle object with updated fields
-      updatedMuscles[index] = new Muscle(
-        field === 'name' ? String(value) : updatedMuscles[index].name,
-        field === 'minSets' ? Number(value) : updatedMuscles[index].minSets,
-        field === 'maxSets' ? Number(value) : updatedMuscles[index].maxSets,
+  
+      // Handle numeric fields (minSets, maxSets) and allow empty string
+      const newMuscle = new Muscle(
+        field === "name" ? String(value) : updatedMuscles[index].name,
+        field === "minSets"
+          ? (value === "" ? "" : Number(value)) as number
+          : updatedMuscles[index].minSets,
+        field === "maxSets"
+          ? (value === "" ? "" : Number(value)) as number
+          : updatedMuscles[index].maxSets,
         updatedMuscles[index].boosted,
-        field === 'coreExercises' ? (value as string[]) : updatedMuscles[index].coreExercises,
-        updatedMuscles[index].warmUps,
+        field === "coreExercises"
+          ? (value as string[])
+          : updatedMuscles[index].coreExercises,
+        updatedMuscles[index].warmUps
       );
   
-      // Handle debouncing logic (unchanged from your original function)
+      // Update the specific muscle with the new values
+      updatedMuscles[index] = newMuscle;
+  
+      // Handle debouncing logic
       setDebouncedMuscleUpdates((prevUpdates) => {
-        const lastUpdateIndex = prevUpdates.findIndex(update => update.newMuscle.name === updatedMuscles[index].name);
+        const lastUpdateIndex = prevUpdates.findIndex(
+          (update) => update.newMuscle.name === updatedMuscles[index].name
+        );
         if (lastUpdateIndex > -1) {
           const updatedQueue = [...prevUpdates];
           updatedQueue[lastUpdateIndex].newMuscle = updatedMuscles[index];
           return updatedQueue;
         } else {
-          return [...prevUpdates, { oldMuscle: prevMuscles[index], newMuscle: updatedMuscles[index] }];
+          return [
+            ...prevUpdates,
+            { oldMuscle: prevMuscles[index], newMuscle: updatedMuscles[index] },
+          ];
         }
       });
   
       return updatedMuscles;
     });
   };
+  
   
 
   // Debouncing
@@ -171,15 +190,15 @@ const MusclePanel: React.FC = () => {
               <div className="workout-settings-muscle-cell">
                 <input
                   type="number"
-                  value={muscle.minSets}
-                  onChange={(e) => handleInputChange(index, 'minSets', Number(e.target.value))}
+                  value={muscle.minSets === 0 ? "" : muscle.minSets}
+                  onChange={(e) => handleInputChange(index, "minSets", e.target.value)}
                 />
               </div>
               <div className="workout-settings-muscle-cell">
                 <input
                   type="number"
-                  value={muscle.maxSets}
-                  onChange={(e) => handleInputChange(index, 'maxSets', Number(e.target.value))}
+                  value={muscle.maxSets === 0 ? "" : muscle.maxSets}
+                  onChange={(e) => handleInputChange(index, "maxSets", e.target.value)}
                 />
               </div>
               <div className="workout-settings-muscle-cell trash-cell">
