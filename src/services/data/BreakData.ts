@@ -9,8 +9,6 @@ export class BreakData {
 
     constructor(dirPath: string) {
         this.dataPath = dirPath + BREAK_DATA_PATH;
-        this.ensureDirectoryExists(dirPath);
-        this.ensureFileExists();
         this.convertDataToBreaks();
     }
 
@@ -35,19 +33,6 @@ export class BreakData {
 			[]
         ));
     }
-
-    private ensureDirectoryExists(dirPath: string) {
-        if (!fs.existsSync(dirPath)) {
-            fs.mkdirSync(dirPath, { recursive: true });
-        }
-    }
-
-    private ensureFileExists() {
-        if (!fs.existsSync(this.dataPath)) {
-            fs.writeFileSync(this.dataPath, JSON.stringify([], null, 2), 'utf8');
-        }
-    }
-
 
     saveBreak() {
         const notes = this.breaks.map((workout) => workout.note);

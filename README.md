@@ -68,3 +68,8 @@ I'm at 18.3%
 - progressivelly overload time of exercises
 - add unloacked + muscle tag to search through exercises
 - Fix mumbo jumbo of backend. There's definetly a cleaner way to write it. Find it.
+
+### FRIENDLY SUGGESTIONS
+- use npm nosql instead of my whole backend stuff
+- use hierarchy for my exercise type. So Exercise as interface.
+- seperate my configcontroller into a controller for each pannel.

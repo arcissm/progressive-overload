@@ -363,7 +363,6 @@ export class WorkoutService {
 		const yoga = this.db.getYoga()
 		const urls = yoga
 
-		console.log(this.settings.settings.yogaChance)
 		// 25% of the time, you do yoga as a warmup
 		if(Math.random() < this.settings.settings.yogaChance && !isCardio){
 			const index = getRandomInt(0, urls.length -1)

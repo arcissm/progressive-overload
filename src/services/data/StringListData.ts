@@ -7,8 +7,6 @@ export class StringListData {
 
     constructor(dirPath: string) {
         this.dataPath = path.join(dirPath);
-        this.ensureDirectoryExists(path.dirname(this.dataPath));
-        this.ensureFileExists();
         this.loadStringList();
     }
 
@@ -38,20 +36,6 @@ export class StringListData {
             this.stringList = parsedData;
         } else {
             throw new Error('Data format error: Expected an array in the JSON file.');
-        }
-    }
-
-    private ensureDirectoryExists(dirPath: string) {
-        if (!fs.existsSync(dirPath)) {
-            fs.mkdirSync(dirPath, { recursive: true });
-        }
-    }
-
-    private ensureFileExists() {
-        if (!fs.existsSync(this.dataPath)) {
-            fs.writeFileSync(this.dataPath, JSON.stringify([], null, 2), 'utf8');
-        } else if (fs.lstatSync(this.dataPath).isDirectory()) {
-            throw new Error(`Cannot create file because a directory exists at: ${this.dataPath}`);
         }
     }
 }

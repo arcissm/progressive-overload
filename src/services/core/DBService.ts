@@ -11,6 +11,7 @@ import { VariationData } from "services/data/VariationData";
 import { WorkoutData } from "services/data/WorkoutData";
 import { NEW_VARIAITON, YOGA_DATA_PATH } from "utils/Constants";
 import { TreeNode } from "utils/data-structure/TreeNode";
+import { InitDBService } from "./InitDBService";
 
 
 
@@ -27,6 +28,9 @@ export class DBService {
 	private exerciseConfigs: ExerciseConfig[];
 
 	constructor(dirPath: string) {
+		const dbInitializer = new InitDBService(dirPath) //new
+		dbInitializer.initializeFiles();
+
 		this.muscleData = new MuscleData(dirPath);
         this.exerciseData = new ExerciseData(dirPath);
         this.relationalData = new RelationalData(dirPath);
@@ -40,7 +44,6 @@ export class DBService {
 
 		this.workoutData = new WorkoutData(dirPath, this.getWorkoutTypes());
 	}
-
 
 	getYoga(){
 		return this.yogaData.getStringList();
