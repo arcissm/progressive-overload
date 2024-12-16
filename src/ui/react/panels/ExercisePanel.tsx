@@ -8,6 +8,8 @@ import PanelLayout from "../components/PanelLayout";
 import Search from "../components/Search";
 import Collapse from "../components/Collapse";
 import ExerciseForm from "../forms/ExerciseForm";
+import { Notice } from "obsidian";
+import { ERROR_MESSAGE_NOT_UNIQUE_NAME, NEW_EXERCISE_ID, NEW_EXERCISE_NAME } from "utils/Constants";
 
 
 const ExercisePanel: React.FC = () => {
@@ -45,6 +47,13 @@ const ExercisePanel: React.FC = () => {
 
 // Save
 const handleSave = (oldConfig: ExerciseConfig, newConfig: ExerciseConfig) => {
+  
+  if ((isDuplicate(newConfig.exercise.name, newConfig.exercise.id))) {
+    new Notice(ERROR_MESSAGE_NOT_UNIQUE_NAME);
+    return;
+  }
+
+
   setExerciseConfigs(() => {
     return controller.saveExerciseConfigs(oldConfig, newConfig);
   });
@@ -58,13 +67,27 @@ const handleDeleteExercise = (exerciseId: string) => {
 
 // Add
 const handleAddExercise = () => {
-  const newExercise = new Exercise('New Exercise');
+
+  if ((isDuplicate(NEW_EXERCISE_NAME, NEW_EXERCISE_ID))) {
+    new Notice(ERROR_MESSAGE_NOT_UNIQUE_NAME);
+    return;
+  }
+  const newExercise = new Exercise(NEW_EXERCISE_NAME);
+
   const updatedConfigs = controller.addExerciseConfig(newExercise);
   setExerciseConfigs([...updatedConfigs]);
 };
 
 
 
+const isDuplicate = (newExerciseName: string, newExerciseId:string) => {
+  return exerciseConfigs.some(
+  (config) => {
+    return config.exercise.name.toLowerCase() === newExerciseName.toLowerCase() &&
+    config.exercise.id === newExerciseId // Exclude the current exercise being edited
+  }
+  )
+}
 
 
   
