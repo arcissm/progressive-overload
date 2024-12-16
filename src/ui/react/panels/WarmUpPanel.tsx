@@ -8,6 +8,8 @@ import Collapse from "../components/Collapse";
 import WarmUpForm from "../forms/WarmUpForm";
 import { Exercise } from "models/Exercise";
 import YogaForm from "../forms/YogaForm";
+import { ERROR_MESSAGE_NOT_UNIQUE_NAME, NEW_EXERCISE_ID, NEW_EXERCISE_NAME } from "utils/Constants";
+import { Notice } from "obsidian";
 
 
 
@@ -60,7 +62,13 @@ const WarmUpPannel: React.FC = () => {
   // Add
   const handleAdd = (oldMuscle: Muscle) => {
     const newMuscle = oldMuscle.clone()
-    newMuscle.warmUps.push(new Exercise("New Exercise"))
+
+      if ((isDuplicate(newMuscle, NEW_EXERCISE_NAME, NEW_EXERCISE_ID))) {
+        new Notice(ERROR_MESSAGE_NOT_UNIQUE_NAME);
+        return;
+      }
+
+    newMuscle.warmUps.push(new Exercise(NEW_EXERCISE_NAME))
     controller.updateMuscle(oldMuscle, newMuscle)
     setMuscles((prevMuscles) => 
       prevMuscles.map((muscle) => (muscle.equals(oldMuscle) ? newMuscle : muscle))
@@ -68,6 +76,15 @@ const WarmUpPannel: React.FC = () => {
   }
 
     
+  const isDuplicate = (muscle: Muscle, newExerciseName: string, newExerciseId:string) => {
+    return muscle.warmUps.some(
+        (warmup) => {
+          return warmup.name.toLowerCase() === newExerciseName.toLowerCase() &&
+          warmup.id === newExerciseId // Exclude the current exercise being edited
+        }
+      )
+  }
+
 
   return (
     <PanelLayout
