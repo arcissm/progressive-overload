@@ -1,6 +1,6 @@
 import * as path from 'path';
 
-const DATA_PATH = path.join("/", ".obsidian", "plugins", "progressive-overload", "data");
+export const DATA_PATH = path.join("/", ".obsidian", "plugins", "progressive-overload", "data");
 export const WORKOUT_DATA_PATH = path.join(DATA_PATH, "workouts.json");
 export const EXERCISE_DATA_PATH = path.join(DATA_PATH, "exercises.json");
 export const MUSCLE_DATA_PATH = path.join(DATA_PATH, "muscles.json");

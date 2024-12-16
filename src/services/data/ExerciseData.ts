@@ -8,8 +8,6 @@ export class ExerciseData {
 
 	constructor(dirPath: string) {
 		this.dataPath = dirPath + EXERCISE_DATA_PATH;
-		this.ensureDirectoryExists(dirPath);
-		this.ensureFileExists();
 		this.convertDataToExercises();
 	}
 
@@ -30,18 +28,6 @@ export class ExerciseData {
 		const index = this.exercises.findIndex(exercise => exercise.nameToId() === id);
 		if (index !== -1) {
 			this.exercises.splice(index, 1);
-		}
-	}
-
-	private ensureDirectoryExists(dirPath: string) {
-        if (!fs.existsSync(dirPath)) {
-            fs.mkdirSync(dirPath, { recursive: true });
-        }
-    }
-
-	private ensureFileExists() {
-		if (!fs.existsSync(this.dataPath)) {
-			fs.writeFileSync(this.dataPath, JSON.stringify([], null, 2), 'utf8');
 		}
 	}
 

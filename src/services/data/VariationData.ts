@@ -9,8 +9,6 @@ export class VariationData {
 
 	constructor(dirPath: string) {
 		this.dataPath = dirPath + VARIATION_DATA_PATH;
-        this.ensureDirectoryExists(dirPath);
-        this.ensureFileExists();
 		this.convertDataToTree();
 	}
 
@@ -84,18 +82,6 @@ export class VariationData {
             this.variations.delete(root);
         }
         return this.variations;
-    }
-    
-    private ensureDirectoryExists(dirPath: string) {
-        if (!fs.existsSync(dirPath)) {
-            fs.mkdirSync(dirPath, { recursive: true });
-        }
-    }
-
-    private ensureFileExists() {
-        if (!fs.existsSync(this.dataPath)) {
-            fs.writeFileSync(this.dataPath, JSON.stringify([], null, 2), 'utf8');
-        }
     }
 
     // Function to save the Map data structure back to the JSON file

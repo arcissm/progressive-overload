@@ -10,8 +10,6 @@ export class WorkoutData{
 
 	constructor(dirPath:string, workoutTypes: string[]) {
 		this.dataPath = dirPath + WORKOUT_DATA_PATH;
-		this.ensureDirectoryExists(dirPath);
-		this.ensureFileExists();
 		this.convertDataToWorkout(workoutTypes);
 	}
 
@@ -87,18 +85,6 @@ export class WorkoutData{
 			this.workouts.set(workout.workoutType, [workout]);
 		}
 		this.saveWorkouts()
-	}
-
-	private ensureDirectoryExists(dirPath: string) {
-        if (!fs.existsSync(dirPath)) {
-            fs.mkdirSync(dirPath, { recursive: true });
-        }
-    }
-
-	private ensureFileExists() {
-		if (!fs.existsSync(this.dataPath)) {
-			fs.writeFileSync(this.dataPath, JSON.stringify([], null, 2), 'utf8');
-		}
 	}
 
 	saveWorkouts(){

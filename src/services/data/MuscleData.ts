@@ -10,10 +10,6 @@ export class MuscleData {
 
 	constructor(dirPath: string) {
 		this.dataPath = dirPath + MUSCLE_DATA_PATH;
-		console.log(dirPath)
-		console.log(this.dataPath)
-		this.ensureDirectoryExists(dirPath);
-		this.ensureFileExists();
 		this.convertDataToMuscles();
 	}
 
@@ -46,27 +42,6 @@ export class MuscleData {
 		}
 		this.saveMuscles();
 	}
-	
-	private ensureDirectoryExists(dirPath: string) {
-        if (!fs.existsSync(dirPath)) {
-            fs.mkdirSync(dirPath, { recursive: true });
-        }
-    }
-
-	private ensureFileExists() {
-		const directoryPath = path.dirname(this.dataPath);
-	
-		// Ensure the directory exists
-		if (!fs.existsSync(directoryPath)) {
-			fs.mkdirSync(directoryPath, { recursive: true });
-		}
-	
-		// Ensure the file exists
-		if (!fs.existsSync(this.dataPath)) {
-			fs.writeFileSync(this.dataPath, JSON.stringify([], null, 2), 'utf8');
-		}
-	}
-	
 
 	saveMuscles(){
 		const updatedData = JSON.stringify( this.muscles, null, 2);
