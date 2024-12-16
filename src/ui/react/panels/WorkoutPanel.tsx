@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useWorkoutController } from "../../../controller/ConfigControllerProvider";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPlus, faTrashCan } from "@fortawesome/free-solid-svg-icons";
+import { faTrashCan } from "@fortawesome/free-solid-svg-icons";
 import MultiSelectInput from "../components/MultiSelect";
 import { Notice } from "obsidian";
 import PanelLayout from "../components/PanelLayout";
@@ -10,7 +10,6 @@ const WorkoutPanel: React.FC = () => {
   const controller = useWorkoutController();
   const [muscles, setMuscles] = useState<string[]>([]);
   const [workoutTypeMuscleArray, setWorkoutTypeMuscleArray] = useState<[string, string[]][]>([]);
-  const [debounceTimeout, setDebounceTimeout] = useState<NodeJS.Timeout | null>(null);
 
   // Load
   useEffect(() => {
@@ -21,20 +20,18 @@ const WorkoutPanel: React.FC = () => {
 
       const array = controller.getWorkoutTypeMuscleArray();
       setWorkoutTypeMuscleArray(array);
-
-      
     };
     loadWorkoutData();
   }, [controller]);
 
   // Multi Select Muscles
   const handleSelectionChange = (type: string, selectedMuscles: string[]) => {
-    const updatedArray = workoutTypeMuscleArray.map(([t, muscles]): [string, string[]] =>
+    const updatedArray = workoutTypeMuscleArray.map(([t, muscles], idx): [string, string[]] =>
       t === type ? [t, selectedMuscles] : [t, muscles]
     );
     setWorkoutTypeMuscleArray(updatedArray);
   };
-  
+
   // Add
   const handleAddWorkoutType = () => {
     const emptyWorkoutTypeExists = workoutTypeMuscleArray.some(([type]) => type === "");
@@ -53,42 +50,37 @@ const WorkoutPanel: React.FC = () => {
     controller.removeWorkoutType(type);
   };
 
-
-  // Name Change
-  const handleInputChange = (oldType: string, newType: string) => {
-    // if (newType !== oldType && workoutTypeMuscleArray.some(([t]) => t === newType)) {
-    //   new Notice("This workout type already exists. Please choose a different name.");
-    //   return;
-    // }
-    const updatedArray = workoutTypeMuscleArray.map(([t, muscles]): [string, string[]] =>
-      t === oldType ? [newType, muscles] : [t, muscles]
+  // Handle Input Change (Real-Time)
+  const handleInputChange = (index: number, oldType: string, newType: string) => {
+    setWorkoutTypeMuscleArray((prevArray) =>
+      prevArray.map(([t, muscles], idx) => {
+        if (idx === index) {
+          return [newType, muscles];
+        }
+        return [t, muscles];
+      })
     );
-    setWorkoutTypeMuscleArray(updatedArray);
   };
 
-
-
-  // Debounce
-  useEffect(() => {
-    if (debounceTimeout) {
-      clearTimeout(debounceTimeout);
+  // Handle Blur (Validation and Controller Update)
+  const handleBlurr = (index: number, oldType: string, newType: string) => {
+    // Check for duplicates
+    if (
+      newType !== oldType &&
+      workoutTypeMuscleArray.some(([t], idx) => idx !== index && t.toLowerCase() === newType.toLowerCase())
+    ) {
+      new Notice("This workout type already exists. Please choose a different name.");
+      setWorkoutTypeMuscleArray((prevArray) =>
+        prevArray.map(([t, muscles], idx) => (idx === index ? [oldType, muscles] : [t, muscles]))
+      );
+      return;
     }
-    const newTimeout = setTimeout(() => {
-      controller.updateWorkoutTypeMuscleMap(workoutTypeMuscleArray);
-    }, 500);
-    setDebounceTimeout(newTimeout);
 
-    return () => {
-      if (newTimeout) {
-        clearTimeout(newTimeout);
-      }
-    };
-  }, [workoutTypeMuscleArray, controller]);
+    // Update the controller with the validated value
+    controller.updateWorkoutTypeMuscleMap(workoutTypeMuscleArray);
+  };
 
-
-
-
-
+  
   return (
     <PanelLayout
       title="Workout Types Config"
@@ -112,7 +104,8 @@ const WorkoutPanel: React.FC = () => {
                   <input
                     type="text"
                     value={type}
-                    onChange={(e) => handleInputChange(type, e.target.value)}
+                    onChange={(e) => handleInputChange(index, type, e.target.value)}
+                    onBlur={(e) => handleBlurr(index, type, e.target.value)}
                   />
                 </td>
                 <td className="workout-settings-table-cell">
