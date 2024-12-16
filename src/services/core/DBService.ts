@@ -9,7 +9,7 @@ import { RelationalData } from "services/data/RelationalData";
 import { StringListData } from "services/data/StringListData";
 import { VariationData } from "services/data/VariationData";
 import { WorkoutData } from "services/data/WorkoutData";
-import { NEW_VARIAITON, YOGA_DATA_PATH } from "utils/Constants";
+import { BREAK, NEW_VARIAITON, YOGA_DATA_PATH } from "utils/Constants";
 import { TreeNode } from "utils/data-structure/TreeNode";
 import { InitDBService } from "./InitDBService";
 
@@ -476,6 +476,7 @@ export class DBService {
 		const map = this.relationalData.workoutMuscleMap;
 		const workoutMuscleArray: [string, string[]][] = [];
 		map.forEach((value, key) => {
+			if(key !== BREAK) // remove break from front end. Its a necessary part
 			workoutMuscleArray.push([key, value]);
 		});
 		return workoutMuscleArray;
