@@ -77,6 +77,9 @@ const ExerciseForm: React.FC<ExerciseFormProps> = ({
   // Save
   const handleSave = (e: React.FormEvent) => {
     e.preventDefault();
+    console.log(initialConfig)
+    console.log(editedConfig)
+
     onSave(initialConfig, editedConfig);
     setEditMode(false);
   };

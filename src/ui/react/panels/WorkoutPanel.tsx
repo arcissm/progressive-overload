@@ -25,11 +25,13 @@ const WorkoutPanel: React.FC = () => {
   }, [controller]);
 
   // Multi Select Muscles
-  const handleSelectionChange = (type: string, selectedMuscles: string[]) => {
-    const updatedArray = workoutTypeMuscleArray.map(([t, muscles], idx): [string, string[]] =>
-      t === type ? [t, selectedMuscles] : [t, muscles]
+  const handleSelectionChange = (workoutType: string, selectedMuscles: string[]) => {
+    const updatedArray = workoutTypeMuscleArray.map(([type, muscles], idx): [string, string[]] =>
+      type === workoutType ? [type, selectedMuscles] : [type, muscles]
     );
-    setWorkoutTypeMuscleArray(updatedArray);
+
+    setWorkoutTypeMuscleArray(updatedArray);    
+    controller.updateWorkoutTypeMuscleMap(updatedArray);
   };
 
   // Add

@@ -69,7 +69,7 @@ I'm at 18.3%
 - add unloacked + muscle tag to search through exercises
 - Fix mumbo jumbo of backend. There's definetly a cleaner way to write it. Find it.
 
-### FRIENDLY SUGGESTIONS
+### WISE WORDS FROM A WIZARD
 - use npm nosql instead of my whole backend stuff
 - use hierarchy for my exercise type. So Exercise as interface.
 - seperate my configcontroller into a controller for each pannel.

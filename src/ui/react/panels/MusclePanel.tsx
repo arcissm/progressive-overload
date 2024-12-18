@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useWorkoutController } from "../../../controller/ConfigControllerProvider";
 import { Muscle } from "models/Muscle"; 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPlus, faTrashCan,  } from '@fortawesome/free-solid-svg-icons'; 
+import { faPlus, faTrashCan } from '@fortawesome/free-solid-svg-icons'; 
 import { Notice } from "obsidian";
 import MultiSelectInput from "../components/MultiSelect";
 import PanelLayout from "../components/PanelLayout";
@@ -17,7 +17,7 @@ const MusclePanel: React.FC = () => {
   const controller = useWorkoutController();
   const [muscles, setMuscles] = useState<Muscle[]>([]); 
   const [muscleExerciseMap, setMuscleExerciseMap] = useState< Map<string, string[]>>(new Map());
-  const [debouncedMuscleUpdates, setDebouncedMuscleUpdates] = useState<MuscleUpdate[]>([]);
+  const [originalMuscles, setOriginalMuscles] = useState<Muscle[]>([]);
 
 
   // Use useEffect to load the muscles when the component mounts
@@ -25,9 +25,9 @@ const MusclePanel: React.FC = () => {
     const loadData = async () => {
       const fetchedMuscles = controller.getMuscles();
       setMuscles(fetchedMuscles);
-
-      const fetchedMuscleExerciseMap = controller.getMuscleExerciseMap();  
-      setMuscleExerciseMap(fetchedMuscleExerciseMap)    
+      setOriginalMuscles(fetchedMuscles); // Keep a copy of the original state
+      const fetchedMuscleExerciseMap = controller.getMuscleExerciseMap();
+      setMuscleExerciseMap(fetchedMuscleExerciseMap);
     };
     
     loadData();
@@ -42,8 +42,8 @@ const MusclePanel: React.FC = () => {
       setMuscles((prevMuscles) => {
         const newMuscle = new Muscle("", 0, 0, 0, [], [])
         const updatedMuscles = [...prevMuscles, newMuscle];
-        controller.addMuscle(newMuscle)
-        return updatedMuscles
+        controller.addMuscle(newMuscle);
+        return updatedMuscles;
 
       });
     } else {
@@ -61,19 +61,11 @@ const MusclePanel: React.FC = () => {
     });
   };
 
-  // Input
-  const handleInputChange = (
-    index: number,
-    field: keyof Muscle,
-    value: string | number | string[]
-  ) => {
+  // Handle Input Change (Real-Time)
+  const handleInputChange = (index: number, field: keyof Muscle, value: string | number | string[]) => {
     setMuscles((prevMuscles) => {
       const updatedMuscles = [...prevMuscles];
-  
-      if (field === "name" && !isNameUnique(prevMuscles, String(value), index)) {
-        new Notice("Be original");
-        return updatedMuscles;
-      }
+
   
       // Handle numeric fields (minSets, maxSets) and allow empty string
       const newMuscle = new Muscle(
@@ -90,73 +82,58 @@ const MusclePanel: React.FC = () => {
           : updatedMuscles[index].coreExercises,
         updatedMuscles[index].warmUps
       );
+
+      if(field === "coreExercises"){
+        handleBlur(index, field, value)
+      }
   
       // Update the specific muscle with the new values
       updatedMuscles[index] = newMuscle;
-  
-      // Handle debouncing logic
-      setDebouncedMuscleUpdates((prevUpdates) => {
-        const lastUpdateIndex = prevUpdates.findIndex(
-          (update) => update.newMuscle.name === updatedMuscles[index].name
-        );
-        if (lastUpdateIndex > -1) {
-          const updatedQueue = [...prevUpdates];
-          updatedQueue[lastUpdateIndex].newMuscle = updatedMuscles[index];
-          return updatedQueue;
-        } else {
-          return [
-            ...prevUpdates,
-            { oldMuscle: prevMuscles[index], newMuscle: updatedMuscles[index] },
-          ];
-        }
-      });
-  
       return updatedMuscles;
     });
   };
-  
-  
 
-  // Debouncing
-  useEffect(() => {
-    if (debouncedMuscleUpdates.length > 0) {
-      const timeoutId = setTimeout(() => {
-        debouncedMuscleUpdates.forEach(({ oldMuscle, newMuscle }) => {
-          if (!oldMuscle.equals(newMuscle)) {
-            controller.updateMuscle(oldMuscle, newMuscle);
-          }
-        });
-        setDebouncedMuscleUpdates([]);
-      }, 500); // Wait 500ms after the last input
+  // Handle Blur (Validation and Controller Update)
+  const handleBlur = (index: number, field: keyof Muscle, value: string | number | string[]) => {
+    const oldMuscle = originalMuscles[index]; // Use the original copy
+    const currentMuscle = muscles[index];
 
-      return () => {
-        clearTimeout(timeoutId);
-      };
-    }
-  }, [debouncedMuscleUpdates, controller]);
-
-
-  // Utility function to check if the muscle name is unique (considering singular/plural forms)
-  const isNameUnique = (muscles: Muscle[], newName: string, currentIndex: number): boolean => {
-    const normalizeMuscleName = (name: string) => {
-      if (name.endsWith("s")) {
-        return name.slice(0, -1); // Remove 's' for singular form
-      } else {
-        return name + "s"; // Add 's' for plural form
+    // Handle name-specific validation
+    if (field === "name") {
+      const newName = String(value);
+      // Check for duplicate names
+      if (
+        currentMuscle.name !== newName &&
+        muscles.some((muscle, idx) => idx !== index && muscle.name.toLowerCase() === newName.toLowerCase())
+      ) {
+        new Notice("This muscle name already exists. Please choose a different name.");
+        setMuscles((prevMuscles) =>
+          prevMuscles.map((muscle, idx) =>
+            idx === index ? new Muscle(oldMuscle.name, muscle.minSets, muscle.maxSets, muscle.boosted, muscle.coreExercises, muscle.warmUps) : muscle
+          )
+        );
+        return;
       }
-    };
-    return !muscles.some((muscle, i) => {
-      return (
-        (muscle.name === newName || muscle.name === normalizeMuscleName(newName)) &&
-        i !== currentIndex // Exclude the current muscle being edited
-      );
-    });
+    }
+
+    // Create updated muscle based on the field and value
+    const newMuscle = new Muscle(
+      field === "name" ? String(value) : currentMuscle.name,
+      field === "minSets" ? Number(value) : currentMuscle.minSets,
+      field === "maxSets" ? Number(value) : currentMuscle.maxSets,
+      currentMuscle.boosted,
+      field === "coreExercises" ? (value as string[]) : currentMuscle.coreExercises,
+      currentMuscle.warmUps
+    );
+
+    controller.updateMuscle(oldMuscle, newMuscle);
+
+    setOriginalMuscles((prevOriginals) =>
+      prevOriginals.map((muscle, idx) => (idx === index ? newMuscle : muscle))
+    );
   };
 
 
-
-
-    
 
   return (
     <PanelLayout
@@ -185,6 +162,7 @@ const MusclePanel: React.FC = () => {
                   type="text"
                   value={muscle.name}
                   onChange={(e) => handleInputChange(index, 'name', e.target.value)}
+                  onBlur={(e) => handleBlur(index, 'name', e.target.value)}
                 />
               </div>
               <div className="workout-settings-muscle-cell">
@@ -192,6 +170,7 @@ const MusclePanel: React.FC = () => {
                   type="number"
                   value={muscle.minSets === 0 ? "" : muscle.minSets}
                   onChange={(e) => handleInputChange(index, "minSets", e.target.value)}
+                  onBlur={(e) => handleBlur(index, 'minSets', e.target.value)}
                 />
               </div>
               <div className="workout-settings-muscle-cell">
@@ -199,6 +178,7 @@ const MusclePanel: React.FC = () => {
                   type="number"
                   value={muscle.maxSets === 0 ? "" : muscle.maxSets}
                   onChange={(e) => handleInputChange(index, "maxSets", e.target.value)}
+                  onBlur={(e) => handleBlur(index, 'maxSets', e.target.value)}
                 />
               </div>
               <div className="workout-settings-muscle-cell trash-cell">

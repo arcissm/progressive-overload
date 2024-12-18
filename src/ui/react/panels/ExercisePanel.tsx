@@ -48,11 +48,10 @@ const ExercisePanel: React.FC = () => {
 // Save
 const handleSave = (oldConfig: ExerciseConfig, newConfig: ExerciseConfig) => {
   
-  if ((isDuplicate(newConfig.exercise.name, newConfig.exercise.id))) {
+  if ((isDuplicate(newConfig.exercise.name, newConfig.exercise.id) && oldConfig.exercise.name != newConfig.exercise.name)) {
     new Notice(ERROR_MESSAGE_NOT_UNIQUE_NAME);
     return;
   }
-
 
   setExerciseConfigs(() => {
     return controller.saveExerciseConfigs(oldConfig, newConfig);
