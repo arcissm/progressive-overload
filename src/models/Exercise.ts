@@ -163,9 +163,12 @@ export class Exercise {
 	}
 
 	toMarkdownCardio(){
+		let result = `\n\n`;
 		if (this.note) {
-			return `${this.note}`;
+			result += `# ${this.note}`;
 		}
+		result += `\n- [ ] **Completed:** No ❌ <!-- id: completed_${this.id} -->\n`;
+		return result;
 	}
 
 	toMarkdown() {
