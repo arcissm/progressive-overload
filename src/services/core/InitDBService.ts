@@ -148,7 +148,7 @@ const DEFAULT_BREAK_DATA = [
       "reps": "5",
       "time": 48,
       "note": "",
-      "variation": "wall assisted handstand kick-up",
+      "variation": "push up to feet on wall",
       "isSuccess": false,
       "isCompleted": true,
       "isUnlocked": true,
@@ -489,5 +489,5 @@ const DEFAULT_BREAK_DATA = [
         }
       ]
     }
-  ]
+  ];
   
