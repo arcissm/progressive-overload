@@ -330,164 +330,164 @@ const DEFAULT_BREAK_DATA = [
   ];
 
   const DEFAULT_VARIATION_DATA = [
-  {
-    "exercise": "handstand",
-    "variations": [
-      {
-        "name": "handstand",
-        "next": [
-          "push up to feet on wall"
-        ]
-      },
-      {
-        "name": "push up to feet on wall",
-        "next": [
-          "walk on wall"
-        ]
-      },
-      {
-        "name": "walk on wall",
-        "next": [
-          "walk on wall to handstand"
-        ]
-      },
-      {
-        "name": "walk on wall to handstand",
-        "next": [
-          "triangle handstand feet on ground"
-        ]
-      },
-      {
-        "name": "triangle handstand feet on ground",
-        "next": [
-          "triangle handstand feet off ground"
-        ]
-      },
-      {
-        "name": "triangle handstand feet off ground",
-        "next": [
-          "triangle handstand tuck heels to glutes"
-        ]
-      },
-      {
-        "name": "triangle handstand tuck heels to glutes",
-        "next": [
-          "triangle handstand extend hips"
-        ]
-      },
-      {
-        "name": "triangle handstand extend hips",
-        "next": [
-          "triangle handstand heels above hips"
-        ]
-      },
-      {
-        "name": "triangle handstand heels above hips",
-        "next": [
-          "triangle handstand hold"
-        ]
-      },
-      {
-        "name": "triangle handstand hold",
-        "next": [
-          "triangle handstand tuck ups"
-        ]
-      },
-      {
-        "name": "triangle handstand tuck ups",
-        "next": [
-          "triangle handstand straddle"
-        ]
-      },
-      {
-        "name": "triangle handstand straddle",
-        "next": [
-          "triangle handstand split legs"
-        ]
-      },
-      {
-        "name": "triangle handstand split legs",
-        "next": [
-          "crow wiggle"
-        ]
-      },
-      {
-        "name": "crow wiggle",
-        "next": [
-          "wall assisted handstand kick-up"
-        ]
-      },
-      {
-        "name": "wall assisted handstand kick-up",
-        "next": [
-          "forearm handstand pike-up"
-        ]
-      },
-      {
-        "name": "forearm handstand pike-up",
-        "next": [
-          "handstand on wall"
-        ]
-      },
-      {
-        "name": "handstand on wall",
-        "next": [
-          "handstand"
-        ]
-      },
-      {
-        "name": "handstand",
-        "next": [
-          "15s hold (shoulder focus)"
-        ]
-      },
-      {
-        "name": "15s hold (shoulder focus)",
-        "next": [
-          "freestanding straddle up"
-        ]
-      },
-      {
-        "name": "freestanding straddle up",
-        "next": [
-          "straddle jump up"
-        ]
-      },
-      {
-        "name": "straddle jump up",
-        "next": [
-          "60s hold (form focus)"
-        ]
-      },
-      {
-        "name": "60s hold (form focus)",
-        "next": [
-          "handstand look at feet"
-        ]
-      },
-      {
-        "name": "handstand look at feet",
-        "next": [
-          "knuckle assisted hold (30s)"
-        ]
-      },
-      {
-        "name": "knuckle assisted hold (30s)",
-        "next": [
-          "shift to fingertip"
-        ]
-      },
-      {
-        "name": "shift to fingertip",
-        "next": [
-          "1 finger shifts"
-        ]
-      },
-      {
-        "name": "1 finger shifts",
-        "next": []
-      }
-    ]
-  }
-]
+    {
+      "exercise": "handstand",
+      "variations": [
+        {
+          "name": "handstand",
+          "next": [
+            "push up to feet on wall"
+          ]
+        },
+        {
+          "name": "push up to feet on wall",
+          "next": [
+            "walk on wall"
+          ]
+        },
+        {
+          "name": "walk on wall",
+          "next": [
+            "walk on wall to handstand"
+          ]
+        },
+        {
+          "name": "walk on wall to handstand",
+          "next": [
+            "triangle handstand feet on ground"
+          ]
+        },
+        {
+          "name": "triangle handstand feet on ground",
+          "next": [
+            "triangle handstand feet off ground"
+          ]
+        },
+        {
+          "name": "triangle handstand feet off ground",
+          "next": [
+            "triangle handstand tuck heels to glutes"
+          ]
+        },
+        {
+          "name": "triangle handstand tuck heels to glutes",
+          "next": [
+            "triangle handstand extend hips"
+          ]
+        },
+        {
+          "name": "triangle handstand extend hips",
+          "next": [
+            "triangle handstand heels above hips"
+          ]
+        },
+        {
+          "name": "triangle handstand heels above hips",
+          "next": [
+            "triangle handstand hold"
+          ]
+        },
+        {
+          "name": "triangle handstand hold",
+          "next": [
+            "triangle handstand tuck ups"
+          ]
+        },
+        {
+          "name": "triangle handstand tuck ups",
+          "next": [
+            "triangle handstand straddle"
+          ]
+        },
+        {
+          "name": "triangle handstand straddle",
+          "next": [
+            "triangle handstand split legs"
+          ]
+        },
+        {
+          "name": "triangle handstand split legs",
+          "next": [
+            "crow wiggle"
+          ]
+        },
+        {
+          "name": "crow wiggle",
+          "next": [
+            "wall assisted handstand kick-up"
+          ]
+        },
+        {
+          "name": "wall assisted handstand kick-up",
+          "next": [
+            "forearm handstand pike-up"
+          ]
+        },
+        {
+          "name": "forearm handstand pike-up",
+          "next": [
+            "handstand on wall"
+          ]
+        },
+        {
+          "name": "handstand on wall",
+          "next": [
+            "handstand"
+          ]
+        },
+        {
+          "name": "handstand",
+          "next": [
+            "15s hold (shoulder focus)"
+          ]
+        },
+        {
+          "name": "15s hold (shoulder focus)",
+          "next": [
+            "freestanding straddle up"
+          ]
+        },
+        {
+          "name": "freestanding straddle up",
+          "next": [
+            "straddle jump up"
+          ]
+        },
+        {
+          "name": "straddle jump up",
+          "next": [
+            "60s hold (form focus)"
+          ]
+        },
+        {
+          "name": "60s hold (form focus)",
+          "next": [
+            "handstand look at feet"
+          ]
+        },
+        {
+          "name": "handstand look at feet",
+          "next": [
+            "knuckle assisted hold (30s)"
+          ]
+        },
+        {
+          "name": "knuckle assisted hold (30s)",
+          "next": [
+            "shift to fingertip"
+          ]
+        },
+        {
+          "name": "shift to fingertip",
+          "next": [
+            "1 finger shifts"
+          ]
+        },
+        {
+          "name": "1 finger shifts",
+          "next": []
+        }
+      ]
+    }
+  ]
   
