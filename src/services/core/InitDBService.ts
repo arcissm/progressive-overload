@@ -102,7 +102,7 @@ const DEFAULT_BREAK_DATA = [
       "sets": 1,
       "reps": "",
       "time": 0,
-      "note": "🌳🌳🏃💨🌲🌳🌲🚴‍♂️🌲🌳🌳",
+      "note": "# 🌳🌳🏃💨🌲🌳🌲🚴‍♂️🌲🌳🌳",
       "variation": "",
       "isSuccess": false,
       "isCompleted": false,

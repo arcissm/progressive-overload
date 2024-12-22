@@ -29,10 +29,14 @@ const CalendarDay: React.FC<CalendarDayProps> =  ({ dayText, currentDate, isGrey
       opacity: isOutsideMonth ? 0.4 : 1,
     };
 
-    if (workout.workoutType === 'cardio') {
-      style.backgroundColor = colorMapping.completedCardio;
-    } else if (workout.isCompleted) {
-      style.backgroundColor = colorMapping.completed;
+  
+    if (workout.isCompleted) {
+      if (workout.workoutType === 'cardio') {
+        style.backgroundColor = colorMapping.completedCardio;
+      }
+      else {
+        style.backgroundColor = colorMapping.completed;
+      }
     } else {
       style.border = `1px solid ${colorMapping.started}`;
     }
