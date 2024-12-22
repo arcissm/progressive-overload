@@ -13,6 +13,11 @@ export const YOGA_DATA_PATH = path.join(DATA_PATH, "yoga.json");
 export const MINIMUM_SUCCESS_TO_UNLOCK_NEW_EXERCISE = 3;
 export const MINIMUM_MUSCLE_SUCCESS_STREAK = 2;
 
+export const NEW_EXERCISE_NAME = "New Exercise";
+export const NEW_EXERCISE_ID = "new-exercise";
+export const ERROR_MESSAGE_NOT_UNIQUE_NAME = "NOPE! Come Up with a Unique Name for your Exercise.";
+
+
 export const NEW_VARIAITON = "New Variations";
 export const BREAK = "break"
 export const REPS = ["N/A", "5", "6-8", "8-10", "10-12", "12-15", "15-20", "max"];

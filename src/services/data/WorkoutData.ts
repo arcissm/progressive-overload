@@ -67,7 +67,13 @@ export class WorkoutData{
 					console.error("Workout to delete not found in the original list");
 				}
 			} else {
-				console.error("Index out of range for workouts on the specified date");
+				console.warn("Index out of range for workouts on the specified date");
+				//Delete all the workouts on that day of that type
+				const remainingWorkouts = workoutsOfType.filter(workout => 
+					!isSameDate(workout.date, date)
+				);
+				this.workouts.set(workoutType, remainingWorkouts);
+				this.saveWorkouts();
 			}
 		} else {
 			console.error("Workout type not found");

@@ -41,7 +41,7 @@ export class Workout {
 
     if (this.workoutType === "cardio") {
       this.exercises.forEach(exercise => {
-        result += `\n\n# ${exercise.toMarkdownCardio()}`;
+        result += `${exercise.toMarkdownCardio()}`;
       });
       result += `\n\n`;
     } else {
