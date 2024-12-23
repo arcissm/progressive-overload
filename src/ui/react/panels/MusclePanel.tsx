@@ -101,15 +101,6 @@ const MusclePanel: React.FC = () => {
     const oldMuscle = originalMuscles[index]; // Use the original copy
     const currentMuscle = muscles[index];
 
-    console.log("ORGININALS")
-    console.log(originalMuscles)
-    console.log(index)
-    console.log("OLD: ")
-    console.log(oldMuscle)
-
-    console.log("CURRENT: ")
-    console.log(currentMuscle)
-
     // Handle name-specific validation
     if (field === "name") {
       const newName = String(value);
@@ -137,11 +128,6 @@ const MusclePanel: React.FC = () => {
       field === "coreExercises" ? (value as string[]) : currentMuscle.coreExercises,
       currentMuscle.warmUps
     );
-
-    console.log("REACT")
-
-    console.log(oldMuscle)
-    console.log(newMuscle)
 
     controller.updateMuscle(oldMuscle, newMuscle);
 
