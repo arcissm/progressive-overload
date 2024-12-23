@@ -150,7 +150,7 @@ const DEFAULT_BREAK_DATA = [
       "note": "",
       "variation": "push up to feet on wall",
       "isSuccess": false,
-      "isCompleted": true,
+      "isCompleted": false,
       "isUnlocked": true,
       "weightIncrease": 0,
       "boosted": null
@@ -171,7 +171,7 @@ const DEFAULT_BREAK_DATA = [
       "boosted": null
     }
   ];
-
+  
   const DEFAULT_MUSCLE_DATA = [
     {
       "name": "cardio",
