@@ -40,17 +40,20 @@ const MusclePanel: React.FC = () => {
   
     if (!muscleWithEmptyNameExists) {
       setMuscles((prevMuscles) => {
-        const newMuscle = new Muscle("", 0, 0, 0, [], [])
+        const newMuscle = new Muscle("", 0, 0, 0, [], []);
         const updatedMuscles = [...prevMuscles, newMuscle];
         controller.addMuscle(newMuscle);
+  
+        // Update original muscles
+        setOriginalMuscles((prevOriginals) => [...prevOriginals, newMuscle]);
+  
         return updatedMuscles;
-
       });
     } else {
-      new Notice("Finish creating your muscle before you add another.")
+      new Notice("Finish creating your muscle before you add another.");
     }
   };
-
+  
   // Delete
   const handleDeleteMuscle = (muscle: Muscle, index: number) => {
     controller.deleteMuscle(muscle);
@@ -98,6 +101,15 @@ const MusclePanel: React.FC = () => {
     const oldMuscle = originalMuscles[index]; // Use the original copy
     const currentMuscle = muscles[index];
 
+    console.log("ORGININALS")
+    console.log(originalMuscles)
+    console.log(index)
+    console.log("OLD: ")
+    console.log(oldMuscle)
+
+    console.log("CURRENT: ")
+    console.log(currentMuscle)
+
     // Handle name-specific validation
     if (field === "name") {
       const newName = String(value);
@@ -125,6 +137,11 @@ const MusclePanel: React.FC = () => {
       field === "coreExercises" ? (value as string[]) : currentMuscle.coreExercises,
       currentMuscle.warmUps
     );
+
+    console.log("REACT")
+
+    console.log(oldMuscle)
+    console.log(newMuscle)
 
     controller.updateMuscle(oldMuscle, newMuscle);
 
