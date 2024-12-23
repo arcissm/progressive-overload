@@ -68,6 +68,7 @@ I'm at 18.3%
 - progressivelly overload time of exercises
 - add unloacked + muscle tag to search through exercises
 - Fix mumbo jumbo of backend. There's definetly a cleaner way to write it. Find it.
+- add justification feature. To appeal a case where a break is justified. Create a judgy, jurry and executionner
 
 ### WISE WORDS FROM A WIZARD
 - use npm nosql instead of my whole backend stuff
