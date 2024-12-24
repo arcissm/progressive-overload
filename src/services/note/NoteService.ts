@@ -62,7 +62,7 @@ export class NoteService {
 		const imagePath = await this.getMotivationalImage();
 	
 		if (!imagePath) {
-			console.error("No motivational image found.");
+			console.warn("No motivational image found.");
 			return "";
 		}
 	
@@ -105,7 +105,7 @@ export class NoteService {
 	
 				return randomImage.path;
 			} else {
-				console.error("Image directory does not exist or is not a folder.");
+				console.warn("Image directory does not exist or is not a folder.");
 				return "";
 			}
 		} catch (err) {

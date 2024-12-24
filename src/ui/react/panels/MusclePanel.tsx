@@ -8,11 +8,6 @@ import MultiSelectInput from "../components/MultiSelect";
 import PanelLayout from "../components/PanelLayout";
 
 
-type MuscleUpdate = {
-  oldMuscle: Muscle;
-  newMuscle: Muscle;
-};
-
 const MusclePanel: React.FC = () => {
   const controller = useWorkoutController();
   const [muscles, setMuscles] = useState<Muscle[]>([]); 
@@ -40,17 +35,20 @@ const MusclePanel: React.FC = () => {
   
     if (!muscleWithEmptyNameExists) {
       setMuscles((prevMuscles) => {
-        const newMuscle = new Muscle("", 0, 0, 0, [], [])
+        const newMuscle = new Muscle("", 0, 0, 0, [], []);
         const updatedMuscles = [...prevMuscles, newMuscle];
         controller.addMuscle(newMuscle);
+  
+        // Update original muscles
+        setOriginalMuscles((prevOriginals) => [...prevOriginals, newMuscle]);
+  
         return updatedMuscles;
-
       });
     } else {
-      new Notice("Finish creating your muscle before you add another.")
+      new Notice("Finish creating your muscle before you add another.");
     }
   };
-
+  
   // Delete
   const handleDeleteMuscle = (muscle: Muscle, index: number) => {
     controller.deleteMuscle(muscle);
@@ -102,17 +100,17 @@ const MusclePanel: React.FC = () => {
     if (field === "name") {
       const newName = String(value);
       // Check for duplicate names
-      if (
-        currentMuscle.name !== newName &&
-        muscles.some((muscle, idx) => idx !== index && muscle.name.toLowerCase() === newName.toLowerCase())
-      ) {
+      if (muscles.some((muscle, idx) => idx !== index && muscle.name.toLowerCase() === newName.toLowerCase())) {
         new Notice("This muscle name already exists. Please choose a different name.");
+        return;
+      }
+      
+      if(currentMuscle.name !== newName){
         setMuscles((prevMuscles) =>
           prevMuscles.map((muscle, idx) =>
             idx === index ? new Muscle(oldMuscle.name, muscle.minSets, muscle.maxSets, muscle.boosted, muscle.coreExercises, muscle.warmUps) : muscle
           )
         );
-        return;
       }
     }
 

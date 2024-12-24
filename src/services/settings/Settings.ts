@@ -6,6 +6,7 @@ export interface PluginSettings {
     calendarStartedColor: string;
     yogaChance: number;
     numberWorkoutDays2Weeks: number;
+    folderCreated: boolean;
 }
 
 export const DEFAULT_SETTINGS: PluginSettings = {
@@ -15,5 +16,6 @@ export const DEFAULT_SETTINGS: PluginSettings = {
     calendarCardioColor: "#008080",
     calendarStartedColor: "#AD83FF",
     yogaChance: 0.25,
-    numberWorkoutDays2Weeks: 8
+    numberWorkoutDays2Weeks: 8,
+    folderCreated: false
 }

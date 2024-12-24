@@ -24,6 +24,13 @@ export default class WorkoutPlugin extends Plugin {
 		this.settingsController = new SettingsController(this);
 		await this.settingsController.loadSettings();
 
+		// Create folder only once if not already created
+		if (!this.settingsController.settings.folderCreated) {
+			await this.createFolder(this.settingsController.settings.imagesDir);
+			this.settingsController.settings.folderCreated = true;
+			await this.settingsController.saveSettings();
+		}
+
 		// @ts-ignore
 		const dirPath = app.vault.adapter.basePath;
 		this.db = new DBService(dirPath);
@@ -45,6 +52,19 @@ export default class WorkoutPlugin extends Plugin {
 	onunload() {
 		this.app.workspace.detachLeavesOfType(WORKOUT_VIEW);        // Clean up WorkoutView
 		this.app.workspace.detachLeavesOfType(CONFIG_WORKOUT_VIEW); // Clean up ConfigWorkoutsView
+	}
+
+	// Create a folder in the vault
+	private async createFolder(folderName: string): Promise<void> {
+		const folderPath = `${folderName}/`;
+		const adapter = this.app.vault.adapter;
+
+		if (!(await adapter.exists(folderPath))) {
+			await adapter.mkdir(folderPath);
+			console.log(`Folder "${folderPath}" created successfully.`);
+		} else {
+			console.log(`Folder "${folderPath}" already exists.`);
+		}
 	}
 
 	// Separate function to register plugin events
