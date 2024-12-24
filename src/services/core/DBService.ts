@@ -28,7 +28,7 @@ export class DBService {
 	private exerciseConfigs: ExerciseConfig[];
 
 	constructor(dirPath: string) {
-		const dbInitializer = new InitDBService(dirPath) //new
+		const dbInitializer = new InitDBService(dirPath)
 		dbInitializer.initializeFiles();
 
 		this.muscleData = new MuscleData(dirPath);
