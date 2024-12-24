@@ -60,14 +60,14 @@ export class DBService {
 
 	getNextVariation(exercise: Exercise){
 		const variationTree = this.variationData.variations.get(exercise.name)
-		let nextVariation = ""
+		let nextVariation = "";
 
 		if(variationTree){
 			const currentVariation = variationTree.findNode(exercise.variation)
 			if(currentVariation){
 				const children = currentVariation.children
-				if(children) {
-					nextVariation = children[0].data
+				if(children.length != 0) {
+					nextVariation = children[0].data;
 				}
 			}
 		}
@@ -349,6 +349,7 @@ export class DBService {
 			exercise.isSuccess = editedExercise.isSuccess;
 			exercise.isCompleted = editedExercise.isCompleted;
 			exercise.isUnlocked = editedExercise.isUnlocked;
+			exercise.variation = editedExercise.variation;
 		}
 	}
 

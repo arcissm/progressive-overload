@@ -117,7 +117,8 @@ export class Exercise {
 			if(this.weightIncrease === 0)return
 
 			this.reps = PRGRESSIVE_OVERLOAD_REPS[0]
-			if(this.weight === 0 && this.variation){
+
+			if(this.variation){
 				this.variation = variation;
 			}else{
 				this.weight += this.weightIncrease
